@@ -1,14 +1,7 @@
+let baseUrl = 'http://193.140.43.25:8080/'
+
 export const environment = {
   production: true,
-  defaultauth: 'fackbackend',
-  firebaseConfig: {
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: ''
-  }
+  baseUrl: `${baseUrl}`,
+  apiUrl: `${baseUrl}api/v1/`,
 };
