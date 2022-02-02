@@ -1,27 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
-
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
-
-import { environment } from '../../../../environments/environment';
+import { AuthfakeauthenticationService } from '../core/services/authfake.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
-  selector: 'app-login2',
-  templateUrl: './login2.component.html',
-  styleUrls: ['./login2.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-/**
- * Login-2 component
- */
-export class Login2Component implements OnInit {
+export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService) { }
+
   loginForm: FormGroup;
   submitted = false;
   error = '';
@@ -30,8 +20,11 @@ export class Login2Component implements OnInit {
   // set the currenr year
   year: number = new Date().getFullYear();
 
-  ngOnInit(): void {
-    document.body.classList.add('auth-body-bg')
+  // tslint:disable-next-line: max-line-length
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
+    private authFackservice: AuthfakeauthenticationService) { }
+
+  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
       password: ['123456', [Validators.required]],
@@ -42,19 +35,6 @@ export class Login2Component implements OnInit {
     // get return url from route parameters or default to '/'
     // tslint:disable-next-line: no-string-literal
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
-
-  carouselOption: OwlOptions = {
-    items: 1,
-    loop: false,
-    margin: 0,
-    nav: false,
-    dots: true,
-    responsive: {
-      680: {
-        items: 1
-      },
-    }
   }
 
   // convenience getter for easy access to form fields

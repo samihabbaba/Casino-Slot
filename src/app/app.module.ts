@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 
 import { environment } from '../environments/environment';
 
-import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
@@ -24,6 +24,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UIModule } from './shared/ui/ui.module';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -35,6 +38,7 @@ export function createTranslateLoader(http: HttpClient): any {
   declarations: [
     AppComponent,
     CyptolandingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,11 +51,15 @@ export function createTranslateLoader(http: HttpClient): any {
         deps: [HttpClient]
       }
     }),
+    ReactiveFormsModule,
+    FormsModule,
+    NgbAlertModule,
     LayoutsModule,
     AppRoutingModule,
     ExtrapagesModule,
     CarouselModule,
     NgbAccordionModule,
+    UIModule,
     NgbNavModule,
     NgbTooltipModule,
     SharedModule,
