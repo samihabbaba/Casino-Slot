@@ -22,18 +22,10 @@ export class AuthenticationService {
     private http: HttpClient,
     private router: Router,
     private dataService: DataService
-  ) {}
+  ) {
+  }
 
-  login(username: string, password: string): Observable<any> {
-    if (!username || !password) {
-      return of(null);
-    }
-
-    const obj = {
-      username: username,
-      password: password,
-    };
-
+  login(obj): Observable<any> {
     return this.http.post(`${environment.apiUrl}auth/login`, obj).pipe(
       map((response: any) => {
         const user = response;
