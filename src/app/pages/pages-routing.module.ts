@@ -1,38 +1,123 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { CalendarComponent } from './calendar/calendar.component';
-import { ChatComponent } from './chat/chat.component';
-import { DefaultComponent } from './dashboards/default/default.component';
-import { FilemanagerComponent } from './filemanager/filemanager.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard' },
- 
-  { path: 'dashboard', component: DefaultComponent },
-  { path: 'calendar', component: CalendarComponent },
-  { path: 'chat', component: ChatComponent },
-  { path: 'filemanager', component: FilemanagerComponent },
-  { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
-  { path: 'ecommerce', loadChildren: () => import('./ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
-  { path: 'crypto', loadChildren: () => import('./crypto/crypto.module').then(m => m.CryptoModule) },
-  { path: 'email', loadChildren: () => import('./email/email.module').then(m => m.EmailModule) },
-  { path: 'invoices', loadChildren: () => import('./invoices/invoices.module').then(m => m.InvoicesModule) },
-  { path: 'projects', loadChildren: () => import('./projects/projects.module').then(m => m.ProjectsModule) },
-  { path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule) },
-  { path: 'contacts', loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule) },
-  { path: 'blog', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) },
-  { path: 'pages', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule) },
-  { path: 'ui', loadChildren: () => import('./ui/ui.module').then(m => m.UiModule) },
-  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
-  { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
-  { path: 'icons', loadChildren: () => import('./icons/icons.module').then(m => m.IconsModule) },
-  { path: 'charts', loadChildren: () => import('./chart/chart.module').then(m => m.ChartModule) },
-  { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) }
+  {
+    path: "dashboard",
+    loadChildren: () =>
+      import("../dashboard/dashboard.module").then((m) => m.DashboardModule),
+  },
+
+  {
+    path: "case-transaction",
+    loadChildren: () =>
+      import("../case-transaction/case-transaction.module").then(
+        (m) => m.CaseTransactionModule
+      ),
+  },
+
+  {
+    path: "chip-transfer",
+    loadChildren: () =>
+      import("../chip-transfer/chip-transfer.module").then(
+        (m) => m.ChipTransferModule
+      ),
+  },
+
+  {
+    path: "chip-type",
+    loadChildren: () =>
+      import("../chip-type/chip-type.module").then((m) => m.ChipTypeModule),
+  },
+
+  {
+    path: "currency",
+    loadChildren: () =>
+      import("../currency/currency.module").then((m) => m.CurrencyModule),
+  },
+
+  {
+    path: "customer",
+    loadChildren: () =>
+      import("../customer/customer.module").then((m) => m.CustomerModule),
+  },
+
+  {
+    path: "customer-transaction",
+    loadChildren: () =>
+      import("../customer-transaction/customer-transaction.module").then(
+        (m) => m.CustomerTransactionModule
+      ),
+  },
+
+  {
+    path: "hospitality",
+    loadChildren: () =>
+      import("../hospitality/hospitality.module").then(
+        (m) => m.HospitalityModule
+      ),
+  },
+
+  {
+    path: "live-data",
+    loadChildren: () =>
+      import("../live-data/live-data.module").then((m) => m.LiveDataModule),
+  },
+
+  {
+    path: "live-table",
+    loadChildren: () =>
+      import("../live-table/live-table.module").then((m) => m.LiveTableModule),
+  },
+
+  {
+    path: "live-transaction",
+    loadChildren: () =>
+      import("../live-transaction/live-transaction.module").then(
+        (m) => m.LiveTransactionModule
+      ),
+  },
+
+  {
+    path: "logs",
+    loadChildren: () => import("../logs/logs.module").then((m) => m.LogsModule),
+  },
+
+  {
+    path: "machine",
+    loadChildren: () =>
+      import("../machine/machine.module").then((m) => m.MachineModule),
+  },
+
+  {
+    path: "meters",
+    loadChildren: () =>
+      import("../meters/meters.module").then((m) => m.MetersModule),
+  },
+
+  {
+    path: "open-day",
+    loadChildren: () =>
+      import("../open-day/open-day.module").then((m) => m.OpenDayModule),
+  },
+
+  {
+    path: "slot-transaction",
+    loadChildren: () =>
+      import("../slot-transaction/slot-transaction.module").then(
+        (m) => m.SlotTransactionModule
+      ),
+  },
+
+  {
+    path: "staff",
+    loadChildren: () =>
+      import("../staff/staff.module").then((m) => m.StaffModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

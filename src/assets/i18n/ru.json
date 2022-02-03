@@ -79,6 +79,183 @@
         "BLOG": "Блог"
       }
     },
+
+    "SLOTTRANSANSACTION": {
+      "TEXT": "Слот Транзакция",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVETRANSANSACTION": {
+      "TEXT": "Живая транзакция",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CASETRANSANSACTION": {
+      "TEXT": "Кейс Транзакция",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CUSTOMERTRANSANSACTION": {
+      "TEXT": "Транзакция клиента",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVEDATA": {
+      "TEXT": "Живые данные",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CHIPTRANSFER": {
+      "TEXT": "Перенос чипа",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "METERS": {
+      "TEXT": "Метры",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CUSTOMER": {
+      "TEXT": "Клиент",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "STAFF": {
+      "TEXT": "Штат сотрудников",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVETABLE": {
+      "TEXT": "Живой стол",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "MACHINE": {
+      "TEXT": "Машина",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CHIPTYPE": {
+      "TEXT": "Тип чипа",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "HOSPITALITY": {
+      "TEXT": "гостеприимство",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CURRENCY": {
+      "TEXT": "Валюта",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "OPENDAY": {
+      "TEXT": "День открытых дверей",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LOGS": {
+      "TEXT": "Журналы",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
     "LAYOUTS": {
       "TEXT": "Макеты",
       "LIST": {

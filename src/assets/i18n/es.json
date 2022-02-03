@@ -70,7 +70,7 @@
       "TEXT": "Menú"
     },
     "DASHBOARDS": {
-      "TEXT": "Tableros",
+      "TEXT": "Tablero",
       "BADGE": "04",
       "LIST": {
         "DEFAULT": "Defecto",
@@ -79,6 +79,183 @@
         "BLOG": "Blog"
       }
     },
+
+    "SLOTTRANSANSACTION": {
+      "TEXT": "Transacción de tragamonedas",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVETRANSANSACTION": {
+      "TEXT": "Transacción en vivo",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CASETRANSANSACTION": {
+      "TEXT": "Transacción de caso",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CUSTOMERTRANSANSACTION": {
+      "TEXT": "Transacción del cliente",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVEDATA": {
+      "TEXT": "Datos en tiempo real",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CHIPTRANSFER": {
+      "TEXT": "Transferencia de fichas",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "METERS": {
+      "TEXT": "Metros",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CUSTOMER": {
+      "TEXT": "Cliente",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "STAFF": {
+      "TEXT": "Personal",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LIVETABLE": {
+      "TEXT": "Mesa en vivo",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "MACHINE": {
+      "TEXT": "Máquina",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CHIPTYPE": {
+      "TEXT": "Tipo de chip",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "HOSPITALITY": {
+      "TEXT": "Hospitalidad",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "CURRENCY": {
+      "TEXT": "Divisa",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "OPENDAY": {
+      "TEXT": "Dia abierto",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
+    "LOGS": {
+      "TEXT": "Registros",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+
     "LAYOUTS": {
       "TEXT": "Diseños",
       "LIST": {

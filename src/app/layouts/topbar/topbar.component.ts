@@ -39,6 +39,7 @@ export class TopbarComponent implements OnInit {
     { text: "German", flag: "assets/images/flags/germany.jpg", lang: "de" },
     { text: "Italian", flag: "assets/images/flags/italy.jpg", lang: "it" },
     { text: "Russian", flag: "assets/images/flags/russia.jpg", lang: "ru" },
+    { text: "Turkish", flag: "assets/images/flags/turkey.png", lang: "tr" },
   ];
 
   openMobileMenu: boolean;

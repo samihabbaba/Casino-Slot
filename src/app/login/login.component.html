@@ -12,7 +12,11 @@
                 </div>
               </div>
               <div class="col-5 align-self-end">
-                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+                <img
+                  src="assets/images/profile-img.png"
+                  alt=""
+                  class="img-fluid"
+                />
               </div>
             </div>
           </div>
@@ -21,61 +25,103 @@
               <a>
                 <div class="avatar-md profile-user-wid mb-4">
                   <span class="avatar-title rounded-circle bg-light">
-                    <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                    <img
+                      src="assets/images/logo.svg"
+                      alt=""
+                      class="rounded-circle"
+                      height="34"
+                    />
                   </span>
                 </div>
               </a>
             </div>
             <div class="p-2">
-              <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-                <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+              <form
+                class="form-horizontal"
+                [formGroup]="loginForm"
+                (ngSubmit)="onSubmit()"
+              >
+                <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{
+                  error
+                }}</ngb-alert>
 
                 <div class="mb-3">
                   <label for="email">Username</label>
-                  <input type="text" formControlName="username" class="form-control" id="email" placeholder="Username"
-                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                  <input
+                    type="text"
+                    formControlName="username"
+                    class="form-control"
+                    id="email"
+                    placeholder="Username"
+                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                  />
+                  <div
+                    *ngIf="submitted && f.username.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.username.errors.required">
+                      Username is required
+                    </div>
                   </div>
                 </div>
 
                 <div class="mb-3">
                   <label for="password">Password</label>
                   <div class="input-group auth-pass-inputgroup">
-                    <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
-                      [ngClass]="{ 'is-invalid': submitted && f.password.errors }" aria-label="Password"
-                      aria-describedby="password-addon">
+                    <input
+                      [type]="passwordVisible ? 'text' : 'password'"
+                      class="form-control"
+                      formControlName="password"
+                      placeholder="Enter password"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.password.errors
+                      }"
+                      aria-label="Password"
+                      aria-describedby="password-addon"
+                    />
 
-                    <button class="btn btn-light ms-0" type="button" id="password-addon"><i
-                        class="mdi mdi-eye-outline"></i></button>
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                      <span *ngIf="f.password.errors.required">Password is required</span>
+                    <button
+                      (click)="seePassword()"
+                      class="btn btn-light ms-0"
+                      type="button"
+                      id="password-addon"
+                    >
+                      <i class="mdi mdi-eye-outline"></i>
+                    </button>
+                    <div
+                      *ngIf="submitted && f.password.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="f.password.errors.required"
+                        >Password is required</span
+                      >
                     </div>
                   </div>
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="remember-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="remember-check"
+                  />
                   <label class="form-check-label" for="remember-check">
-                      Remember me
+                    Remember me
                   </label>
-              </div>
+                </div>
 
                 <div class="mt-3 d-grid">
                   <button class="btn btn-primary" type="submit">Log In</button>
                 </div>
-                <div class="mt-4 text-center">
-                  <a routerLink="/account/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot
-                    your
-                    password?</a>
-                </div>
+                <!-- <div class="mt-4 text-center">
+                  <a routerLink="/account/reset-password" class="text-muted"
+                    ><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a
+                  >
+                </div> -->
               </form>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </div>

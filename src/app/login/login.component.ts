@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   error = "";
   returnUrl: string;
+  passwordVisible: boolean = false;
 
   // set the currenr year
   year: number = new Date().getFullYear();
@@ -45,5 +46,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(obj).subscribe((resp) => {
       this.router.navigate(["/"]);
     });
+  }
+
+  seePassword() {
+    this.passwordVisible = !this.passwordVisible;
   }
 }
