@@ -1,4 +1,4 @@
-// 
+//
 // backgrounds.scss
 //
 
@@ -10,5 +10,7 @@ $value in $theme-colors {
             background-color: rgba(($value), 0.25) !important;
 
         }
+
+        height: 98.89px;
     }
 }

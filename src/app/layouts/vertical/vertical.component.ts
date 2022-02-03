@@ -29,7 +29,6 @@ export class VerticalComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {
     this.router.events.forEach((event) => {
-      console.log(event);
       if (event instanceof NavigationEnd) {
         document.body.classList.remove("sidebar-enable");
       }

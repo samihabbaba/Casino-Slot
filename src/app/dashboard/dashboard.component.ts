@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfigService } from "../core/services/config.service";
 import { EventService } from "../core/services/event.service";
+import { AuthenticationService } from "../shared/services/authentication.service";
 import { DataService } from "../shared/services/data.service";
 import { ChartType } from "./dashboard.model";
 import { emailSentBarChart, monthlyEarningChart } from "./data";
@@ -22,23 +23,20 @@ export class DashboardComponent implements OnInit {
 
   isActive: string;
 
+  dashboardData: any;
+
   @ViewChild("content") content;
   constructor(
     private modalService: NgbModal,
     private configService: ConfigService,
     private eventService: EventService,
-    private dataService: DataService
+    private dataService: DataService,
+    public authService: AuthenticationService
   ) {}
 
   ngOnInit() {
-    // this.isLoading = true;
-    // setTimeout(() => {
-    //   this.isLoading = false;
-    // }, 2000);
-
-    this.dataService.getDashboard().subscribe((resp) => {
-      console.log(resp);
-    });
+    this.isLoading = true;
+    
     /**
      * horizontal-vertical layput set
      */
@@ -60,6 +58,14 @@ export class DashboardComponent implements OnInit {
     /**
      * Fetches the data
      */
+
+     this.dataService.getDashboard().subscribe((resp) => {
+      this.dashboardData = resp;
+      this.isLoading = false;
+      console.log(resp);
+    });
+
+
     this.fetchData();
   }
 
@@ -72,6 +78,7 @@ export class DashboardComponent implements OnInit {
 
     this.isActive = "year";
     this.configService.getConfig().subscribe((data) => {
+      console.log(data)
       this.transactions = data.transactions;
       this.statData = data.statData;
     });

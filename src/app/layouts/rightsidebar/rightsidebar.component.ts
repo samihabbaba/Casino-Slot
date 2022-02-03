@@ -20,9 +20,7 @@ export class RightsidebarComponent implements OnInit {
   sidebartype: string;
   topbar: string;
 
-  constructor(
-    private eventService: EventService
-  ) {}
+  constructor(private eventService: EventService) {}
 
   ngOnInit() {
     this.width = LAYOUT_WIDTH;
@@ -66,7 +64,9 @@ export class RightsidebarComponent implements OnInit {
       this.eventService.broadcast("changeLayout", "vertical");
     else this.eventService.broadcast("changeLayout", "horizontal");
 
-
+    if (layout.target.checked == true) {
+      location.reload();
+    }
   }
 
   changeWidth(width: string) {
