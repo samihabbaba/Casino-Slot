@@ -49,7 +49,7 @@ export const MENU: MenuItem[] = [
   {
     id: 8,
     label: "MENUITEMS.METERS.TEXT",
-    icon: "bx-rulere",
+    icon: "bx-ruler",
     link: "/meters",
   },
   {
@@ -79,7 +79,7 @@ export const MENU: MenuItem[] = [
   {
     id: 13,
     label: "MENUITEMS.CHIPTYPE.TEXT",
-    icon: "bx-chipe",
+    icon: "bx-chip",
     link: "/chip-type",
   },
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +11,7 @@ export class DataService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: "Bearer " + localStorage.getItem("token"),
     }),
   };
 
@@ -34,8 +35,12 @@ export class DataService {
   constructor(private http: HttpClient, private router: Router) {}
 
   // DASHBOARD
-  
 
+  getDashboard() {
+    return this.http.get<any>(`${environment.apiUrl}general/dashboard`, {
+      headers: this.httpOptions.headers,
+    });
+  }
 
   // getFullLive(queryParams?: any) {
   //   if (queryParams !== undefined) {

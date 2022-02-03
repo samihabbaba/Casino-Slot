@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ConfigService } from "../core/services/config.service";
 import { EventService } from "../core/services/event.service";
+import { DataService } from "../shared/services/data.service";
 import { ChartType } from "./dashboard.model";
 import { emailSentBarChart, monthlyEarningChart } from "./data";
 
@@ -25,7 +26,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private configService: ConfigService,
-    private eventService: EventService
+    private eventService: EventService,
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
@@ -34,7 +36,9 @@ export class DashboardComponent implements OnInit {
     //   this.isLoading = false;
     // }, 2000);
 
-    
+    this.dataService.getDashboard().subscribe((resp) => {
+      console.log(resp);
+    });
     /**
      * horizontal-vertical layput set
      */

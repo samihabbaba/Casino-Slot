@@ -7,13 +7,14 @@ import { Page404Component } from "./extrapages/page404/page404.component";
 import { LoginComponent } from "./login/login.component";
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent },
   // tslint:disable-next-line: max-line-length
+
+  { path: "login", component: LoginComponent },
+
   {
     path: "",
-    component: LayoutComponent,
     loadChildren: () =>
-      import("./pages/pages.module").then((m) => m.PagesModule),
+      import("./layouts/layouts.module").then((m) => m.LayoutsModule),
     canActivate: [AuthGuard],
   },
 
