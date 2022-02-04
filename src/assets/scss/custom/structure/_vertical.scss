@@ -1,6 +1,6 @@
 //
 // _menu.scss
-// 
+//
 
 .metismenu {
   margin: 0;
@@ -441,6 +441,8 @@ body[data-sidebar="dark"] {
               >a {
                 background: lighten($sidebar-dark-bg, 2%);
                 color: $sidebar-dark-menu-item-hover-color;
+                border-top-right-radius: 30px;
+                border-bottom-right-radius: 30px;
 
                 i {
                   color: $sidebar-dark-menu-item-hover-color;
@@ -784,7 +786,7 @@ body[data-sidebar="colored"] {
 
                   &:hover {
                       color: $white;
-  
+
                       i {
                           color: $white;
                       }

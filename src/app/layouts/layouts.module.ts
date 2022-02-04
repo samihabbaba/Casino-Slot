@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
 import { SimplebarAngularModule } from "simplebar-angular";
-import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDropdownModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { ClickOutsideModule } from "ng-click-outside";
 
 import { UIModule } from "../shared/ui/ui.module";
@@ -18,6 +18,8 @@ import { HorizontaltopbarComponent } from "./horizontaltopbar/horizontaltopbar.c
 import { LanguageService } from "../core/services/language.service";
 import { TranslateModule } from "@ngx-translate/core";
 import { LayoutsRoutingModule } from "./layouts-routing.module";
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -40,6 +42,8 @@ import { LayoutsRoutingModule } from "./layouts-routing.module";
     ClickOutsideModule,
     UIModule,
     SimplebarAngularModule,
+    Ng2SmartTableModule,
+
   ],
   providers: [LanguageService],
 })

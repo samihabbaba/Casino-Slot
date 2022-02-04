@@ -2,15 +2,14 @@
 // backgrounds.scss
 //
 
-
-@each $color,
-$value in $theme-colors {
-    .bg-#{$color} {
-        &.bg-soft{
-            background-color: rgba(($value), 0.25) !important;
-
-        }
-
-        height: 98.89px;
+@each $color, $value in $theme-colors {
+  .bg-#{$color} {
+    &.bg-soft {
+      background-color: rgba(($value), 0.25) !important;
     }
+
+    &#dashboard {
+      height: 98.89px;
+    }
+  }
 }

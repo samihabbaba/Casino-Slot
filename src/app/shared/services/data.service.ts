@@ -15,23 +15,6 @@ export class DataService {
     }),
   };
 
-  setParams(params: any): HttpParams {
-    let opt = new HttpParams();
-    for (const [key, value] of Object.entries(params)) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        if (typeof value == "object") {
-          for (const [index, result] of Object.entries(value)) {
-            if (result != null) {
-              opt = opt.append(index, result as any);
-            }
-          }
-        }
-        opt = opt.append(key, value as any);
-      }
-    }
-    return opt;
-  }
-
   constructor(private http: HttpClient, private router: Router) {}
 
   // DASHBOARD
@@ -42,27 +25,22 @@ export class DataService {
     });
   }
 
-  // getFullLive(queryParams?: any) {
-  //   if (queryParams !== undefined) {
-  //     this.params = this.setParams(queryParams);
-  //   } else {
-  //     this.params = new HttpParams();
-  //   }
-  //   return this.http.get<any>(`${environment.sportsApiUrl}live/full`, {
-  //     params: this.params,
-  //     headers: this.httpOptions.headers,
-  //   });
-  // }
+  // CUSTOMER
 
-  // getLiveById(id) {
-  //   return this.http.get<any>(`${environment.sportsApiUrl}live/${id}`, {
-  //     headers: this.httpOptions.headers,
-  //   });
-  // }
+  getCustomers(queryParams = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer?SearchQuery= ${queryParams}`,
+      {
+        params: this.params,
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 
-  // getSoonGames() {
-  //   return this.http.get<any>(`${environment.sportsApiUrl}soon`, {
-  //     headers: this.httpOptions.headers,
-  //   });
-  // }
+  addCustomer(customer) {
+    return this.http.post<any>(`${environment.apiUrl}customer`, customer, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
 }

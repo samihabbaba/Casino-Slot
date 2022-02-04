@@ -25,6 +25,7 @@ import { FakeBackendInterceptor } from './core/helpers/fake-backend';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from './shared/ui/ui.module';
 import { LoginComponent } from './login/login.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -60,12 +61,13 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbNavModule,
     NgbTooltipModule,
     ScrollToModule.forRoot(),
+    ToastrModule.forRoot(),
     NgbModule
   ],
   bootstrap: [AppComponent],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
     // LoaderService,
     // { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },

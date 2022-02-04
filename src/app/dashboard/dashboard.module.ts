@@ -7,6 +7,7 @@ import { UIModule } from "../shared/ui/ui.module";
 import {
   NgbDropdownModule,
   NgbNavModule,
+  NgbPaginationModule,
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { WidgetModule } from "../shared/widget/widget.module";
@@ -27,6 +28,8 @@ import { SimplebarAngularModule } from "simplebar-angular";
     WidgetModule,
     NgApexchartsModule,
     SimplebarAngularModule,
+
+    NgbPaginationModule
   ],
 })
 export class DashboardModule {}

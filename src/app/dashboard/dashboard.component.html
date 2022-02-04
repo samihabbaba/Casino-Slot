@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col-xl-4">
       <div class="card overflow-hidden">
-        <div class="bg-primary bg-soft limit-height">
+        <div class="bg-primary bg-soft limit-height"  id="dashboard">
           <div class="row">
             <div class="col-7">
               <div class="text-primary p-3">
@@ -65,252 +65,191 @@
           ></app-stat>
         </div>
       </div>
-
     </div>
   </div>
   <!-- end row -->
 
   <div class="row">
-    <div class="col-xl-4">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title mb-4">Social Source</h4>
-          <div class="text-center">
-            <div class="avatar-sm mx-auto mb-4">
-              <span
-                class="avatar-title rounded-circle bg-primary bg-soft font-size-24"
-              >
-                <i class="mdi mdi-facebook text-primary"></i>
-              </span>
-            </div>
-            <p class="font-16 text-muted mb-2"></p>
-            <h5>
-              <a href="javascript: void(0);" class="text-dark"
-                >Facebook - <span class="text-muted font-16">125 sales</span>
-              </a>
-            </h5>
-            <p class="text-muted">
-              Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut
-              libero venenatis faucibus tincidunt.
-            </p>
-            <a href="javascript: void(0);" class="text-primary font-16"
-              >Learn more <i class="mdi mdi-chevron-right"></i
-            ></a>
-          </div>
-          <div class="row mt-4">
-            <div class="col-4">
-              <div class="social-source text-center mt-3">
-                <div class="avatar-xs mx-auto mb-3">
-                  <span
-                    class="avatar-title rounded-circle bg-primary font-size-16"
-                  >
-                    <i class="mdi mdi-facebook text-white"></i>
-                  </span>
-                </div>
-                <h5 class="font-size-15">Facebook</h5>
-                <p class="text-muted mb-0">125 sales</p>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="social-source text-center mt-3">
-                <div class="avatar-xs mx-auto mb-3">
-                  <span
-                    class="avatar-title rounded-circle bg-info font-size-16"
-                  >
-                    <i class="mdi mdi-twitter text-white"></i>
-                  </span>
-                </div>
-                <h5 class="font-size-15">Twitter</h5>
-                <p class="text-muted mb-0">112 sales</p>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="social-source text-center mt-3">
-                <div class="avatar-xs mx-auto mb-3">
-                  <span
-                    class="avatar-title rounded-circle bg-pink font-size-16"
-                  >
-                    <i class="mdi mdi-instagram text-white"></i>
-                  </span>
-                </div>
-                <h5 class="font-size-15">Instagram</h5>
-                <p class="text-muted mb-0">104 sales</p>
-              </div>
+          <div class="table-header">
+            <h4 class="card-title">Case Chip</h4>
+            <div>
+              <select class="form-select" [(ngModel)]="currencySelect">
+                <option value="USD" *ngIf="dollarKasaChip.length > 0">
+                  Dollar
+                </option>
+                <option value="EURO" *ngIf="euroKasaChip.length > 0">
+                  Euro
+                </option>
+                <option value="TL" *ngIf="tlKasaChip.length > 0">TL</option>
+                <option value="STG" *ngIf="poundKasaChip.length > 0">
+                  Pound
+                </option>
+              </select>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-5">Activity</h4>
-          <ul class="verti-timeline list-unstyled">
-            <li class="event-list">
-              <div class="event-timeline-dot">
-                <i class="bx bx-right-arrow-circle font-size-18"></i>
-              </div>
-              <div class="media">
-                <div class="mr-3">
-                  <h5 class="font-size-14">
-                    22 Nov
-                    <i
-                      class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"
-                    ></i>
-                  </h5>
-                </div>
-                <div class="media-body">
-                  <div>Responded to need “Volunteer Activities</div>
-                </div>
-              </div>
-            </li>
-            <li class="event-list">
-              <div class="event-timeline-dot">
-                <i class="bx bx-right-arrow-circle font-size-18"></i>
-              </div>
-              <div class="media">
-                <div class="mr-3">
-                  <h5 class="font-size-14">
-                    17 Nov
-                    <i
-                      class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"
-                    ></i>
-                  </h5>
-                </div>
-                <div class="media-body">
-                  <div>
-                    Everyone realizes why a new common language would be
-                    desirable... <a href="javascript: void(0);">Read more</a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="event-list active">
-              <div class="event-timeline-dot">
-                <i
-                  class="bx bxs-right-arrow-circle font-size-18 bx-fade-right"
-                ></i>
-              </div>
-              <div class="media">
-                <div class="mr-3">
-                  <h5 class="font-size-14">
-                    15 Nov
-                    <i
-                      class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"
-                    ></i>
-                  </h5>
-                </div>
-                <div class="media-body">
-                  <div>Joined the group “Boardsmanship Forum”</div>
-                </div>
-              </div>
-            </li>
-            <li class="event-list">
-              <div class="event-timeline-dot">
-                <i class="bx bx-right-arrow-circle font-size-18"></i>
-              </div>
-              <div class="media">
-                <div class="mr-3">
-                  <h5 class="font-size-14">
-                    12 Nov
-                    <i
-                      class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"
-                    ></i>
-                  </h5>
-                </div>
-                <div class="media-body">
-                  <div>Responded to need “In-Kind Opportunity”</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <div class="text-center mt-4">
-            <a href="javascript: void(0);" class="btn btn-primary btn-sm"
-              >View More <i class="mdi mdi-arrow-right ms-1"></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Top Cities Selling Product</h4>
-
-          <div class="text-center">
-            <div class="mb-4">
-              <i class="bx bx-map-pin text-primary display-4"></i>
-            </div>
-            <h3>1,456</h3>
-            <p>San Francisco</p>
-          </div>
-
-          <div class="table-responsive mt-4">
-            <table class="table table-centered table-nowrap">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr>
-                  <td style="width: 30%">
-                    <p class="mb-0">San Francisco</p>
-                  </td>
-                  <td style="width: 25%">
-                    <h5 class="mb-0">1,456</h5>
-                  </td>
-                  <td>
-                    <div class="progress bg-transparent progress-sm">
-                      <div
-                        class="progress-bar bg-primary rounded"
-                        role="progressbar"
-                        style="width: 94%"
-                        aria-valuenow="94"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="mb-0">Los Angeles</p>
-                  </td>
-                  <td>
-                    <h5 class="mb-0">1,123</h5>
-                  </td>
-                  <td>
-                    <div class="progress bg-transparent progress-sm">
-                      <div
-                        class="progress-bar bg-success rounded"
-                        role="progressbar"
-                        style="width: 82%"
-                        aria-valuenow="82"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="mb-0">San Diego</p>
-                  </td>
-                  <td>
-                    <h5 class="mb-0">1,026</h5>
-                  </td>
-                  <td>
-                    <div class="progress bg-transparent progress-sm">
-                      <div
-                        class="progress-bar bg-warning rounded"
-                        role="progressbar"
-                        style="width: 70%"
-                        aria-valuenow="70"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </td>
+                <tr
+                  *ngFor="
+                    let item of chooseWhichTableToDisplay()
+                      | slice
+                        : (page - 1) * pageSize
+                        : (page - 1) * pageSize + pageSize
+                  "
+                >
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.stringValue }}</td>
+                  <td>{{ item.amount }}</td>
                 </tr>
               </tbody>
             </table>
+            <div class="col-sm-12 col-md-5" style="margin-left: auto">
+              <div class="text-md-right float-md-end pagination-rounded">
+                <ngb-pagination
+                  [collectionSize]="chooseWhichTableToDisplay().length"
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">Slot Customer</p>
+                  <h5 class="mb-0">{{ dashboardData.slotCustomer }}</h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bxs-component"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="me-3">
+                  <p class="text-muted mb-2">Live Customer</p>
+                  <h5 class="mb-0">{{ dashboardData.liveCustomer }}</h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bx-broadcast"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">VIP In</p>
+                  <h5 class="mb-0">{{ dashboardData.vipIn }}</h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bxs-log-out"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">VIP Out</p>
+                  <h5 class="mb-0">{{ dashboardData.vipOut }}</h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bxs-log-in"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">Chip Profit</p>
+                  <h5 class="mb-0">
+                    {{ dashboardData.chipProfit | number: "1.2-2" }}
+                  </h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bx-money"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">Chip Out</p>
+                  <h5 class="mb-0">
+                    {{ dashboardData.chipOut | number: "1.2-2" }}
+                  </h5>
+                </div>
+                <div class="avatar-sm ms-auto">
+                  <div
+                    class="avatar-title bg-light rounded-circle text-primary font-size-20"
+                  >
+                    <i class="bx bx-card"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -318,14 +257,293 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Latest Transaction</h4>
-          <app-transaction [transactions]="transactions"></app-transaction>
-          <!-- end table -->
+    <div class="col-12">
+      <div
+        class="page-title-box d-flex align-items-center justify-content-between"
+      >
+        <h4 class="mb-0 font-size-18">Slot (Total)</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-success bg-soft text-success font-size-18"
+                  >
+                    <i class="bx bx-lira"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">TL Profit</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.tlProfit | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-secondary bg-soft text-secondary font-size-18"
+                  >
+                    <i class="bx bx-euro"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Euro Profit</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.euProfit | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-danger bg-soft text-danger font-size-18"
+                  >
+                    <i class="bx bx-dollar"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Dollar Profit</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.usdProfit | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-warning bg-soft text-warning font-size-18"
+                  >
+                    <i class="bx bx-pound"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Pound Profit</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.stgProfit | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- end row -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="page-title-box d-flex align-items-center justify-content-between"
+      >
+        <h4 class="mb-0 font-size-18">Slot (Pending)</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-success bg-soft text-success font-size-18"
+                  >
+                    <i class="bx bx-lira"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">TL Pending</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.tlOut | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-secondary bg-soft text-secondary font-size-18"
+                  >
+                    <i class="bx bx-euro"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Euro Pending</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.euOut | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-danger bg-soft text-danger font-size-18"
+                  >
+                    <i class="bx bx-dollar"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Dollar Pending</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.usdOut | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-warning bg-soft text-warning font-size-18"
+                  >
+                    <i class="bx bx-pound"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Pound Pending</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.stgOut | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="page-title-box d-flex align-items-center justify-content-between"
+      >
+        <h4 class="mb-0 font-size-18">Live Drop</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-success bg-soft text-success font-size-18"
+                  >
+                    <i class="bx bx-lira"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">TL Drop</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.tlDrop | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-secondary bg-soft text-secondary font-size-18"
+                  >
+                    <i class="bx bx-euro"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Euro Drop</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.euroDrop | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-danger bg-soft text-danger font-size-18"
+                  >
+                    <i class="bx bx-dollar"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Dollar Drop</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.usdDrop | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-warning bg-soft text-warning font-size-18"
+                  >
+                    <i class="bx bx-pound"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Pound Drop</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ dashboardData.stgDrop | number: "1.2-2" }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
     </div>
   </div>
 </div>

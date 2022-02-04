@@ -152,7 +152,6 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
           <a class="dropdown-item d-block" href="javascript: void(0);"
-            ><span class="badge bg-success float-end">11</span
             ><i class="bx bx-wrench font-size-16 align-middle me-1"></i
             >{{ "HEADER.LOGIN.SETTINGS" | translate }}
           </a>
@@ -163,7 +162,6 @@
           <div class="dropdown-divider"></div>
           <a
             class="dropdown-item text-danger"
-            href="javascript: void(0);"
             (click)="logout()"
             ><i
               class="bx bx-power-off font-size-16 align-middle me-1 text-danger"
@@ -305,7 +303,6 @@
                         <div class="dropdown" *ngIf="hasItems(subSubitem)">
                           <a
                             class="dropdown-item dropdown-toggle"
-                            href="javascript: void(0);"
                             (click)="onMenuClick($event)"
                             >{{ subSubitem.label | translate }}
                             <div class="arrow-down"></div>

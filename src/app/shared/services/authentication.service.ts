@@ -55,7 +55,7 @@ export class AuthenticationService {
       }),
     };
     this.currentUser = null;
-    this.router.navigate(["login"]);
+    this.router.navigate(["/login"]);
   }
 
   loggedIn() {

@@ -25,6 +25,17 @@ export class DashboardComponent implements OnInit {
 
   dashboardData: any;
 
+  currencySelect: any = "";
+
+  page: number = 1;
+  pageSize: number = 5;
+
+
+  euroKasaChip: any[] = [];
+  dollarKasaChip: any[] = [];
+  tlKasaChip: any[] = [];
+  poundKasaChip: any[] = [];
+
   @ViewChild("content") content;
   constructor(
     private modalService: NgbModal,
@@ -36,7 +47,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    
+
     /**
      * horizontal-vertical layput set
      */
@@ -59,12 +70,13 @@ export class DashboardComponent implements OnInit {
      * Fetches the data
      */
 
-     this.dataService.getDashboard().subscribe((resp) => {
+    this.dataService.getDashboard().subscribe((resp) => {
       this.dashboardData = resp;
+      this.setCaseChip();
+      this.setCurrencySelect();
       this.isLoading = false;
       console.log(resp);
     });
-
 
     this.fetchData();
   }
@@ -78,68 +90,57 @@ export class DashboardComponent implements OnInit {
 
     this.isActive = "year";
     this.configService.getConfig().subscribe((data) => {
-      console.log(data)
+      console.log(data);
       this.transactions = data.transactions;
       this.statData = data.statData;
     });
   }
 
-  openModal() {
-    this.modalService.open(this.content, { centered: true });
+  setCaseChip() {
+    this.dashboardData.kasaChipList.forEach((x) => {
+      if (x.currency === "EURO") {
+        this.euroKasaChip.push(x);
+      }
+      if (x.currency === "TL") {
+        this.tlKasaChip.push(x);
+      }
+      if (x.currency === "STG") {
+        this.poundKasaChip.push(x);
+      }
+      if (x.currency === "USD") {
+        this.dollarKasaChip.push(x);
+      }
+    });
   }
 
-  weeklyreport() {
-    this.isActive = "week";
-    this.emailSentBarChart.series = [
-      {
-        name: "Series A",
-        data: [44, 55, 41, 67, 22, 43, 36, 52, 24, 18, 36, 48],
-      },
-      {
-        name: "Series B",
-        data: [11, 17, 15, 15, 21, 14, 11, 18, 17, 12, 20, 18],
-      },
-      {
-        name: "Series C",
-        data: [13, 23, 20, 8, 13, 27, 18, 22, 10, 16, 24, 22],
-      },
-    ];
+  setCurrencySelect() {
+    if (this.dollarKasaChip.length > 0) {
+      this.currencySelect = "USD";
+    }
+    if (this.euroKasaChip.length > 0) {
+      this.currencySelect = "EURO";
+    }
+    if (this.tlKasaChip.length > 0) {
+      this.currencySelect = "TL";
+    }
+    if (this.poundKasaChip.length > 0) {
+      this.currencySelect = "STG";
+    }
   }
 
-  monthlyreport() {
-    this.isActive = "month";
-    this.emailSentBarChart.series = [
-      {
-        name: "Series A",
-        data: [44, 55, 41, 67, 22, 43, 36, 52, 24, 18, 36, 48],
-      },
-      {
-        name: "Series B",
-        data: [13, 23, 20, 8, 13, 27, 18, 22, 10, 16, 24, 22],
-      },
-      {
-        name: "Series C",
-        data: [11, 17, 15, 15, 21, 14, 11, 18, 17, 12, 20, 18],
-      },
-    ];
-  }
-
-  yearlyreport() {
-    this.isActive = "year";
-    this.emailSentBarChart.series = [
-      {
-        name: "Series A",
-        data: [13, 23, 20, 8, 13, 27, 18, 22, 10, 16, 24, 22],
-      },
-      {
-        name: "Series B",
-        data: [11, 17, 15, 15, 21, 14, 11, 18, 17, 12, 20, 18],
-      },
-      {
-        name: "Series C",
-        data: [44, 55, 41, 67, 22, 43, 36, 52, 24, 18, 36, 48],
-      },
-    ];
+  chooseWhichTableToDisplay() {
+    if (this.currencySelect === "USD") {
+      return this.dollarKasaChip;
+    }
+    if (this.currencySelect === "EURO") {
+      return this.euroKasaChip;
+    }
+    if (this.currencySelect === "STG") {
+      return this.poundKasaChip;
+    }
+    if (this.currencySelect === "TL") {
+      return this.tlKasaChip;
+    }
   }
 
   /**
