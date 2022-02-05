@@ -68,21 +68,29 @@ export class CustomerComponent implements OnInit {
   }
 
   openModal(content: any) {
-    this.toastr.success('Have fun storming the castle!', 'Miracle Max Says')
     this.modalService.open(content);
   }
 
   saveCustomer() {
     if (this.formData.valid) {
       const form = this.formData.getRawValue();
-      this.dataService.addCustomer(form).subscribe(
+      const formData = new FormData();
+      for (let i in form) {
+        formData.append(i, form[i]);
+      }
+
+      this.dataService.addCustomer(formData).subscribe(
         (resp) => {
+          this.toastr.success("Customer added successfully");
           this.initializeForm();
           this.fetchData();
         },
-        (err) => {}
+        (err) => {
+          this.toastr.error("Something went wrong");
+        }
       );
+    } else {
+      this.submitted = true;
     }
-    this.submitted = true;
   }
 }
