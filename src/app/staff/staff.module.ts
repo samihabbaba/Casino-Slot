@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StaffRoutingModule } from './staff-routing.module';
 import { StaffComponent } from './staff.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { StaffComponent } from './staff.component';
   ],
   imports: [
     CommonModule,
-    StaffRoutingModule
+    StaffRoutingModule,
+    SharedModule
   ]
 })
 export class StaffModule { }

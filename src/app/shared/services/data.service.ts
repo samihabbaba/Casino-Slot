@@ -48,4 +48,33 @@ export class DataService {
       headers: this.httpOptions.headers,
     });
   }
+
+  // STAFF
+  getStaff(queryParams = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}staff?SearchQuery= ${queryParams}`,
+      {
+        params: this.params,
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  addStaff(staff) {
+    return this.http.post<any>(`${environment.apiUrl}staff`, staff, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editStaff(staff) {
+    return this.http.put<any>(`${environment.apiUrl}staff`, staff, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  deleteStaff(id) {
+    return this.http.delete<any>(`${environment.apiUrl}staff/${id}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
 }
