@@ -43,4 +43,9 @@ export class DataService {
     });
   }
 
+  editCustomer(customer, id) {
+    return this.http.put<any>(`${environment.apiUrl}customer/${id}`, customer, {
+      headers: this.httpOptions.headers,
+    });
+  }
 }

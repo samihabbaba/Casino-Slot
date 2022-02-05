@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { DataService } from "../shared/services/data.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-customer",
@@ -13,6 +14,9 @@ import { DataService } from "../shared/services/data.service";
 })
 export class CustomerComponent implements OnInit {
   formData: FormGroup;
+  editForm: FormGroup;
+  editedId: string = "";
+
   submitted = false;
   isLoading: boolean = false;
 
@@ -40,7 +44,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.initializeForm();
+    this.initializeAddForm();
     this.fetchData();
   }
 
@@ -56,7 +60,7 @@ export class CustomerComponent implements OnInit {
     return this.formData.controls;
   }
 
-  initializeForm() {
+  initializeAddForm() {
     this.formData = this.formBuilder.group({
       name: ["", [Validators.required]],
       grade: ["D", [Validators.required]],
@@ -67,8 +71,49 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  openModal(content: any) {
-    this.modalService.open(content);
+  initializeEditForm(obj) {
+    this.editForm = this.formBuilder.group({
+      name: [obj?.name, [Validators.required]],
+      grade: [obj?.grade, [Validators.required]],
+      identity: [obj?.identity],
+      avarageBet: [obj?.avarageBet],
+      birthday: [obj?.birthday.slice(0, -9)],
+      mobile: [obj?.mobile],
+      isBaned: [obj.isBaned],
+    });
+  }
+
+  openModal(content: any, obj?: any) {
+    if (obj) {
+      this.editedId = obj.id;
+      this.initializeEditForm(obj);
+      this.modalService.open(content);
+    } else {
+      this.modalService.open(content);
+    }
+  }
+
+  editCustomer() {
+    if (this.editForm.valid) {
+      const form = this.editForm.getRawValue();
+      const formData = new FormData();
+      for (let i in form) {
+        formData.append(i, form[i]);
+      }
+
+      this.dataService.editCustomer(formData, this.editedId).subscribe(
+        (resp) => {
+          this.toastr.success("Customer edited successfully");
+          this.modalService.dismissAll();
+          this.fetchData();
+        },
+        (err) => {
+          this.toastr.error("Something went wrong");
+        }
+      );
+    } else {
+      this.submitted = true;
+    }
   }
 
   saveCustomer() {
@@ -82,7 +127,7 @@ export class CustomerComponent implements OnInit {
       this.dataService.addCustomer(formData).subscribe(
         (resp) => {
           this.toastr.success("Customer added successfully");
-          this.initializeForm();
+          this.initializeAddForm();
           this.fetchData();
         },
         (err) => {
@@ -92,5 +137,65 @@ export class CustomerComponent implements OnInit {
     } else {
       this.submitted = true;
     }
+  }
+
+  confirmBlock(obj) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to block this user?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#34c38f",
+      cancelButtonColor: "#f46a6a",
+      confirmButtonText: "Yes, block!",
+    }).then((result) => {
+      if (result.value) {
+        obj.isBaned = true;
+        const formData = new FormData();
+        for (let i in obj) {
+          formData.append(i, obj[i]);
+        }
+        this.dataService.editCustomer(formData, obj.id).subscribe(
+          (resp) => {
+            this.toastr.success("Customer blocked successfully");
+            this.fetchData();
+          },
+          (err) => {
+            obj.isBaned = false;
+            this.toastr.error("Something went wrong");
+          }
+        );
+      }
+    });
+  }
+
+  confirmUnblock(obj) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to unblock this user?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#34c38f",
+      cancelButtonColor: "#f46a6a",
+      confirmButtonText: "Yes, unblock!",
+    }).then((result) => {
+      if (result.value) {
+        obj.isBaned = false;
+        const formData = new FormData();
+        for (let i in obj) {
+          formData.append(i, obj[i]);
+        }
+        this.dataService.editCustomer(formData, obj.id).subscribe(
+          (resp) => {
+            this.toastr.success("Customer unblocked successfully");
+            this.fetchData();
+          },
+          (err) => {
+            obj.isBaned = true;
+            this.toastr.error("Something went wrong");
+          }
+        );
+      }
+    });
   }
 }
