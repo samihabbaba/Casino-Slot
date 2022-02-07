@@ -17,6 +17,13 @@ export class DataService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // GENERAL
+  getCurrencies() {
+    return this.http.get<any>(`${environment.apiUrl}general/currency`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
   // DASHBOARD
 
   getDashboard() {
@@ -82,5 +89,29 @@ export class DataService {
     return this.http.delete<any>(`${environment.apiUrl}staff/${id}`, {
       headers: this.httpOptions.headers,
     });
+  }
+
+  // LIVE TABLE
+
+  getLiveTable() {
+    return this.http.get<any>(`${environment.apiUrl}table`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  addLiveTable(liveTable) {
+    return this.http.post<any>(`${environment.apiUrl}table`, liveTable, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  updateLiveTable(liveTable, tableId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}table/${tableId}`,
+      liveTable,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 }
