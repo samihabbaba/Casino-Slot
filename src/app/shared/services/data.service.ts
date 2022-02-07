@@ -105,7 +105,7 @@ export class DataService {
     });
   }
 
-  updateLiveTable(liveTable, tableId) {
+  editLiveTable(liveTable, tableId) {
     return this.http.put<any>(
       `${environment.apiUrl}table/${tableId}`,
       liveTable,

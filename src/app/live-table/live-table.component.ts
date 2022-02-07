@@ -51,13 +51,7 @@ export class LiveTableComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dataService: DataService,
     private toastr: ToastrService
-  ) {
-    this.debounceSubject
-      .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe((value) => {
-        this.fetchData();
-      });
-  }
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -76,10 +70,10 @@ export class LiveTableComponent implements OnInit {
   getCurrencies() {
     this.dataService.getCurrencies().subscribe((resp) => {
       resp.forEach((x) => {
-        if(x.code === 'TL' || x.code ==='EURO') {
+        if (x.code === "TL" || x.code === "EURO") {
           this.currencyList.push(x);
         }
-      })
+      });
       this.initializeAddForm();
     });
   }
@@ -108,16 +102,13 @@ export class LiveTableComponent implements OnInit {
   initializeEditForm(obj) {
     console.log(obj);
     this.editForm = this.formBuilder.group({
-      staffId: [obj.id],
-      name: [obj?.name, [Validators.required]],
-      username: [obj?.username, [Validators.required]],
-      // password: [obj?.password, [Validators.required]],
-      role: [obj?.role, [Validators.required]],
-      birthday: [
-        obj?.birthday?.slice(0, -9) ? obj?.birthday?.slice(0, -9) : "",
-      ],
-      mobile: [obj?.mobile ? obj?.mobile : ""],
-      // isActive: [obj.isActive],
+      game: [obj.game],
+      currencyId: [obj?.currencyId, [Validators.required]],
+      number: [obj?.number, [Validators.required]],
+      minAmount: [obj?.minAmount, [Validators.required]],
+      maxAmount: [obj?.maxAmount, [Validators.required]],
+      isActive: [obj?.isActive],
+      code: [obj.code],
       isDeleted: [false],
     });
   }
@@ -183,14 +174,10 @@ export class LiveTableComponent implements OnInit {
   editCustomer() {
     if (this.editForm.valid) {
       const form = this.editForm.getRawValue();
-      const formData = new FormData();
-      for (let i in form) {
-        formData.append(i, form[i]);
-      }
-
-      this.dataService.editStaff(formData).subscribe(
+      form.currencyId = parseInt(form.currencyId);
+      this.dataService.editLiveTable(form, this.editedId).subscribe(
         (resp) => {
-          this.toastr.success("Staff edited successfully");
+          this.toastr.success("Table edited successfully");
           this.modalService.dismissAll();
           this.fetchData();
         },
