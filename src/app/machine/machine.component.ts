@@ -11,20 +11,16 @@ import { Subject } from "rxjs";
 import { DataService } from "../shared/services/data.service";
 import Swal from "sweetalert2";
 
-
 @Component({
-  selector: 'app-machine',
-  templateUrl: './machine.component.html',
-  styleUrls: ['./machine.component.scss']
+  selector: "app-machine",
+  templateUrl: "./machine.component.html",
+  styleUrls: ["./machine.component.scss"],
 })
 export class MachineComponent implements OnInit {
-
   formData: FormGroup;
   editForm: FormGroup;
-  changePasswordForm: FormGroup;
   editedId: string = "";
 
-  currencyList: any[] = [];
   gamesList: any[] = [
     "BlackJack",
     "Roulette",
@@ -46,6 +42,7 @@ export class MachineComponent implements OnInit {
 
   searchQuery: any;
   debounceSubject = new Subject<any>();
+  
 
   constructor(
     private modalService: NgbModal,
@@ -56,28 +53,19 @@ export class MachineComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.getCurrencies();
+    this.initializeAddForm();
     this.fetchData();
   }
 
   fetchData() {
-    this.dataService.getLiveTable().subscribe((resp) => {
+    this.dataService.getMachines().subscribe((resp) => {
       this.tableData = resp;
       this.isLoading = false;
       console.log(this.tableData);
     });
   }
 
-  getCurrencies() {
-    this.dataService.getCurrencies().subscribe((resp) => {
-      resp.forEach((x) => {
-        if (x.code === "TL" || x.code === "EURO") {
-          this.currencyList.push(x);
-        }
-      });
-      this.initializeAddForm();
-    });
-  }
+
 
   get form() {
     return this.formData.controls;
@@ -85,14 +73,12 @@ export class MachineComponent implements OnInit {
   get editF() {
     return this.editForm.controls;
   }
-  get password() {
-    return this.changePasswordForm.controls;
-  }
+
 
   initializeAddForm() {
     this.formData = this.formBuilder.group({
       game: [this.gamesList[0], [Validators.required]],
-      currencyId: [this.currencyList[0].id, [Validators.required]],
+      currencyId: ['', [Validators.required]],
       number: [0],
       minAmount: [0],
       maxAmount: [0],
@@ -125,60 +111,13 @@ export class MachineComponent implements OnInit {
     this.submitted = false;
   }
 
-  openPasswordModal(content, obj) {
-    this.initializePasswordForm(obj);
-    this.modalService.open(content);
-  }
-
-  initializePasswordForm(obj) {
-    this.passwordsNotMatch = false;
-    this.changePasswordForm = this.formBuilder.group({
-      staffId: new FormControl(obj.id),
-      password: new FormControl("", [
-        Validators.required,
-        Validators.pattern(
-          "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{7,}"
-        ),
-      ]),
-      confirmPassword: new FormControl(""),
-    });
-  }
-
-  changeStaffPassword() {
-    if (this.changePasswordForm.valid) {
-      const password = this.changePasswordForm.get("password").value;
-      const passwordConfirm =
-        this.changePasswordForm.get("confirmPassword").value;
-
-      if (password === passwordConfirm) {
-        const obj = this.changePasswordForm.getRawValue();
-        delete obj.confirmPassword;
-        this.dataService.changeStaffPassword(obj).subscribe(
-          (resp) => {
-            this.toastr.success("Password changed successfully");
-            this.modalService.dismissAll();
-            this.fetchData();
-          },
-          (err) => {
-            this.toastr.error("Something went wrong");
-          }
-        );
-      }
-      if (password !== passwordConfirm) {
-        this.passwordsNotMatch = true;
-      }
-    } else {
-      this.submitted = true;
-    }
-  }
 
   editCustomer() {
     if (this.editForm.valid) {
       const form = this.editForm.getRawValue();
-      form.currencyId = parseInt(form.currencyId);
-      this.dataService.editLiveTable(form, this.editedId).subscribe(
+      this.dataService.editMachine(form, this.editedId).subscribe(
         (resp) => {
-          this.toastr.success("Table edited successfully");
+          this.toastr.success("Machine edited successfully");
           this.modalService.dismissAll();
           this.fetchData();
         },
@@ -194,10 +133,9 @@ export class MachineComponent implements OnInit {
   saveCustomer() {
     if (this.formData.valid) {
       const form = this.formData.getRawValue();
-      form.currencyId = parseInt(form.currencyId);
-      this.dataService.addLiveTable(form).subscribe(
+      this.dataService.addMachine(form).subscribe(
         (resp) => {
-          this.toastr.success("Table added successfully");
+          this.toastr.success("Machine added successfully");
           this.modalService.dismissAll();
           this.initializeAddForm();
           this.fetchData();
@@ -214,7 +152,7 @@ export class MachineComponent implements OnInit {
   confirmDelete(obj) {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to delete this table?",
+      text: "You want to delete this machine?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#34c38f",
@@ -222,10 +160,9 @@ export class MachineComponent implements OnInit {
       confirmButtonText: "Yes, delete!",
     }).then((result) => {
       if (result.value) {
-        obj.isDeleted = true;
-        this.dataService.editLiveTable(obj, obj.id).subscribe(
+        this.dataService.deleteMachine(obj.id).subscribe(
           (resp) => {
-            this.toastr.success("Table deleted successfully");
+            this.toastr.success("Machine deleted successfully");
             this.fetchData();
           },
           (err) => {
@@ -236,5 +173,4 @@ export class MachineComponent implements OnInit {
       }
     });
   }
-
 }
