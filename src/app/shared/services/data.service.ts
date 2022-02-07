@@ -114,4 +114,33 @@ export class DataService {
       }
     );
   }
+
+  // MACHINE
+  getMachines() {
+    return this.http.get<any>(`${environment.apiUrl}machine`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  addMachine(machine) {
+    return this.http.post<any>(`${environment.apiUrl}machine`, machine, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editMachine(machine, machineId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}machine/${machineId}`,
+      machine,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  deleteMachine(machineId) {
+    return this.http.delete<any>(`${environment.apiUrl}machine/${machineId}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
 }

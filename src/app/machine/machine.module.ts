@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MachineRoutingModule } from './machine-routing.module';
 import { MachineComponent } from './machine.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { MachineComponent } from './machine.component';
   ],
   imports: [
     CommonModule,
-    MachineRoutingModule
+    MachineRoutingModule,
+    SharedModule
   ]
 })
 export class MachineModule { }

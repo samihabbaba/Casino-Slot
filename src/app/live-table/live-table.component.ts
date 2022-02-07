@@ -8,7 +8,6 @@ import {
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { DataService } from "../shared/services/data.service";
 import Swal from "sweetalert2";
 
@@ -213,7 +212,7 @@ export class LiveTableComponent implements OnInit {
   confirmDelete(obj) {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to delete this staff?",
+      text: "You want to delete this table?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#34c38f",
@@ -221,9 +220,10 @@ export class LiveTableComponent implements OnInit {
       confirmButtonText: "Yes, delete!",
     }).then((result) => {
       if (result.value) {
-        this.dataService.deleteStaff(obj.id).subscribe(
+        obj.isDeleted = true;
+        this.dataService.editLiveTable(obj, obj.id).subscribe(
           (resp) => {
-            this.toastr.success("Staff deleted successfully");
+            this.toastr.success("Table deleted successfully");
             this.fetchData();
           },
           (err) => {
