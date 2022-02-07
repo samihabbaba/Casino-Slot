@@ -34,7 +34,7 @@
             <!-- end col-->
           </div>
           <div class="table-responsive">
-            <table class="table table-nowrap" style="margin-bottom: 80px">
+            <table class="table table-nowrap" style="margin-bottom: 110px">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -104,17 +104,18 @@
                           >
                         </li>
 
-
-                        <li (click)="openModal(edit, customers)">
+                        <li
+                          (click)="openPasswordModal(changePassword, customers)"
+                        >
                           <a href="javascript: void(0);" class="dropdown-item"
-                            ><i class="fas fa-pencil-alt text-success me-1"></i>
+                            ><i class="fas fa-lock text-primary me-1"></i>
                             Change Password</a
                           >
                         </li>
 
-                        <li>
+                        <li (click)="confirmDelete(customers)">
                           <a href="javascript: void(0);" class="dropdown-item"
-                            ><i class="fas fa-bin text-danger me-1"></i>
+                            ><i class="fas fa-trash text-danger me-1"></i>
                             Delete</a
                           >
                         </li>
@@ -175,16 +176,46 @@
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Identity</label>
+            <label class="control-label">Username</label>
             <input
               class="form-control"
-              placeholder="Enter Identity"
+              placeholder="Enter Username"
               type="text"
               name="title"
               autocomplete="off"
-              formControlName="identity"
-              [ngClass]="{ 'is-invalid': submitted && form.identity.errors }"
+              formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && form.username.errors }"
             />
+            <div
+              *ngIf="submitted && form.username.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.username.errors.required"
+                >Username is required.</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Password</label>
+            <input
+              class="form-control"
+              placeholder="Enter Password"
+              type="text"
+              name="title"
+              autocomplete="off"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && form.password.errors }"
+            />
+            <div
+              *ngIf="submitted && form.password.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.password.errors"
+                >Password should contain at least 9 characters, 1 uppercase, 1
+                number and 1 special character.</span
+              >
+            </div>
           </div>
 
           <div class="mb-3">
@@ -213,30 +244,30 @@
           </div>
 
           <div class="mb-3">
-            <label for="formrow-inputState">Grade</label>
+            <label for="formrow-inputState">Role</label>
             <select
               id="formrow-inputState"
-              formControlName="grade"
+              formControlName="role"
               class="form-control"
             >
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
+              <option value="Administrator">Administrator</option>
+              <option value="Accountant">Accountant</option>
+              <option value="Chief">Chief</option>
+              <option value="Attendant">Attendant</option>
+              <option value="Inspector">Inspector</option>
+              <option value="Pit Boss">Pit Boss</option>
+              <option value="Waiter">Waiter</option>
             </select>
           </div>
-
-          <div class="mb-3">
-            <label class="control-label">Avarage Bet</label>
-            <input
-              class="form-control"
-              placeholder="Enter Avarage Bet"
-              type="number"
-              name="title"
-              autocomplete="off"
-              formControlName="avarageBet"
-              [ngClass]="{ 'is-invalid': submitted && form.avarageBet.errors }"
-            />
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState">Active</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isActive"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
           </div>
         </div>
       </div>
@@ -286,24 +317,35 @@
               name="title"
               autocomplete="off"
               formControlName="name"
-              [ngClass]="{ 'is-invalid': submitted && form.name.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.name.errors }"
             />
-            <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
-              <span *ngIf="form.name.errors.required">Name is required.</span>
+            <div
+              *ngIf="submitted && editF.name.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.name.errors.required">Name is required.</span>
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Identity</label>
+            <label class="control-label">Username</label>
             <input
               class="form-control"
-              placeholder="Enter Identity"
+              placeholder="Enter Username"
               type="text"
               name="title"
               autocomplete="off"
-              formControlName="identity"
-              [ngClass]="{ 'is-invalid': submitted && form.identity.errors }"
+              formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && editF.username.errors }"
             />
+            <div
+              *ngIf="submitted && editF.username.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.username.errors.required"
+                >Username is required.</span
+              >
+            </div>
           </div>
 
           <div class="mb-3">
@@ -314,7 +356,7 @@
               type="date"
               name="date"
               formControlName="birthday"
-              [ngClass]="{ 'is-invalid': submitted && form.birthday.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.birthday.errors }"
             />
           </div>
 
@@ -327,35 +369,107 @@
               name="title"
               autocomplete="off"
               formControlName="mobile"
-              [ngClass]="{ 'is-invalid': submitted && form.mobile.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.mobile.errors }"
             />
           </div>
-
           <div class="mb-3">
-            <label for="formrow-inputState">Grade</label>
+            <label for="formrow-inputState">Role</label>
             <select
               id="formrow-inputState"
-              formControlName="grade"
+              formControlName="role"
               class="form-control"
             >
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
+              <option value="Administrator">Administrator</option>
+              <option value="Accountant">Accountant</option>
+              <option value="Chief">Chief</option>
+              <option value="Attendant">Attendant</option>
+              <option value="Inspector">Inspector</option>
+              <option value="Pit Boss">Pit Boss</option>
+              <option value="Waiter">Waiter</option>
             </select>
+          </div>
+          <!--
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState">Active</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isActive"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div> -->
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Change Password Modal -->
+<ng-template #changePassword role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Change Password</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="changeStaffPassword()" [formGroup]="changePasswordForm">
+      <div class="row">
+        <div class="col-12">
+          <div class="mb-3">
+            <label class="control-label">Password</label>
+            <input
+              class="form-control"
+              placeholder="Enter Password"
+              type="text"
+              name="title"
+              autocomplete="off"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': submitted && password.password.errors
+              }"
+            />
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Avarage Bet</label>
+            <label class="control-label">Confirm Password</label>
             <input
               class="form-control"
-              placeholder="Enter Avarage Bet"
-              type="number"
+              placeholder="Enter Password"
+              type="text"
               name="title"
               autocomplete="off"
-              formControlName="avarageBet"
-              [ngClass]="{ 'is-invalid': submitted && form.avarageBet.errors }"
+              formControlName="confirmPassword"
+              [ngClass]="{
+                'is-invalid': submitted && password.password.errors
+              }"
             />
+            <div
+              *ngIf="submitted && password.password.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="password.password.errors"
+                >Password should contain at least 9 characters, 1 uppercase, 1
+                number and 1 special character.</span
+              >
+            </div>
+            <span *ngIf="passwordsNotMatch" style="color: #f46a6a"
+              >Passwords should be matching.</span
+            >
           </div>
         </div>
       </div>

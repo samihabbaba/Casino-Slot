@@ -288,10 +288,10 @@
               name="title"
               autocomplete="off"
               formControlName="name"
-              [ngClass]="{ 'is-invalid': submitted && form.name.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.name.errors }"
             />
-            <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
-              <span *ngIf="form.name.errors.required">Name is required.</span>
+            <div *ngIf="submitted && editF.name.errors" class="invalid-feedback">
+              <span *ngIf="editF.name.errors.required">Name is required.</span>
             </div>
           </div>
 
@@ -304,7 +304,7 @@
               name="title"
               autocomplete="off"
               formControlName="identity"
-              [ngClass]="{ 'is-invalid': submitted && form.identity.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.identity.errors }"
             />
           </div>
 
@@ -316,7 +316,7 @@
               type="date"
               name="date"
               formControlName="birthday"
-              [ngClass]="{ 'is-invalid': submitted && form.birthday.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.birthday.errors }"
             />
           </div>
 
@@ -329,7 +329,7 @@
               name="title"
               autocomplete="off"
               formControlName="mobile"
-              [ngClass]="{ 'is-invalid': submitted && form.mobile.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.mobile.errors }"
             />
           </div>
 
@@ -356,7 +356,7 @@
               name="title"
               autocomplete="off"
               formControlName="avarageBet"
-              [ngClass]="{ 'is-invalid': submitted && form.avarageBet.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.avarageBet.errors }"
             />
           </div>
         </div>

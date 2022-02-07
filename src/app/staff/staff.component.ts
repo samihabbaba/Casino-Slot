@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
@@ -15,10 +20,12 @@ import Swal from "sweetalert2";
 export class StaffComponent implements OnInit {
   formData: FormGroup;
   editForm: FormGroup;
+  changePasswordForm: FormGroup;
   editedId: string = "";
 
   submitted = false;
   isLoading: boolean = false;
+  passwordsNotMatch: boolean = false;
 
   tableData: any[] = [];
 
@@ -59,13 +66,27 @@ export class StaffComponent implements OnInit {
   get form() {
     return this.formData.controls;
   }
+  get editF() {
+    return this.editForm.controls;
+  }
+  get password() {
+    return this.changePasswordForm.controls;
+  }
 
   initializeAddForm() {
     this.formData = this.formBuilder.group({
       name: ["", [Validators.required]],
       username: ["", [Validators.required]],
-      password: [""],
-      role: [""],
+      password: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{7,}"
+          ),
+        ],
+      ],
+      role: ["Administrator"],
       birthday: [""],
       mobile: ["05"],
       isActive: [true],
@@ -73,14 +94,19 @@ export class StaffComponent implements OnInit {
   }
 
   initializeEditForm(obj) {
+    console.log(obj);
     this.editForm = this.formBuilder.group({
+      staffId: [obj.id],
       name: [obj?.name, [Validators.required]],
       username: [obj?.username, [Validators.required]],
-      password: [obj?.password, [Validators.required]],
-      role: [obj?.grade, [Validators.required]],
-      birthday: [obj?.birthday.slice(0, -9)],
-      mobile: [obj?.mobile],
-      isActive: [obj.isActive],
+      // password: [obj?.password, [Validators.required]],
+      role: [obj?.role, [Validators.required]],
+      birthday: [
+        obj?.birthday?.slice(0, -9) ? obj?.birthday?.slice(0, -9) : "",
+      ],
+      mobile: [obj?.mobile ? obj?.mobile : ""],
+      // isActive: [obj.isActive],
+      isDeleted: [false],
     });
   }
 
@@ -92,6 +118,54 @@ export class StaffComponent implements OnInit {
     } else {
       this.modalService.open(content);
     }
+    this.submitted = false;
+  }
+
+  openPasswordModal(content, obj) {
+    this.initializePasswordForm(obj);
+    this.modalService.open(content);
+  }
+
+  initializePasswordForm(obj) {
+    this.passwordsNotMatch = false;
+    this.changePasswordForm = this.formBuilder.group({
+      staffId: new FormControl(obj.id),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.pattern(
+          "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{7,}"
+        ),
+      ]),
+      confirmPassword: new FormControl(""),
+    });
+  }
+
+  changeStaffPassword() {
+    if (this.changePasswordForm.valid) {
+      const password = this.changePasswordForm.get("password").value;
+      const passwordConfirm =
+        this.changePasswordForm.get("confirmPassword").value;
+
+      if (password === passwordConfirm) {
+        const obj = this.changePasswordForm.getRawValue();
+        delete obj.confirmPassword;
+        this.dataService.changeStaffPassword(obj).subscribe(
+          (resp) => {
+            this.toastr.success("Password changed successfully");
+            this.modalService.dismissAll();
+            this.fetchData();
+          },
+          (err) => {
+            this.toastr.error("Something went wrong");
+          }
+        );
+      }
+      if (password !== passwordConfirm) {
+        this.passwordsNotMatch = true;
+      }
+    } else {
+      this.submitted = true;
+    }
   }
 
   editCustomer() {
@@ -102,9 +176,9 @@ export class StaffComponent implements OnInit {
         formData.append(i, form[i]);
       }
 
-      this.dataService.editCustomer(formData, this.editedId).subscribe(
+      this.dataService.editStaff(formData).subscribe(
         (resp) => {
-          this.toastr.success("Customer edited successfully");
+          this.toastr.success("Staff edited successfully");
           this.modalService.dismissAll();
           this.fetchData();
         },
@@ -125,9 +199,10 @@ export class StaffComponent implements OnInit {
         formData.append(i, form[i]);
       }
 
-      this.dataService.addCustomer(formData).subscribe(
+      this.dataService.addStaff(formData).subscribe(
         (resp) => {
-          this.toastr.success("Customer added successfully");
+          this.toastr.success("Staff added successfully");
+          this.modalService.dismissAll();
           this.initializeAddForm();
           this.fetchData();
         },
@@ -143,12 +218,12 @@ export class StaffComponent implements OnInit {
   confirmDelete(obj) {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to block this user?",
+      text: "You want to delete this staff?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#34c38f",
       cancelButtonColor: "#f46a6a",
-      confirmButtonText: "Yes, block!",
+      confirmButtonText: "Yes, delete!",
     }).then((result) => {
       if (result.value) {
         this.dataService.deleteStaff(obj.id).subscribe(

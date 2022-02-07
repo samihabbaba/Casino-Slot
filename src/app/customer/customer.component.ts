@@ -60,6 +60,10 @@ export class CustomerComponent implements OnInit {
     return this.formData.controls;
   }
 
+  get editF() {
+    return this.formData.controls;
+  }
+
   initializeAddForm() {
     this.formData = this.formBuilder.group({
       name: ["", [Validators.required]],
@@ -77,7 +81,7 @@ export class CustomerComponent implements OnInit {
       grade: [obj?.grade, [Validators.required]],
       identity: [obj?.identity],
       avarageBet: [obj?.avarageBet],
-      birthday: [obj?.birthday.slice(0, -9)],
+      birthday: [obj?.birthday?.slice(0, -9)],
       mobile: [obj?.mobile],
       isBaned: [obj.isBaned],
     });
@@ -91,6 +95,7 @@ export class CustomerComponent implements OnInit {
     } else {
       this.modalService.open(content);
     }
+    this.submitted = false;
   }
 
   editCustomer() {
@@ -127,6 +132,7 @@ export class CustomerComponent implements OnInit {
       this.dataService.addCustomer(formData).subscribe(
         (resp) => {
           this.toastr.success("Customer added successfully");
+          this.modalService.dismissAll();
           this.initializeAddForm();
           this.fetchData();
         },

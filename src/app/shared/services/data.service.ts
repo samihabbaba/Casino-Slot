@@ -72,6 +72,12 @@ export class DataService {
     });
   }
 
+  changeStaffPassword(staff) {
+    return this.http.post<any>(`${environment.apiUrl}staff/reset`, staff, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
   deleteStaff(id) {
     return this.http.delete<any>(`${environment.apiUrl}staff/${id}`, {
       headers: this.httpOptions.headers,

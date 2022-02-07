@@ -7,6 +7,7 @@ import { WidgetModule } from "./widget/widget.module";
 import { NgbDropdownModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     NgbDropdownModule,
+    UiSwitchModule,
   ],
 })
 export class SharedModule {}
