@@ -33,6 +33,7 @@ export class HospitalityComponent implements OnInit {
   passwordsNotMatch: boolean = false;
 
   tableData: any[] = [];
+  tableData2: any[] = [];
 
   // Pagination
   currentpage: number = 1;
@@ -54,29 +55,33 @@ export class HospitalityComponent implements OnInit {
     this.getDays();
     this.initializeAddForm();
     this.fetchData();
+    this.fetchData2();
   }
 
   getDays() {
     this.dataService.getDays().subscribe((resp) => {
       this.daysList = resp;
-      console.log(this.daysList);
     });
   }
 
   getStaff() {
     this.dataService.getStaff().subscribe((resp) => {
       this.staffList = resp;
-      console.log(this.staffList);
     });
   }
 
   fetchData() {
+    this.dataService.getHospitalityItems().subscribe((resp) => {
+      this.tableData = resp;
+    });
+  }
+
+  fetchData2() {
     this.dataService
       .getHospitalityRecords(this.stardDayIn, this.endDayIn, this.staff)
       .subscribe((resp) => {
-        this.tableData = resp;
+        this.tableData2 = resp;
         this.isLoading = false;
-        console.log(this.tableData);
       });
   }
 

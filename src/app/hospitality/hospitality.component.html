@@ -112,7 +112,7 @@
         <tbody>
           <tr
             *ngFor="
-              let customers of tableData
+              let customers of tableData2
                 | slice
                   : (currentpage - 1) * pageSize
                   : (currentpage - 1) * pageSize + pageSize;
