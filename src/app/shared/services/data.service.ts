@@ -143,4 +143,22 @@ export class DataService {
       headers: this.httpOptions.headers,
     });
   }
+
+  // CHIP TYPE
+
+  getChipType() {
+    return this.http.get<any>(`${environment.apiUrl}bill/chips`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editChipType(chip, chipId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}bill/chip/${chipId}`,
+      chip,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 }

@@ -232,7 +232,7 @@ export class StaffComponent implements OnInit {
             this.fetchData();
           },
           (err) => {
-            obj.isBaned = false;
+            obj.isDeleted = false;
             this.toastr.error("Something went wrong");
           }
         );

@@ -1,1 +1,188 @@
-<p>chip-type works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title title="Chip Type"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4"></div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-nowrap" style="margin-bottom: 110px">
+              <thead>
+                <tr>
+                  <th>Currency</th>
+                  <th>Value</th>
+                  <th>Active</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tableData
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.currency }}
+                  </td>
+
+                  <td>
+                    {{ customers.value }}
+                  </td>
+
+                  <td>
+                    <span
+                      *ngIf="customers.isActive"
+                      class="badge bg-success font-size-12"
+                    >
+                      <i class="mdi mdi-check me-1"></i>
+                      {{ customers.isActive }}
+                    </span>
+
+                    <span
+                      *ngIf="!customers.isActive"
+                      class="badge bg-danger font-size-12"
+                    >
+                      <i class="mdi mdi-close me-1"></i>
+                      {{ customers.isActive }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="dropdown" ngbDropdown>
+                      <a
+                        class="dropdown-toggle card-drop"
+                        data-toggle="dropdown"
+                        ngbDropdownToggle
+                        aria-expanded="false"
+                        style="cursor: pointer"
+                      >
+                        <i class="mdi mdi-dots-horizontal font-size-20"></i>
+                      </a>
+                      <ul class="dropdown-menu" ngbDropdownMenu>
+                        <li (click)="openModal(edit, customers)">
+                          <a href="javascript: void(0);" class="dropdown-item"
+                            ><i class="fas fa-pencil-alt text-success me-1"></i>
+                            Edit</a
+                          >
+                        </li>
+
+                        <li (click)="confirmDelete(customers)">
+                          <a href="javascript: void(0);" class="dropdown-item"
+                            ><i class="fas fa-trash text-danger me-1"></i>
+                            Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+
+<!-- Edit Modal -->
+<ng-template #edit role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Edit Table {{ selectedObj.name }}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="editCustomer()" [formGroup]="editForm">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Currency</label>
+            <select
+              id="formrow-inputState"
+              formControlName="currencyId"
+              class="form-control"
+            >
+              <option
+                [value]="currency.id"
+                *ngFor="let currency of currencyList"
+              >
+                {{ currency.code }}
+              </option>
+            </select>
+          </div>
+
+
+
+          <div class="mb-3">
+            <label class="control-label">Value</label>
+            <input
+              class="form-control"
+              placeholder="Enter Value"
+              type="number"
+              name="title"
+              formControlName="value"
+              [ngClass]="{ 'is-invalid': submitted && editF.value.errors }"
+            />
+            <div
+              *ngIf="submitted && editF.value.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.value.errors"
+                >Value should be greater than 0.</span
+              >
+            </div>
+          </div>
+
+
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px">Active</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isActive"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

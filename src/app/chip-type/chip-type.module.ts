@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChipTypeRoutingModule } from './chip-type-routing.module';
 import { ChipTypeComponent } from './chip-type.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ChipTypeComponent } from './chip-type.component';
   ],
   imports: [
     CommonModule,
-    ChipTypeRoutingModule
+    ChipTypeRoutingModule,
+    SharedModule
   ]
 })
 export class ChipTypeModule { }
