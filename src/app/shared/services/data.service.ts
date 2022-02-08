@@ -192,9 +192,27 @@ export class DataService {
     );
   }
 
-  getHospitalityRecords(startDayIn = 0, endDayIn = 0, staffId = '') {
+  getHospitalityRecords(startDayIn = 0, endDayIn = 0, staffId = "") {
     return this.http.get<any>(
       `${environment.apiUrl}hospitality/records?startDayIn=${startDayIn}&endDayIn=${endDayIn}&staff=${staffId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  // CURRENCY
+
+  getCurrencyUpdate() {
+    return this.http.get<any>(`${environment.apiUrl}general/currencyupdate`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  updateCurrency(currency) {
+    return this.http.post<any>(
+      `${environment.apiUrl}general/update`,
+      currency,
       {
         headers: this.httpOptions.headers,
       }
