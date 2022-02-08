@@ -42,7 +42,6 @@ export class MachineComponent implements OnInit {
 
   searchQuery: any;
   debounceSubject = new Subject<any>();
-  
 
   constructor(
     private modalService: NgbModal,
@@ -65,8 +64,6 @@ export class MachineComponent implements OnInit {
     });
   }
 
-
-
   get form() {
     return this.formData.controls;
   }
@@ -74,29 +71,28 @@ export class MachineComponent implements OnInit {
     return this.editForm.controls;
   }
 
-
   initializeAddForm() {
     this.formData = this.formBuilder.group({
-      game: [this.gamesList[0], [Validators.required]],
-      currencyId: ['', [Validators.required]],
-      number: [0],
-      minAmount: [0],
-      maxAmount: [0],
-      isActive: [true],
+      gameName: ["", [Validators.required]],
+      number: [0, [Validators.min(1)]],
+      credit: [0, [Validators.min(1)]],
+      isActive: [false],
+      isJackPot: [false],
+      isMoneyMeter: [false],
+      isVIP: [false],
     });
   }
 
   initializeEditForm(obj) {
     console.log(obj);
     this.editForm = this.formBuilder.group({
-      game: [obj.game],
-      currencyId: [obj?.currencyId, [Validators.required]],
-      number: [obj?.number, [Validators.required]],
-      minAmount: [obj?.minAmount, [Validators.required]],
-      maxAmount: [obj?.maxAmount, [Validators.required]],
-      isActive: [obj?.isActive],
-      code: [obj.code],
-      isDeleted: [false],
+      gameName: [obj.gameName, [Validators.required]],
+      number: [obj.number, [Validators.min(1)]],
+      credit: [obj.credit, [Validators.min(1)]],
+      isActive: [obj.isActive],
+      isJackPot: [obj.isJackPot],
+      isMoneyMeter: [obj.isMoneyMeter],
+      isVIP: [obj.isVIP],
     });
   }
 
@@ -110,7 +106,6 @@ export class MachineComponent implements OnInit {
     }
     this.submitted = false;
   }
-
 
   editCustomer() {
     if (this.editForm.valid) {

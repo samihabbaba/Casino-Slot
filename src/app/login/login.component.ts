@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
     const obj = this.loginForm.getRawValue();
     this.authService.login(obj).subscribe((resp) => {
       this.router.navigate(["/"]);
+      this.submitted = false;
     });
   }
 

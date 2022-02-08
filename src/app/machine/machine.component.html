@@ -56,7 +56,6 @@
                     let i = index
                   "
                 >
-
                   <td>
                     {{ customers.number }}
                   </td>
@@ -68,9 +67,6 @@
                   <td>
                     {{ customers.credit }}
                   </td>
-
-
-
 
                   <td>
                     <span
@@ -108,8 +104,6 @@
                     </span>
                   </td>
 
-
-
                   <td>
                     <span
                       *ngIf="customers.isActive"
@@ -127,7 +121,6 @@
                       {{ customers.isActive }}
                     </span>
                   </td>
-
 
                   <td>
                     <div class="dropdown" ngbDropdown>
@@ -198,18 +191,24 @@
       <div class="row">
         <div class="col-12">
           <div class="mb-3">
-            <label for="formrow-inputState">Game</label>
-            <select
-              id="formrow-inputState"
-              formControlName="game"
+            <label class="control-label">Game Name</label>
+            <input
               class="form-control"
+              placeholder="Enter Game Name"
+              type="text"
+              name="title"
+              formControlName="gameName"
+              [ngClass]="{ 'is-invalid': submitted && form.gameName.errors }"
+            />
+            <div
+              *ngIf="submitted && form.gameName.errors"
+              class="invalid-feedback"
             >
-              <option [value]="item" *ngFor="let item of gamesList">
-                {{ item }}
-              </option>
-            </select>
+              <span *ngIf="form.gameName.errors.required"
+                >Game Name is required.</span
+              >
+            </div>
           </div>
-
 
           <div class="mb-3">
             <label class="control-label">Number</label>
@@ -221,34 +220,73 @@
               formControlName="number"
               [ngClass]="{ 'is-invalid': submitted && form.number.errors }"
             />
+            <div
+              *ngIf="submitted && form.number.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.number.errors"
+                >Number should be greater than 0.</span
+              >
+            </div>
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Minimum Bet</label>
+            <label class="control-label">Credit</label>
             <input
               class="form-control"
-              placeholder="Enter Minimum Bet"
+              placeholder="Enter Credit"
               type="number"
               name="title"
-              formControlName="minAmount"
-              [ngClass]="{ 'is-invalid': submitted && form.minAmount.errors }"
+              formControlName="credit"
+              [ngClass]="{ 'is-invalid': submitted && form.credit.errors }"
             />
-          </div>
-
-          <div class="mb-3">
-            <label class="control-label">Maximum Bet</label>
-            <input
-              class="form-control"
-              placeholder="Enter Maximum Bet"
-              type="number"
-              name="title"
-              formControlName="maxAmount"
-              [ngClass]="{ 'is-invalid': submitted && form.maxAmount.errors }"
-            />
+            <div
+              *ngIf="submitted && form.credit.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.credit.errors"
+                >Credit should be greater than 0.</span
+              >
+            </div>
           </div>
 
           <div class="mb-3" style="display: flex; align-items: center">
-            <label for="formrow-inputState">Active</label>
+            <label for="formrow-inputState" style="width: 85px">JackPot</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isJackPot"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px">VIP</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isVIP"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px"
+              >Money Meter</label
+            >
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isMoneyMeter"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px">Active</label>
             <ui-switch
               style="margin-bottom: 0.5rem; margin-left: 0.5rem"
               formControlName="isActive"
@@ -296,21 +334,25 @@
     <form (ngSubmit)="editCustomer()" [formGroup]="editForm">
       <div class="row">
         <div class="col-12">
-
           <div class="mb-3">
-            <label for="formrow-inputState">Game</label>
-            <select
-              id="formrow-inputState"
-              formControlName="game"
+            <label class="control-label">Game Name</label>
+            <input
               class="form-control"
+              placeholder="Enter Game Name"
+              type="text"
+              name="title"
+              formControlName="gameName"
+              [ngClass]="{ 'is-invalid': submitted && editF.gameName.errors }"
+            />
+            <div
+              *ngIf="submitted && editF.gameName.errors"
+              class="invalid-feedback"
             >
-              <option [value]="item" *ngFor="let item of gamesList">
-                {{ item }}
-              </option>
-            </select>
+              <span *ngIf="editF.gameName.errors.required"
+                >Game Name is required.</span
+              >
+            </div>
           </div>
-
-
 
           <div class="mb-3">
             <label class="control-label">Number</label>
@@ -320,35 +362,75 @@
               type="number"
               name="title"
               formControlName="number"
-              [ngClass]="{ 'is-invalid': submitted && form.number.errors }"
+              [ngClass]="{ 'is-invalid': submitted && editF.number.errors }"
             />
+            <div
+              *ngIf="submitted && editF.number.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.number.errors"
+                >Number should be greater than 0.</span
+              >
+            </div>
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Minimum Bet</label>
+            <label class="control-label">Credit</label>
             <input
               class="form-control"
-              placeholder="Enter Minimum Bet"
+              placeholder="Enter Credit"
               type="number"
               name="title"
-              formControlName="minAmount"
-              [ngClass]="{ 'is-invalid': submitted && form.minAmount.errors }"
+              formControlName="credit"
+              [ngClass]="{ 'is-invalid': submitted && editF.credit.errors }"
             />
+            <div
+              *ngIf="submitted && editF.credit.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.credit.errors"
+                >Credit should be greater than 0.</span
+              >
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label class="control-label">Maximum Bet</label>
-            <input
-              class="form-control"
-              placeholder="Enter Maximum Bet"
-              type="number"
-              name="title"
-              formControlName="maxAmount"
-              [ngClass]="{ 'is-invalid': submitted && form.maxAmount.errors }"
-            />
-          </div>
           <div class="mb-3" style="display: flex; align-items: center">
-            <label for="formrow-inputState">Active</label>
+            <label for="formrow-inputState" style="width: 85px">JackPot</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isJackPot"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px">VIP</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isVIP"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px"
+              >Money Meter</label
+            >
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              formControlName="isMoneyMeter"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+            ></ui-switch>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState" style="width: 85px">Active</label>
             <ui-switch
               style="margin-bottom: 0.5rem; margin-left: 0.5rem"
               formControlName="isActive"
@@ -357,7 +439,6 @@
               color="#34c38f"
             ></ui-switch>
           </div>
-
         </div>
       </div>
       <div style="display: flex">
