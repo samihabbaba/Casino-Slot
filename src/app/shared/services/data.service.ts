@@ -24,6 +24,12 @@ export class DataService {
     });
   }
 
+  getDays() {
+    return this.http.get<any>(`${environment.apiUrl}general/days`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
   // DASHBOARD
 
   getDashboard() {
@@ -156,6 +162,39 @@ export class DataService {
     return this.http.put<any>(
       `${environment.apiUrl}bill/chip/${chipId}`,
       chip,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  // HOSPITALITY
+
+  getHospitalityItems() {
+    return this.http.get<any>(`${environment.apiUrl}hospitality`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  addHospitalityItems(item) {
+    return this.http.post<any>(`${environment.apiUrl}hospitality`, item, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editHospitalityItems(item, itemId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}hospitality/${itemId}`,
+      item,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getHospitalityRecords(startDayIn = 0, endDayIn = 0, staffId = '') {
+    return this.http.get<any>(
+      `${environment.apiUrl}hospitality/records?startDayIn=${startDayIn}&endDayIn=${endDayIn}&staff=${staffId}`,
       {
         headers: this.httpOptions.headers,
       }
