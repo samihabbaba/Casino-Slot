@@ -1,16 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
-  Validators,
   FormGroup,
-  FormControl,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
-import { Subject } from "rxjs";
 import { DataService } from "../shared/services/data.service";
-import Swal from "sweetalert2";
-import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-logs",
@@ -71,40 +66,5 @@ export class LogsComponent implements OnInit {
       });
   }
 
-  get form() {
-    return this.formData.controls;
-  }
-  get editF() {
-    return this.editForm.controls;
-  }
 
-  initializeAddForm() {
-    this.formData = this.formBuilder.group({
-      password: new FormControl("", [Validators.required]),
-    });
-  }
-
-  confirmDelete() {
-    Swal.fire({
-      title: "Are you sure?",
-      text: `You want to close day?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#34c38f",
-      cancelButtonColor: "#f46a6a",
-      confirmButtonText: "Yes, close!",
-    }).then((result) => {
-      if (result.value) {
-        this.dataService.closeDay().subscribe(
-          (resp) => {
-            this.toastr.success("Day Closed successfully");
-            this.fetchData();
-          },
-          (err) => {
-            this.toastr.error("Something went wrong");
-          }
-        );
-      }
-    });
-  }
 }
