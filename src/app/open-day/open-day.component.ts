@@ -84,7 +84,7 @@ export class OpenDayComponent implements OnInit {
       if (result.value) {
         this.dataService.closeDay().subscribe(
           (resp) => {
-            this.toastr.success("Day Closed successfully");
+            this.toastr.success("Day added successfully");
             this.fetchData();
           },
           (err) => {

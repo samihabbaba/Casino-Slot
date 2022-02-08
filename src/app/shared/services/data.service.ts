@@ -224,4 +224,14 @@ export class DataService {
       }
     );
   }
+
+  // LOGS
+  getLogs(startDayIn = 0, endDayIn = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}general/logs?startDayIn=${startDayIn}&endDayIn=${endDayIn}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 }
