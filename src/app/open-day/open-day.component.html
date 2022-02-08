@@ -1,1 +1,82 @@
-<p>open-day works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title title="Currency"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+              <!-- <div class="search-box me-2 mb-2 d-inline-block">
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search..."
+                    [(ngModel)]="searchQuery"
+                    (keyup)="debounceSubject.next($event)"
+                  />
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button
+                  type="button"
+                  class="btn btn-success btn-rounded mb-2 mr-2"
+                  (click)="confirmDelete()"
+                >
+                  <i class="mdi mdi-calendar me-1"></i> Open Day
+                </button>
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-nowrap" style="margin-bottom: 110px">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tableData
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.id }}
+                  </td>
+
+                  <td>
+                    {{ customers.date | date: "medium" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+

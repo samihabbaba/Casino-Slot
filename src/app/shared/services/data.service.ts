@@ -30,6 +30,12 @@ export class DataService {
     });
   }
 
+  closeDay() {
+    return this.http.get<any>(`${environment.apiUrl}general/close`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
   // DASHBOARD
 
   getDashboard() {

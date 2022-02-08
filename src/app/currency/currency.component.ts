@@ -9,7 +9,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataService } from "../shared/services/data.service";
-import Swal from "sweetalert2";
 
 @Component({
   selector: "app-currency",
