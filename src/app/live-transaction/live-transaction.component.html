@@ -52,7 +52,6 @@
                   <span class="label"> | STG Drop : </span>
                   {{ footerData.stgDrop }} &nbsp;
                 </div>
-
               </div>
             </div>
             <div class="buttons">
@@ -195,7 +194,7 @@
                   "
                 >
                   <td>
-                    {{ customers.table }}
+                    {{ customers.game + " " + customers.table }}
                   </td>
 
                   <td>
@@ -240,19 +239,9 @@
                   <td>{{ customers.amount + " " + customers.currency }}</td>
 
                   <td>
-                    <span
-                      *ngIf="customers.isKasaPaid"
-                      class="badge bg-success font-size-12"
-                    >
-                      <i class="mdi mdi-check"></i>
-                    </span>
+                    <span *ngIf="customers.isOut"> Cash Out </span>
 
-                    <span
-                      *ngIf="!customers.isKasaPaid"
-                      class="badge bg-danger font-size-12"
-                    >
-                      <i class="mdi mdi-close"></i>
-                    </span>
+                    <span *ngIf="!customers.isOut"> Cash In </span>
                   </td>
 
                   <!-- <td>
