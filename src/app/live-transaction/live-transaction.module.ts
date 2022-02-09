@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LiveTransactionRoutingModule } from './live-transaction-routing.module';
 import { LiveTransactionComponent } from './live-transaction.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { LiveTransactionComponent } from './live-transaction.component';
   ],
   imports: [
     CommonModule,
-    LiveTransactionRoutingModule
+    LiveTransactionRoutingModule,
+    SharedModule
   ]
 })
 export class LiveTransactionModule { }

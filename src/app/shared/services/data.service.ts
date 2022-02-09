@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
+import { AuthenticationService } from "./authentication.service";
 
 @Injectable({
   providedIn: "root",
@@ -253,5 +254,55 @@ export class DataService {
         headers: this.httpOptions.headers,
       }
     );
+  }
+
+  collectStaff(staffId) {
+    return this.http.get<any>(`${environment.apiUrl}staff/collect/${staffId}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  // LIVE TRANSACTION
+
+  getLive(startDayIn = 0, endDayIn = 0, tableId = 0, staff = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}live?startDayIn=${startDayIn}&endDayIn=${endDayIn}&table=${tableId}&staff=${staff}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getLiveDrop(startDayIn = 0, endDayIn = 0, tableId = 0, staff = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}live/drops?startDayIn=${startDayIn}&endDayIn=${endDayIn}&table=${tableId}&staff=${staff}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  // CHIP TRANSFER
+
+  getChipTransfers(dayId = 0) {
+    return this.http.get<any>(`${environment.apiUrl}kasa/transfer/${dayId}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  transferChip(obj, isOpen, tableId, staffId) {
+    return this.http.post<any>(
+      `${environment.apiUrl}kasa/transfer?isOpen=${isOpen}&table=${tableId}&staff=${staffId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getChipsForCurrency(currencyId) {
+    return this.http.get<any>(`${environment.apiUrl}bill/chips/${currencyId}`, {
+      headers: this.httpOptions.headers,
+    });
   }
 }

@@ -1,15 +1,98 @@
 <div class="container-fluid" *ngIf="!isLoading">
   <app-page-title title="Slot Transaction"></app-page-title>
 
-  <div class="row">
-    <div class="col-1">
-     <div class="card">
-       <div class="card-body">
-         SSS
-       </div>
-     </div>
+  <div class="row" *ngIf="footerData">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="profit-and-report">
+            <div class="data">
+              <div class="first-row">
+                <div>
+                  <span class="label">TL Profit : </span>
+                  {{ footerData.tlProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Euro Profit : </span>
+                  {{ footerData.euProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | USD Profit : </span>
+                  {{ footerData.usdProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | STG Profit : </span>
+                  {{ footerData.stgProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Chip Profit : </span>
+                  {{ footerData.chipProfit }}
+                </div>
+              </div>
+              <div class="second-row">
+                <div>
+                  <span class="label"> TL Out : </span>
+                  {{ footerData.tlOut }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Euro Out : </span>
+                  {{ footerData.euOut }} &nbsp;
+                </div>
+                <div>
+                  <span class="label"> | USD Out : </span>
+                  {{ footerData.usdOut }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | STG Out : </span>
+                  {{ footerData.stgOut }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Credit Card : </span>
+                  {{ footerData.ccOut }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | VIP Out : </span>
+                  {{ footerData.vipOut }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | VIP In : </span>
+                  {{ footerData.vipIn }} &nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="buttons">
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Machine Report</button
+              ><button
+                style="width: 100%; flex: 1"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document-multiple me-1"></i> Transaction
+                Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-11">
+  </div>
+
+  <div class="row">
+    <div class="col-12">
       <div class="card">
         <div class="card-body">
           <div class="row mb-2">
@@ -62,9 +145,10 @@
                   id="formrow-inputState"
                   class="form-select"
                   [(ngModel)]="selectedStaff"
+
                 >
                   <option [value]="''">All</option>
-                  <option [value]="item.id" *ngFor="let item of staffList">
+                  <option id="staffSelect" [value]="item.id" *ngFor="let item of staffList">
                     {{ item.name }}
                   </option>
                 </select>
@@ -82,9 +166,11 @@
                 </button>
 
                 <button
+                  [disabled]="selectedStaff === ''"
                   style="width: 100%"
                   type="button"
                   class="btn btn-primary mt-2 mr-2"
+                  (click)="confirmCollect(selectedStaff)"
                 >
                   <i class="mdi mdi-plus me-1"></i> Collect
                 </button>

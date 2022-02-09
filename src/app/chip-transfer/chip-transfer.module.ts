@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChipTransferRoutingModule } from './chip-transfer-routing.module';
 import { ChipTransferComponent } from './chip-transfer.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ChipTransferComponent } from './chip-transfer.component';
   ],
   imports: [
     CommonModule,
-    ChipTransferRoutingModule
+    ChipTransferRoutingModule,
+    SharedModule
   ]
 })
 export class ChipTransferModule { }

@@ -1,3 +1,41 @@
 .table-footer {
   padding-top: 1rem;
 }
+
+.profit-and-report {
+  display: flex;
+  .data {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    font-size: 14px;
+  }
+  .buttons {
+    display: flex;
+    width: 30%;
+  }
+}
+
+.label {
+  font-weight: 600;
+}
+
+.first-row {
+  display: flex;
+  color: #556ee6;
+}
+
+.second-row {
+  display: flex;
+  color: #34c38f;
+}
+
+@media screen and (max-width: 1150px) {
+  .profit-and-report {
+    flex-direction: column;
+    .data,
+    .buttons {
+      width: 100%;
+    }
+  }
+}

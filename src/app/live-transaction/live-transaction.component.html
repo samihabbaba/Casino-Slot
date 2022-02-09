@@ -1,1 +1,285 @@
-<p>live-transaction works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title title="Live Transaction"></app-page-title>
+
+  <div class="row" *ngIf="footerData">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="profit-and-report">
+            <div class="data">
+              <!-- <div class="first-row">
+                <div>
+                  <span class="label">TL Profit : </span>
+                  {{ footerData.tlProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Euro Profit : </span>
+                  {{ footerData.euProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | USD Profit : </span>
+                  {{ footerData.usdProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | STG Profit : </span>
+                  {{ footerData.stgProfit }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Chip Profit : </span>
+                  {{ footerData.chipProfit }}
+                </div>
+              </div> -->
+              <div class="second-row">
+                <div>
+                  <span class="label"> TL Drop : </span>
+                  {{ footerData.tlDrop }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | Euro Drop : </span>
+                  {{ footerData.euDrop }} &nbsp;
+                </div>
+                <div>
+                  <span class="label"> | USD Drop : </span>
+                  {{ footerData.usdDrop }} &nbsp;
+                </div>
+
+                <div>
+                  <span class="label"> | STG Drop : </span>
+                  {{ footerData.stgDrop }} &nbsp;
+                </div>
+
+              </div>
+            </div>
+            <div class="buttons">
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Close Shift Report</button
+              ><button
+                style="width: 100%; flex: 1"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document-multiple me-1"></i> Session
+                Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-9" style="display: flex">
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">Start Day</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="stardDayIn"
+                >
+                  <option [value]="0">Today</option>
+                  <option [value]="item.id" *ngFor="let item of daysList">
+                    {{ item.date }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">End Day</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="endDayIn"
+                >
+                  <option [value]="0">Today</option>
+                  <option [value]="item.id" *ngFor="let item of daysList">
+                    {{ item.date }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">Game</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="selectedMachine"
+                >
+                  <option [value]="0">All</option>
+                  <option [value]="item.id" *ngFor="let item of machineList">
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">Staff</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="selectedStaff"
+                >
+                  <option [value]="''">All</option>
+                  <option
+                    id="staffSelect"
+                    [value]="item.id"
+                    *ngFor="let item of staffList"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3" style="align-self: center">
+              <div class="text-sm-end" style="display: flex">
+                <button
+                  style="width: 100%; margin-right: 0.5rem"
+                  type="button"
+                  class="btn btn-success mt-2 mr-2"
+                  (click)="fetchData()"
+                >
+                  <i class="mdi mdi-search-web me-1"></i> Search
+                </button>
+
+                <!-- <button
+                  [disabled]="selectedStaff === ''"
+                  style="width: 100%"
+                  type="button"
+                  class="btn btn-primary mt-2 mr-2"
+                  (click)="confirmCollect(selectedStaff)"
+                >
+                  <i class="mdi mdi-plus me-1"></i> Collect
+                </button> -->
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-nowrap">
+              <thead>
+                <tr>
+                  <th>Table</th>
+                  <th>Open Date</th>
+                  <th>Close Date</th>
+                  <th>Transaction Date</th>
+                  <th>Active</th>
+                  <th>Customer</th>
+                  <th>Staff</th>
+                  <th>Chip</th>
+                  <th>Amount</th>
+                  <th>Transaction</th>
+                  <th>Payment Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tableData
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.table }}
+                  </td>
+
+                  <td>
+                    {{ customers.startDate | date: "short" }}
+                  </td>
+
+                  <td>
+                    {{ customers.endDate | date: "short" }}
+                  </td>
+
+                  <td>
+                    {{ customers.recordDate | date: "short" }}
+                  </td>
+
+                  <td>
+                    <span
+                      *ngIf="customers.isDone"
+                      class="badge bg-success font-size-12"
+                    >
+                      <i class="mdi mdi-check"></i>
+                    </span>
+
+                    <span
+                      *ngIf="!customers.isDone"
+                      class="badge bg-danger font-size-12"
+                    >
+                      <i class="mdi mdi-close"></i>
+                    </span>
+                  </td>
+
+                  <td>
+                    {{ customers.customer }}
+                  </td>
+                  <td>
+                    {{ customers.staffName }}
+                  </td>
+
+                  <td>
+                    {{ customers.chipNumber }}
+                  </td>
+
+                  <td>{{ customers.amount + " " + customers.currency }}</td>
+
+                  <td>
+                    <span
+                      *ngIf="customers.isKasaPaid"
+                      class="badge bg-success font-size-12"
+                    >
+                      <i class="mdi mdi-check"></i>
+                    </span>
+
+                    <span
+                      *ngIf="!customers.isKasaPaid"
+                      class="badge bg-danger font-size-12"
+                    >
+                      <i class="mdi mdi-close"></i>
+                    </span>
+                  </td>
+
+                  <!-- <td>
+                    {{ customers.recordType }}
+                  </td> -->
+
+                  <td>
+                    {{ customers.paymentType }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
