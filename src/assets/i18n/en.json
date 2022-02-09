@@ -106,6 +106,10 @@
 
     "CASETRANSANSACTION": {
       "TEXT": "Case Transaction",
+      "TEXT1": "Transactions",
+      "TEXT2": "Money Exchange",
+      "TEXT3": "Drops",
+      "TEXT4": "Chip",
       "BADGE": "04",
       "LIST": {
         "DEFAULT": "Default",

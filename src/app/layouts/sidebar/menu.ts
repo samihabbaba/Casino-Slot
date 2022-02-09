@@ -1,4 +1,4 @@
-import { MenuItem } from './menu.model';
+import { MenuItem } from "./menu.model";
 
 export const MENU: MenuItem[] = [
   {
@@ -26,7 +26,35 @@ export const MENU: MenuItem[] = [
     id: 4,
     label: "MENUITEMS.CASETRANSANSACTION.TEXT",
     icon: "bx-briefcase-alt-2",
-    link: "/case-transaction",
+    subItems: [
+      {
+        id: 18,
+        label: "MENUITEMS.CASETRANSANSACTION.TEXT1",
+        link: "/dashboard",
+        parentId: 4,
+      },
+
+      {
+        id: 19,
+        label: "MENUITEMS.CASETRANSANSACTION.TEXT2",
+        link: "/dashboard",
+        parentId: 4,
+      },
+
+      {
+        id: 20,
+        label: "MENUITEMS.CASETRANSANSACTION.TEXT3",
+        link: "/dashboard",
+        parentId: 4,
+      },
+
+      {
+        id: 21,
+        label: "MENUITEMS.CASETRANSANSACTION.TEXT4",
+        link: "/dashboard",
+        parentId: 4,
+      },
+    ],
   },
   {
     id: 5,
@@ -111,4 +139,3 @@ export const MENU: MenuItem[] = [
     link: "/logs",
   },
 ];
-

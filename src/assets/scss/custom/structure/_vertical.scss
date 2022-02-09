@@ -441,8 +441,8 @@ body[data-sidebar="dark"] {
               >a {
                 background: lighten($sidebar-dark-bg, 2%);
                 color: $sidebar-dark-menu-item-hover-color;
-                border-top-right-radius: 30px;
-                border-bottom-right-radius: 30px;
+                // border-top-right-radius: 30px;
+                // border-bottom-right-radius: 30px;
 
                 i {
                   color: $sidebar-dark-menu-item-hover-color;

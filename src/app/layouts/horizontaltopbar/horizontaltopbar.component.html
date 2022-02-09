@@ -41,8 +41,6 @@
           <span class="bx bx-search-alt"></span>
         </div>
       </form>
-
-
     </div>
 
     <div class="d-flex">
@@ -160,9 +158,7 @@
             {{ "HEADER.LOGIN.LOCK_SCREEN" | translate }}</a
           >
           <div class="dropdown-divider"></div>
-          <a
-            class="dropdown-item text-danger"
-            (click)="logout()"
+          <a class="dropdown-item text-danger" (click)="logout()"
             ><i
               class="bx bx-power-off font-size-16 align-middle me-1 text-danger"
             ></i>
@@ -183,7 +179,7 @@
     </div>
   </div>
 </header>
-<div class="topnav" >
+<div class="topnav">
   <div
     class="container-fluid"
     style="
@@ -195,11 +191,14 @@
       width: 100%;
     "
   >
-    <nav class="navbar navbar-light navbar-expand-lg topnav-menu active">
+    <nav
+      class="navbar navbar-light navbar-expand-lg topnav-menu active"
+      style="position: unset"
+    >
       <div class="collapse navbar-collapse active" id="topnav-menu-content">
         <ul class="navbar-nav">
           <ng-container *ngFor="let item of menuItems">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="position: unset">
               <a
                 class="nav-link dropdown-toggle arrow-none"
                 *ngIf="!item.subItems"

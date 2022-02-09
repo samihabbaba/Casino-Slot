@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { CaseTransactionComponent } from "../case-transaction/case-transaction.component";
+import { TransactionsComponent } from "../case-transaction/transactions/transactions.component";
 import { AuthGuard } from "../core/guards/auth.guard";
 import { LayoutComponent } from "./layout.component";
 
@@ -8,7 +10,7 @@ const routes: Routes = [
     path: "",
     component: LayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: "", pathMatch: "full", redirectTo: "dashboard" },
 
       {
         path: "dashboard",
@@ -19,12 +21,14 @@ const routes: Routes = [
       },
 
       {
-        path: "case-transaction",
+        path: "case",
         loadChildren: () =>
           import("../case-transaction/case-transaction.module").then(
             (m) => m.CaseTransactionModule
           ),
       },
+
+
 
       {
         path: "chip-transfer",
@@ -128,7 +132,7 @@ const routes: Routes = [
           import("../staff/staff.module").then((m) => m.StaffModule),
       },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 ];
 
