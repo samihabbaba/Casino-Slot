@@ -30,28 +30,28 @@ export const MENU: MenuItem[] = [
       {
         id: 18,
         label: "MENUITEMS.CASETRANSANSACTION.TEXT1",
-        link: "/dashboard",
+        link: "/case/transactions",
         parentId: 4,
       },
 
       {
         id: 19,
         label: "MENUITEMS.CASETRANSANSACTION.TEXT2",
-        link: "/dashboard",
+        link: "/case/money-exchange",
         parentId: 4,
       },
 
       {
         id: 20,
         label: "MENUITEMS.CASETRANSANSACTION.TEXT3",
-        link: "/dashboard",
+        link: "/case/drops",
         parentId: 4,
       },
 
       {
         id: 21,
         label: "MENUITEMS.CASETRANSANSACTION.TEXT4",
-        link: "/dashboard",
+        link: "/case/chip",
         parentId: 4,
       },
     ],

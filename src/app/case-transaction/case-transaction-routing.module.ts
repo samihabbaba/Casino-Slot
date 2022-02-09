@@ -8,22 +8,12 @@ import { TransactionsComponent } from "./transactions/transactions.component";
 
 const routes: Routes = [
   {
-    path: "",
-    component: CaseTransactionComponent,
-    children: [{ path: "", component: TransactionsComponent }],
+    path: "transactions",
+    component: TransactionsComponent,
   },
-  // { path: "/s", component: MoneyExchangeComponent },
-  // {
-  //   path: "",
-  //   component: CaseTransactionComponent,
-  //   children: [
-
-  //     { path: "transaction", component: TransactionsComponent },
-  //     { path: "money-exchange", component: MoneyExchangeComponent },
-  //     { path: "drops", component: DropsComponent },
-  //     { path: "chip", component: ChipComponent },
-  //   ],
-  // },
+  { path: "money-exchange", component: MoneyExchangeComponent },
+  { path: "drops", component: DropsComponent },
+  { path: "chip", component: ChipComponent },
 ];
 
 @NgModule({
