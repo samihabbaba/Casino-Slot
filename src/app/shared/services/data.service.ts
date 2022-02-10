@@ -337,4 +337,10 @@ export class DataService {
       headers: this.httpOptions.headers,
     });
   }
+
+  editKasaTransaction(obj, transactionId) {
+    return this.http.put<any>(`${environment.apiUrl}kasa/transaction/${transactionId}`, obj, {
+      headers: this.httpOptions.headers,
+    });
+  }
 }

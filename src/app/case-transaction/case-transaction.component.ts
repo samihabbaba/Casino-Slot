@@ -14,6 +14,8 @@ import { DataService } from "../shared/services/data.service";
 export class CaseTransactionComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   formData: FormGroup;
+  editForm: FormGroup;
+  editedObj: any;
 
   submitted = false;
   isLoading: boolean = false;
@@ -54,13 +56,22 @@ export class CaseTransactionComponent implements OnInit {
   }
 
   openModal(content: any, obj?: any) {
-    this.initializeAddForm();
-    this.modalService.open(content);
+    if (obj) {
+      this.editedObj = obj;
+      this.initializeEditForm(obj);
+      this.modalService.open(content);
+    } else {
+      this.initializeAddForm();
+      this.modalService.open(content);
+    }
 
     this.submitted = false;
   }
 
   get form() {
+    return this.formData.controls;
+  }
+  get editF() {
     return this.formData.controls;
   }
 
@@ -84,6 +95,37 @@ export class CaseTransactionComponent implements OnInit {
       this.dataService.addKasaTransaction(form).subscribe(
         (resp) => {
           this.toastr.success("Transaction added successfully");
+          this.modalService.dismissAll();
+          this.fetchData();
+        },
+        (err) => {
+          this.toastr.error("Something went wrong");
+        }
+      );
+    } else {
+      this.submitted = true;
+    }
+  }
+
+  initializeEditForm(obj) {
+    this.editForm = this.formBuilder.group({
+      typeId: [obj?.typeId],
+      amount: [obj?.amount, [Validators.required, Validators.min(1)]],
+      currencyId: [this.currencyList.find((x) => x.code === obj.currency).id],
+      note: [obj?.note],
+      isDeleted: [false],
+    });
+  }
+
+  editCustomer() {
+    if (this.editForm.valid) {
+      const form = this.editForm.getRawValue();
+      form.currencyId = parseInt(form.currencyId);
+      form.typeId = parseInt(form.typeId);
+
+      this.dataService.editKasaTransaction(form, this.editedObj.id).subscribe(
+        (resp) => {
+          this.toastr.success("Transaction edited successfully");
           this.modalService.dismissAll();
           this.fetchData();
         },
@@ -134,5 +176,33 @@ export class CaseTransactionComponent implements OnInit {
       .subscribe((resp) => {
         this.footerData = resp;
       });
+  }
+
+  confirmDelete(obj) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this transaction?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#34c38f",
+      cancelButtonColor: "#f46a6a",
+      confirmButtonText: "Yes, delete!",
+    }).then((result) => {
+      if (result.value) {
+        this.initializeEditForm(obj);
+        const form = this.editForm.getRawValue();
+        form.isDeleted = true;
+        this.dataService.editKasaTransaction(form, obj.id).subscribe(
+          (resp) => {
+            this.toastr.success("Transaction deleted successfully");
+            this.fetchData();
+          },
+          (err) => {
+            obj.isDeleted = false;
+            this.toastr.error("Something went wrong");
+          }
+        );
+      }
+    });
   }
 }
