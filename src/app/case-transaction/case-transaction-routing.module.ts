@@ -4,12 +4,11 @@ import { CaseTransactionComponent } from "./case-transaction.component";
 import { ChipComponent } from "./chip/chip.component";
 import { DropsComponent } from "./drops/drops.component";
 import { MoneyExchangeComponent } from "./money-exchange/money-exchange.component";
-import { TransactionsComponent } from "./transactions/transactions.component";
-
 const routes: Routes = [
+  { path: "", pathMatch: "full", redirectTo: "transactions" },
   {
     path: "transactions",
-    component: TransactionsComponent,
+    component: CaseTransactionComponent,
   },
   { path: "money-exchange", component: MoneyExchangeComponent },
   { path: "drops", component: DropsComponent },

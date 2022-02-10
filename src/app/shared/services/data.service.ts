@@ -305,4 +305,36 @@ export class DataService {
       headers: this.httpOptions.headers,
     });
   }
+
+  // KASA TRANSACTION
+
+  getKasaTransactions(dayId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}kasa/transactions?startDayIn=${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getKasaTransactionsTotal(dayId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}kasa/transactions/total?startDayIn=${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getKasaType() {
+    return this.http.get<any>(`${environment.apiUrl}kasa/type`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  addKasaTransaction(obj) {
+    return this.http.post<any>(`${environment.apiUrl}kasa/transaction`, obj, {
+      headers: this.httpOptions.headers,
+    });
+  }
 }

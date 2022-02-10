@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { CaseTransactionComponent } from "../case-transaction/case-transaction.component";
-import { TransactionsComponent } from "../case-transaction/transactions/transactions.component";
 import { AuthGuard } from "../core/guards/auth.guard";
 import { LayoutComponent } from "./layout.component";
 
@@ -27,8 +25,6 @@ const routes: Routes = [
             (m) => m.CaseTransactionModule
           ),
       },
-
-
 
       {
         path: "chip-transfer",
