@@ -37,6 +37,18 @@ export class DataService {
     });
   }
 
+  getBills() {
+    return this.http.get<any>(`${environment.apiUrl}bill`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  getBillByCurrencyId(currencyId) {
+    return this.http.get<any>(`${environment.apiUrl}bill/${currencyId}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
   // DASHBOARD
 
   getDashboard() {
@@ -339,8 +351,59 @@ export class DataService {
   }
 
   editKasaTransaction(obj, transactionId) {
-    return this.http.put<any>(`${environment.apiUrl}kasa/transaction/${transactionId}`, obj, {
+    return this.http.put<any>(
+      `${environment.apiUrl}kasa/transaction/${transactionId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getKasaExchanges(dayId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}kasa/exchanges?startDayIn=${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  addKasaExchanges(obj) {
+    return this.http.post<any>(`${environment.apiUrl}kasa/exchange`, obj, {
       headers: this.httpOptions.headers,
     });
+  }
+
+  editKasaExchanges(obj, transactionId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}kasa/exchange/${transactionId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getKasaDrops(dayId = 1) {
+    return this.http.get<any>(`${environment.apiUrl}kasa/credits/${dayId}`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  addKasaDrop(obj) {
+    return this.http.post<any>(`${environment.apiUrl}kasa/credit`, obj, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editKasaDrops(obj, creditId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}kasa/credit/${creditId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 }
