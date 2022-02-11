@@ -20,8 +20,6 @@
                   </option>
                 </select>
               </div>
-
-
             </div>
             <div class="col-sm-8" style="align-self: center">
               <div class="text-sm-end" style="display: flex">
@@ -158,10 +156,7 @@
               (ngModelChange)="getChips($event)"
               class="form-select"
             >
-              <option
-                [value]="item.id"
-                *ngFor="let item of machineList"
-              >
+              <option [value]="item.id" *ngFor="let item of machineList">
                 {{ item.name }}
               </option>
             </select>
@@ -202,11 +197,11 @@
                   <th>Total</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="pad">
                 <tr *ngFor="let chipForm of chips.controls; let i = index">
                   <td [formGroup]="chipForm" style="width: 250px">
                     <input
-                    style="width: 80%"
+                      style="width: 80%"
                       class="form-control"
                       placeholder="Enter Quantity"
                       type="number"

@@ -2,7 +2,7 @@
   font-weight: 600;
 }
 
-tbody td {
+tbody:not(.pad) td {
   vertical-align: middle;
   padding: 0;
 }
@@ -20,4 +20,9 @@ tbody td {
       color: #f46a6a;
     }
   }
+}
+
+
+.gray-bg {
+  background: #f8f9fa;
 }

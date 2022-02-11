@@ -232,8 +232,13 @@
                   <th>Amount</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let chipForm of chips.controls; let i = index">
+              <tbody class="pad">
+                <tr
+                  *ngFor="let chipForm of chips.controls; let i = index"
+                  [ngClass]="{
+                    'gray-bg': chipForm.controls.currency.value === 'EURO'
+                  }"
+                >
                   <td [formGroup]="chipForm" style="width: 250px">
                     <input
                       style="width: 80%"
