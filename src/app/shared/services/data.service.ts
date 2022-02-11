@@ -71,7 +71,6 @@ export class DataService {
     );
   }
 
-
   getCustomers(queryParams = "") {
     return this.http.get<any>(
       `${environment.apiUrl}customer?SearchQuery= ${queryParams}`,
@@ -418,5 +417,23 @@ export class DataService {
         headers: this.httpOptions.headers,
       }
     );
+  }
+
+  getKasaChips() {
+    return this.http.get<any>(`${environment.apiUrl}kasa/chips`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  editKasaChips(obj) {
+    return this.http.put<any>(`${environment.apiUrl}kasa/chips?isOpen=true`, obj,{
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  getCurrentKasaChips() {
+    return this.http.get<any>(`${environment.apiUrl}kasa/currentchips`, {
+      headers: this.httpOptions.headers,
+    });
   }
 }

@@ -1,6 +1,6 @@
-// 
+//
 // _dropdown.scss
-// 
+//
 
 .dropdown-menu {
   box-shadow: $box-shadow-lg;
@@ -17,8 +17,8 @@
 }
 
 .dropdown-menu-end[style] {
-  left: auto !important;
-  right: 0 !important;
+  left: -120px !important;
+  // right: 0 !important;
 }
 
 .dropdown-menu[x-placement^=right],

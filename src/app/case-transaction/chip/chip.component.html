@@ -1,1 +1,287 @@
-<p>chip works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title
+    title="Chip"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row" style="padding-bottom: 1rem">
+    <div class="top-row">
+      <div class="buttons">
+        <div
+          class="text-sm-end"
+          style="display: flex; justify-content: center; padding-bottom: 1rem"
+        >
+          <button
+            type="button"
+            class="btn btn-success mt-2 mr-2"
+            (click)="fetchData()"
+          >
+            <i class="mdi mdi-refresh me-1"></i> Refresh
+          </button>
+
+          <button
+            style="margin-left: 6px"
+            type="button"
+            class="btn btn-primary mt-2 mr-2"
+            (click)="openModal(add)"
+          >
+            <i class="mdi mdi-pen me-1"></i> Update Chip
+          </button>
+        </div>
+      </div>
+      <div class="title">Opening</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-nowrap">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tlChips
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.quantity }}
+                  </td>
+
+                  <td>
+                    {{ customers.stringValue }}
+                  </td>
+
+                  <td>
+                    {{ customers.amount | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-nowrap">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of euroChips
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.quantity }}
+                  </td>
+
+                  <td>
+                    {{ customers.stringValue }}
+                  </td>
+
+                  <td>
+                    {{ customers.amount | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="padding-bottom: 1rem">
+    <div class="top-row">
+      <div class="title red">Current</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-nowrap">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tlCurrentChips
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.quantity }}
+                  </td>
+
+                  <td>
+                    {{ customers.stringValue }}
+                  </td>
+
+                  <td>
+                    {{ customers.amount | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-nowrap">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of euroCurrentChips
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.quantity }}
+                  </td>
+
+                  <td>
+                    {{ customers.stringValue }}
+                  </td>
+
+                  <td>
+                    {{ customers.amount | number: "1.2-2" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+
+<!-- Standard Modal -->
+<ng-template #add role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Update Chip</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body" *ngIf="chips.length > 1">
+    <form (ngSubmit)="saveCustomer()">
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive pb-3" [formGroup]="formData">
+            <table class="table mb-0" formArrayName="chips">
+              <thead class="table-light">
+                <tr>
+                  <th>Quantity</th>
+                  <th>Value</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let chipForm of chips.controls; let i = index">
+                  <td [formGroup]="chipForm" style="width: 250px">
+                    <input
+                      style="width: 80%"
+                      class="form-control"
+                      placeholder="Enter Quantity"
+                      type="number"
+                      name="title"
+                      autocomplete="off"
+                      formControlName="quantity"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitted && chipForm.controls.quantity.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && chipForm.controls.quantity.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="chipForm.controls.quantity.errors"
+                        >Quantity should be greater than 0.</span
+                      >
+                    </div>
+                  </td>
+                  <td style="vertical-align: middle">
+                    {{ chipForm.controls.stringValue.value }}
+                  </td>
+                  <td style="vertical-align: middle">
+                    {{
+                      chipForm.controls.quantity.value *
+                        chipForm.controls.value.value | number: "1.2-2"
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

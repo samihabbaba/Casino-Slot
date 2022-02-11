@@ -1,0 +1,23 @@
+.label {
+  font-weight: 600;
+}
+
+tbody td {
+  vertical-align: middle;
+  padding: 0;
+}
+
+.top-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  .title {
+    font-size: 21px;
+    font-weight: 500;
+    color: #34c38f;
+    &.red {
+      color: #f46a6a;
+    }
+  }
+}
