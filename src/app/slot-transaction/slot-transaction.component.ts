@@ -79,9 +79,9 @@ export class SlotTransactionComponent implements OnInit {
         this.selectedStaff
       )
       .subscribe((resp) => {
-        this.tableData = resp;
+        this.tableData = resp.body;
         this.isLoading = false;
-        console.log(this.tableData);
+        console.log(resp.headers.keys());
       });
     this.fetchFooterData();
   }

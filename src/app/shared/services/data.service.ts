@@ -274,9 +274,7 @@ export class DataService {
   getSlotData(startDayIn = 0, endDayIn = 0, machineId = 0, staff = "") {
     return this.http.get<any>(
       `${environment.apiUrl}slot/data?startDayIn=${startDayIn}&endDayIn=${endDayIn}&machine=${machineId}&staff=${staff}`,
-      {
-        headers: this.httpOptions.headers,
-      }
+      { observe: "response", headers: this.httpOptions.headers }
     );
   }
 
@@ -426,13 +424,25 @@ export class DataService {
   }
 
   editKasaChips(obj) {
-    return this.http.put<any>(`${environment.apiUrl}kasa/chips?isOpen=true`, obj,{
-      headers: this.httpOptions.headers,
-    });
+    return this.http.put<any>(
+      `${environment.apiUrl}kasa/chips?isOpen=true`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 
   getCurrentKasaChips() {
     return this.http.get<any>(`${environment.apiUrl}kasa/currentchips`, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  // METERS
+
+  getMetersByDayId(dayId: any) {
+    return this.http.get<any>(`${environment.apiUrl}general/totalmeter/${dayId}`, {
       headers: this.httpOptions.headers,
     });
   }

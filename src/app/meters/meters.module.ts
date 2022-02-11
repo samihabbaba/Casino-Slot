@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { MetersRoutingModule } from './meters-routing.module';
 import { MetersComponent } from './meters.component';
+import { MeterListComponent } from './meter-list/meter-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    MetersComponent
+    MetersComponent,
+    MeterListComponent
   ],
   imports: [
     CommonModule,
-    MetersRoutingModule
+    MetersRoutingModule,
+    SharedModule
   ]
 })
 export class MetersModule { }
