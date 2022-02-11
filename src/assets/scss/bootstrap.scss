@@ -7,7 +7,6 @@ Contact: themesbrand@gmail.com
 File: Custom Bootstrap Css File
 */
 
-
 //Core files
 @import "./node_modules/bootstrap/scss/functions";
 @import "./node_modules/bootstrap/scss/variables";
@@ -25,3 +24,17 @@ File: Custom Bootstrap Css File
 @import "custom/components/table";
 @import "custom/components/pagination";
 @import "custom/components/progress";
+
+ngb-typeahead-window {
+  width: 100% !important;
+}
+
+.p-autocomplete-input {
+  height: 36.53px;
+  width: 100%;
+  border-radius: 0.25rem !important;
+}
+
+.p-autocomplete {
+  width: 100%;
+}

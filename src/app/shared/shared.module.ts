@@ -4,10 +4,17 @@ import { CommonModule } from "@angular/common";
 import { UIModule } from "./ui/ui.module";
 
 import { WidgetModule } from "./widget/widget.module";
-import { NgbDropdownModule, NgbNavModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbDropdownModule,
+  NgbNavModule,
+  NgbPaginationModule,
+  NgbTypeahead,
+  NgbTypeaheadModule,
+} from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
-import { UiSwitchModule } from 'ngx-ui-switch';
+import { UiSwitchModule } from "ngx-ui-switch";
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -21,7 +28,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     NgbDropdownModule,
     UiSwitchModule,
     NgbNavModule,
-    
+    AutoCompleteModule
   ],
 })
 export class SharedModule {}

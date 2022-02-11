@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { of } from "rxjs";
+import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { AuthenticationService } from "./authentication.service";
 
@@ -58,6 +60,17 @@ export class DataService {
   }
 
   // CUSTOMER
+
+  getCustomerAutoComplete(queryParams = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/autocomplete?SearchQuery=${queryParams}`,
+      {
+        params: this.params,
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
 
   getCustomers(queryParams = "") {
     return this.http.get<any>(

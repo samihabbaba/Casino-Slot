@@ -1,7 +1,22 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
+import { from, Observable, of, OperatorFunction } from "rxjs";
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+  tap,
+} from "rxjs/operators";
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
 import { DataService } from "src/app/shared/services/data.service";
 import Swal from "sweetalert2";
@@ -28,11 +43,22 @@ export class MoneyExchangeComponent implements OnInit {
 
   stardDayIn: any = 0;
 
+  customersList: any[] = [];
   daysList: any[] = [];
   currencyList: any[] = [];
   typeListIsIn: any[] = [];
   typeListIsOut: any[] = [];
   isIn: boolean = false;
+
+  customerOptions = [];
+
+  selectFromList: any;
+
+  filterMethod(event) {
+    this.dataService.getCustomerAutoComplete(event.query).subscribe((resp) => {
+      this.customerOptions = resp;
+    });
+  }
 
   constructor(
     private modalService: NgbModal,
@@ -75,29 +101,39 @@ export class MoneyExchangeComponent implements OnInit {
   }
 
   initializeAddForm() {
+    this.selectFromList = false;
     this.formData = this.formBuilder.group({
-      amount: [0, [Validators.required, Validators.min(1)]],
+      customerId: [null, [Validators.required]],
       staffId: [this.authService.currentUser.id],
-      currencyId: [this.currencyList[0].id],
-      rate: [this.currencyList[0].rate],
-      note: [""],
-      typeId: [this.typeListIsOut[0].id, [Validators.required]],
+      fromCurrencyId: [this.currencyList[0].id],
+      toCurrencyId: [this.currencyList[0].id],
+      fromRate: [this.currencyList[0].rate],
+      toRate: [this.currencyList[0].rate],
+      fromAmount: [0, [Validators.required, Validators.min(0.01)]],
+      toAmount: [0, [Validators.required]],
     });
   }
 
   saveCustomer() {
     if (this.formData.valid) {
       const form = this.formData.getRawValue();
-      form.currencyId = parseInt(form.currencyId);
-      form.typeId = parseInt(form.typeId);
+      form.customerId = form.customerId.id;
+      form.fromCurrencyId = parseInt(form.fromCurrencyId);
+      form.toCurrencyId = parseInt(form.toCurrencyId);
+      form.toAmount = form.fromAmount * (form.fromRate / form.toRate);
 
-      this.dataService.addKasaTransaction(form).subscribe(
+      this.dataService.addKasaExchanges(form).subscribe(
         (resp) => {
-          this.toastr.success("Transaction added successfully");
+          this.toastr.success("Exchange successful");
           this.modalService.dismissAll();
           this.fetchData();
         },
         (err) => {
+          if (!form.customerId) {
+            this.toastr.error("Select a customer from the list");
+            this.selectFromList = true;
+            return;
+          }
           this.toastr.error("Something went wrong");
         }
       );
@@ -108,14 +144,17 @@ export class MoneyExchangeComponent implements OnInit {
 
   initializeEditForm(obj) {
     this.editForm = this.formBuilder.group({
-      typeId: [obj?.typeId],
-      amount: [obj?.amount, [Validators.required, Validators.min(1)]],
-      currencyId: [this.currencyList.find((x) => x.code === obj.currency).id],
-      note: [obj?.note],
-      isDeleted: [false],
+      customerId: [obj.customerId, [Validators.required]],
+      staffId: [this.authService.currentUser.id],
+      fromCurrencyId: [obj.fromCurrency],
+      toCurrencyId: [obj.toCurrency],
+      fromRate: [obj.fromRate],
+      toRate: [obj.toRate],
+      fromAmount: [obj.fromAmount, [Validators.required, Validators.min(0.01)]],
+      toAmount: [obj.toAmount, [Validators.required]],
+      isDeleted: [true],
     });
   }
-
 
   getKasaTypes() {
     this.dataService.getKasaType().subscribe((resp) => {
@@ -145,14 +184,30 @@ export class MoneyExchangeComponent implements OnInit {
     this.dataService.getKasaExchanges(this.stardDayIn).subscribe((resp) => {
       this.tableData = resp;
       this.isLoading = false;
-      console.log(this.tableData)
+      console.log(this.tableData);
     });
+  }
+
+  patchRate(ev, isTo) {
+    const rate = this.currencyList.find(
+      (x) => x.id === parseInt(ev.target.value)
+    ).rate;
+    if (isTo) {
+      this.form.toRate.patchValue(rate);
+    }
+    if (!isTo) {
+      this.form.fromRate.patchValue(rate);
+    }
+  }
+
+  returnToCurrency(currencyId) {
+    return this.currencyList.find((x) => x.id === parseInt(currencyId)).code;
   }
 
   confirmDelete(obj) {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to delete this transaction?",
+      text: "You want to delete this exchange?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#34c38f",
@@ -162,10 +217,18 @@ export class MoneyExchangeComponent implements OnInit {
       if (result.value) {
         this.initializeEditForm(obj);
         const form = this.editForm.getRawValue();
-        form.isDeleted = true;
-        this.dataService.editKasaTransaction(form, obj.id).subscribe(
+
+        form.fromCurrencyId = this.currencyList.find(
+          (x) => x.code == form.fromCurrencyId
+        ).id;
+
+        form.toCurrencyId = this.currencyList.find(
+          (x) => x.code == form.toCurrencyId
+        ).id;
+
+        this.dataService.editKasaExchanges(form, obj.id).subscribe(
           (resp) => {
-            this.toastr.success("Transaction deleted successfully");
+            this.toastr.success("Exchange deleted successfully");
             this.fetchData();
           },
           (err) => {
