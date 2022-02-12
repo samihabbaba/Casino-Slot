@@ -442,8 +442,21 @@ export class DataService {
   // METERS
 
   getMetersByDayId(dayId: any) {
-    return this.http.get<any>(`${environment.apiUrl}general/totalmeter/${dayId}`, {
-      headers: this.httpOptions.headers,
-    });
+    return this.http.get<any>(
+      `${environment.apiUrl}general/totalmeter/${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  editMeter(obj, meterId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}general/updatemeter/${meterId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 }

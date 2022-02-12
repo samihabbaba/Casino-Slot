@@ -1,6 +1,6 @@
 <div class="container-fluid" *ngIf="!isLoading">
   <app-page-title title="Meters"></app-page-title>
-
+  <!--
   <div class="row">
     <div class="col-12">
       <ul
@@ -39,338 +39,374 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Tab Content -->
-  <ng-template #TabContent>
-    <div class="row mb-2">
-      <div class="col-sm-10" style="display: flex">
-        <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
-          <label for="formrow-inputState">Day</label>
-          <select
-            id="formrow-inputState"
-            class="form-select"
-            [(ngModel)]="stardDayIn"
+  <!-- <ng-template #TabContent> -->
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-7" style="display: flex">
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">Day</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="stardDayIn"
+                >
+                  <option [value]="item.id" *ngFor="let item of daysList">
+                    {{ item.date }}
+                  </option>
+                </select>
+              </div>
+              <div style="display: flex; flex-direction: column">
+                <div class="mb-3 header-switch">
+                  <span> Detailed View </span>
+                  <ui-switch
+                    [(ngModel)]="isDetailed"
+                    defaultBoColor="#dfdfdf"
+                    size="small"
+                    color="#34c38f"
+                    checked
+                  ></ui-switch>
+                </div>
+
+                <div class="mb-3 header-switch">
+                  <span> Money </span>
+                  <ui-switch
+                    [(ngModel)]="isMoney"
+                    defaultBoColor="#dfdfdf"
+                    size="small"
+                    color="#34c38f"
+                    checked
+                  ></ui-switch>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5" style="align-self: center">
+              <div class="text-sm-end" style="display: flex">
+                <button
+                  style="width: 100%; margin-right: 8px"
+                  type="button"
+                  class="btn btn-success mt-2"
+                  (click)="fetchData2()"
+                >
+                  <i class="mdi mdi-search-web me-1"></i> Search
+                </button>
+                <button
+                  style="width: 100%"
+                  type="button"
+                  class="btn btn-secondary mt-2"
+                >
+                  <i class="mdi mdi-file-document-multiple me-1"></i> Machine
+                  Report
+                </button>
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-nowrap" style="margin-bottom: 120px">
+              <thead>
+                <tr>
+                  <th>Machine</th>
+                  <th *ngIf="isDetailed">Start In</th>
+                  <th *ngIf="isDetailed">Start Out</th>
+                  <th *ngIf="isDetailed">Start JackPot</th>
+                  <th *ngIf="isDetailed">End In</th>
+                  <th *ngIf="isDetailed">End Out</th>
+                  <th *ngIf="isDetailed">End JackPot</th>
+                  <th>Balance In</th>
+                  <th>Balance Out</th>
+                  <th>Balance JackPot</th>
+                  <th>Slip In</th>
+                  <th>Slip Out</th>
+                  <th>Slip JackPot</th>
+                  <th>Diff In</th>
+                  <th>Diff Out</th>
+                  <th>Diff JackPot</th>
+                  <th>Diff Credit</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let customers of tableData2
+                      | slice
+                        : (currentpage - 1) * pageSize
+                        : (currentpage - 1) * pageSize + pageSize;
+                    let i = index
+                  "
+                >
+                  <td>
+                    {{ customers.machineName }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ customers.startIn }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ customers.startOut }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ customers.startJackPot }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ customers.endIn }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ customers.endOut }}
+                  </td>
+                  <td *ngIf="isDetailed">
+                    {{ customers.endJackPot }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.balanceInCredit }}
+                  </td>
+                  <td *ngIf="isMoney">
+                    {{ customers.balanceInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.balanceOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.balanceOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.balanceJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.balanceJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.slipInCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.slipInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.slipOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.slipOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.slipJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.slipJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.diffInCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.diffInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.diffOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.diffOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.diffJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.diffJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ customers.diffCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ customers.diffMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td>
+                    <div class="dropdown" ngbDropdown>
+                      <a
+                        class="dropdown-toggle card-drop"
+                        data-toggle="dropdown"
+                        ngbDropdownToggle
+                        aria-expanded="false"
+                        style="cursor: pointer"
+                      >
+                        <i class="mdi mdi-dots-horizontal font-size-20"></i>
+                      </a>
+                      <ul
+                        class="dropdown-menu dropdown-menu-end"
+                        ngbDropdownMenu
+                      >
+                        <li (click)="openModal(edit, customers)">
+                          <a href="javascript: void(0);" class="dropdown-item"
+                            ><i class="fas fa-pencil-alt text-success me-1"></i>
+                            Edit</a
+                          >
+                        </li>
+                        <li (click)="confirmDelete(customers)">
+                          <a href="javascript: void(0);" class="dropdown-item"
+                            ><i class="fas fa-undo-alt text-danger me-1"></i>
+                            Reset</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>
+                    {{ footerData.machineName }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ footerData.startIn }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ footerData.startOut }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ footerData.startJackPot }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ footerData.endIn }}
+                  </td>
+
+                  <td *ngIf="isDetailed">
+                    {{ footerData.endOut }}
+                  </td>
+                  <td *ngIf="isDetailed">
+                    {{ footerData.endJackPot }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.balanceInCredit }}
+                  </td>
+                  <td *ngIf="isMoney">
+                    {{ footerData.balanceInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.balanceOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.balanceOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.balanceJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.balanceJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.slipInCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.slipInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.slipOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.slipOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.slipJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.slipJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.diffInCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.diffInMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.diffOutCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.diffOutMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.diffJackPotCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.diffJackPotMoney | number: "1.2-2" }}
+                  </td>
+
+                  <td *ngIf="!isMoney">
+                    {{ footerData.diffCredit }}
+                  </td>
+
+                  <td *ngIf="isMoney">
+                    {{ footerData.diffMoney | number: "1.2-2" }}
+                  </td>
+                  <td>-</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
           >
-            <option [value]="item.id" *ngFor="let item of daysList">
-              {{ item.date }}
-            </option>
-          </select>
-        </div>
-        <div class="mb-3 header-switch">
-          <span> Detailed View </span>
-          <ui-switch
-          [(ngModel)]="isDetailed"
-            defaultBoColor="#dfdfdf"
-            size="small"
-            color="#34c38f"
-            checked
-          ></ui-switch>
-        </div>
+          </ngb-pagination>
+          <!-- </ng-template> -->
 
-        <div class="mb-3 header-switch">
-          <span> Money </span>
-          <ui-switch
-          [(ngModel)]="isMoney"
-            defaultBoColor="#dfdfdf"
-            size="small"
-            color="#34c38f"
-            checked
-          ></ui-switch>
-        </div>
-      </div>
-      <div class="col-sm-2" style="align-self: center">
-        <div class="text-sm-end">
-          <button
-            style="width: 100%"
-            type="button"
-            class="btn btn-success mt-2 mr-2"
-            (click)="fetchData2()"
-          >
-            <i class="mdi mdi-search-web me-1"></i> Search
-          </button>
-        </div>
-      </div>
-      <!-- end col-->
-    </div>
-    <div class="table-responsive">
-      <table class="table table-nowrap">
-        <thead>
-          <tr>
-            <th>Machine</th>
-            <th *ngIf="isDetailed">Start In</th>
-            <th *ngIf="isDetailed">Start Out</th>
-            <th *ngIf="isDetailed">Start JackPot</th>
-            <th *ngIf="isDetailed">End In</th>
-            <th *ngIf="isDetailed">End Out</th>
-            <th *ngIf="isDetailed">End JackPot</th>
-            <th>Balance In</th>
-            <th>Balance Out</th>
-            <th>Balance JackPot</th>
-            <th>Slip In</th>
-            <th>Slip Out</th>
-            <th>Slip JackPot</th>
-            <th>Diff In</th>
-            <th>Diff Out</th>
-            <th>Diff JackPot</th>
-            <th>Diff Credit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="
-              let customers of tableData2
-                | slice
-                  : (currentpage - 1) * pageSize
-                  : (currentpage - 1) * pageSize + pageSize;
-              let i = index
-            "
-          >
-            <td>
-              {{ customers.machineName }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ customers.startIn }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ customers.startOut }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ customers.startJackPot }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ customers.endIn }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ customers.endOut }}
-            </td>
-            <td *ngIf="isDetailed">
-              {{ customers.endJackPot }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.balanceInCredit }}
-            </td>
-            <td *ngIf="isMoney">
-              {{ customers.balanceInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.balanceOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.balanceOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.balanceJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.balanceJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.slipInCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.slipInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.slipOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.slipOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.slipJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.slipJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.diffInCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.diffInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.diffOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.diffOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.diffJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.diffJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ customers.diffCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ customers.diffMoney }}
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>
-              {{ footerData.machineName }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ footerData.startIn }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ footerData.startOut }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ footerData.startJackPot }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ footerData.endIn }}
-            </td>
-
-            <td *ngIf="isDetailed">
-              {{ footerData.endOut }}
-            </td>
-            <td *ngIf="isDetailed">
-              {{ footerData.endJackPot }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.balanceInCredit }}
-            </td>
-            <td *ngIf="isMoney">
-              {{ footerData.balanceInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.balanceOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.balanceOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.balanceJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.balanceJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.slipInCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.slipInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.slipOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.slipOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.slipJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.slipJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.diffInCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.diffInMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.diffOutCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.diffOutMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.diffJackPotCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.diffJackPotMoney }}
-            </td>
-
-            <td *ngIf="!isMoney">
-              {{ footerData.diffCredit }}
-            </td>
-
-            <td *ngIf="isMoney">
-              {{ footerData.diffMoney }}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <!-- pagination -->
-    <ngb-pagination
-      [collectionSize]="tableData.length"
-      [(page)]="currentpage"
-      [pageSize]="pageSize"
-      class="pagination pagination-rounded justify-content-end mb-2"
-      aria-label="Default pagination"
-    >
-    </ngb-pagination>
-  </ng-template>
-
-  <!-- Tab Content -->
-  <ng-template #TabContent1>
+          <!-- Tab Content -->
+          <!-- <ng-template #TabContent1>
     <div class="row mb-2">
       <div class="col-sm-4">
-        <!-- <div class="search-box me-2 mb-2 d-inline-block">
-          <div class="position-relative">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search..."
-              [(ngModel)]="searchQuery"
-              (keyup)="debounceSubject.next($event)"
-            />
-            <i class="bx bx-search-alt search-icon"></i>
-          </div>
-        </div> -->
       </div>
       <div class="col-sm-8">
         <div class="text-sm-end">
@@ -383,7 +419,6 @@
           </button>
         </div>
       </div>
-      <!-- end col-->
     </div>
     <div class="table-responsive">
       <table class="table table-nowrap" style="margin-bottom: 90px">
@@ -431,24 +466,6 @@
             <td>
               {{ customers.yearlyPlay }}
             </td>
-            <!--
-            <td>
-              <span
-                *ngIf="customers.isActive"
-                class="badge bg-success font-size-12"
-              >
-                <i class="mdi mdi-check me-1"></i>
-                {{ customers.isActive }}
-              </span>
-
-              <span
-                *ngIf="!customers.isActive"
-                class="badge bg-danger font-size-12"
-              >
-                <i class="mdi mdi-close me-1"></i>
-                {{ customers.isActive }}
-              </span>
-            </td> -->
 
             <td>
               <div class="dropdown" ngbDropdown>
@@ -481,7 +498,6 @@
         </tbody>
       </table>
     </div>
-    <!-- pagination -->
     <ngb-pagination
       [collectionSize]="tableData.length"
       [(page)]="currentpage"
@@ -490,13 +506,17 @@
       aria-label="Default pagination"
     >
     </ngb-pagination>
-  </ng-template>
+  </ng-template> -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-loader *ngIf="isLoading"></app-loader>
 
 <!-- Standard Modal -->
-<ng-template #add role="document" let-modal>
+<!-- <ng-template #add role="document" let-modal>
   <div class="modal-header">
     <h5 class="modal-title mt-0">Add Item</h5>
     <button
@@ -633,7 +653,7 @@
       </div>
     </form>
   </div>
-</ng-template>
+</ng-template> -->
 
 <!-- Edit Modal -->
 <ng-template #edit role="document" let-modal>
@@ -650,111 +670,71 @@
     <form (ngSubmit)="editCustomer()" [formGroup]="editForm">
       <div class="row">
         <div class="col-12">
-          <div class="mb-3">
-            <label class="control-label">Name</label>
-            <input
-              class="form-control"
-              placeholder="Enter Name"
-              type="text"
-              name="title"
-              formControlName="name"
-              [ngClass]="{ 'is-invalid': submitted && editF.name.errors }"
-            />
-            <div
-              *ngIf="submitted && editF.name.errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="editF.name.errors.required"
-                >Game Name is required.</span
-              >
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="formrow-inputState">Grade</label>
-            <select
-              id="formrow-inputState"
-              formControlName="customerGrade"
-              class="form-select"
-            >
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="control-label">Daily Play</label>
-            <input
-              class="form-control"
-              placeholder="Enter Daily Play"
-              type="number"
-              name="title"
-              formControlName="dailyPlay"
-              [ngClass]="{ 'is-invalid': submitted && editF.dailyPlay.errors }"
-            />
-            <div
-              *ngIf="submitted && editF.dailyPlay.errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="editF.dailyPlay.errors"
-                >Number should be greater than 0.</span
-              >
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label class="control-label">Monthly Play</label>
-            <input
-              class="form-control"
-              placeholder="Enter Monthly Play"
-              type="number"
-              name="title"
-              formControlName="monthlyPlay"
-              [ngClass]="{
-                'is-invalid': submitted && editF.monthlyPlay.errors
-              }"
-            />
-            <div
-              *ngIf="submitted && editF.monthlyPlay.errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="editF.monthlyPlay.errors"
-                >Number should be greater than 0.</span
-              >
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label class="control-label">Yearly Play</label>
-            <input
-              class="form-control"
-              placeholder="Enter Yearly Play"
-              type="number"
-              name="title"
-              formControlName="yearlyPlay"
-              [ngClass]="{ 'is-invalid': submitted && editF.yearlyPlay.errors }"
-            />
-            <div
-              *ngIf="submitted && editF.yearlyPlay.errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="editF.yearlyPlay.errors"
-                >Number should be greater than 0.</span
-              >
-            </div>
-          </div>
-
           <div class="mb-3" style="display: flex; align-items: center">
-            <label for="formrow-inputState">Active</label>
+            <label for="formrow-inputState" *ngIf="editF.isStart.value"
+              >Opening Meter</label
+            >
+            <label for="formrow-inputState" *ngIf="!editF.isStart.value"
+              >Closing Meter</label
+            >
             <ui-switch
+              (change)="startValueChange($event)"
               style="margin-bottom: 0.5rem; margin-left: 0.5rem"
-              [formControl]="form['isActive']"
+              formControlName="isStart"
               defaultBoColor="#dfdfdf"
               size="small"
               color="#34c38f"
             ></ui-switch>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">In</label>
+            <input
+              class="form-control"
+              placeholder="Enter In"
+              type="number"
+              name="title"
+              formControlName="in"
+              [ngClass]="{ 'is-invalid': submitted && editF.in.errors }"
+            />
+            <div *ngIf="submitted && editF.in.errors" class="invalid-feedback">
+              <span *ngIf="editF.in.errors.required">In is required.</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Out</label>
+            <input
+              class="form-control"
+              placeholder="Enter Out"
+              type="number"
+              name="title"
+              formControlName="out"
+              [ngClass]="{ 'is-invalid': submitted && editF.out.errors }"
+            />
+            <div *ngIf="submitted && editF.out.errors" class="invalid-feedback">
+              <span *ngIf="editF.out.errors.required">Out is required.</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">JackPot</label>
+            <input
+              class="form-control"
+              placeholder="Enter JackPot"
+              type="number"
+              name="title"
+              formControlName="jackPot"
+              [ngClass]="{ 'is-invalid': submitted && editF.jackPot.errors }"
+            />
+            <div
+              *ngIf="submitted && editF.jackPot.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.jackPot.errors.required"
+                >JackPot is required.</span
+              >
+            </div>
           </div>
         </div>
       </div>

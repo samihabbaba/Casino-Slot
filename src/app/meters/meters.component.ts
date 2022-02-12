@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataService } from "../shared/services/data.service";
 import Swal from "sweetalert2";
+import { AuthenticationService } from "../shared/services/authentication.service";
 @Component({
   selector: "app-meters",
   templateUrl: "./meters.component.html",
@@ -18,7 +19,7 @@ import Swal from "sweetalert2";
 export class MetersComponent implements OnInit {
   formData: FormGroup;
   editForm: FormGroup;
-  editedId: string = "";
+  editedObj: any;
 
   stardDayIn: any;
 
@@ -46,13 +47,14 @@ export class MetersComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private dataService: DataService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.getDays();
-    this.initializeAddForm();
+    // this.initializeAddForm();
     // this.fetchData();
   }
 
@@ -62,18 +64,6 @@ export class MetersComponent implements OnInit {
       console.log(this.daysList);
       this.stardDayIn = this.daysList[this.daysList.length - 1].id;
       this.fetchData2();
-    });
-  }
-
-  getStaff() {
-    this.dataService.getStaff().subscribe((resp) => {
-      this.staffList = resp;
-    });
-  }
-
-  fetchData() {
-    this.dataService.getHospitalityItems().subscribe((resp) => {
-      this.tableData = resp;
     });
   }
 
@@ -87,40 +77,53 @@ export class MetersComponent implements OnInit {
     });
   }
 
-  get form() {
-    return this.formData.controls;
-  }
+  // get form() {
+  //   return this.formData.controls;
+  // }
   get editF() {
     return this.editForm.controls;
   }
 
-  initializeAddForm() {
-    this.formData = this.formBuilder.group({
-      name: ["", [Validators.required]],
-      customerGrade: ["D"],
-      dailyPlay: [0, Validators.min(0)],
-      monthlyPlay: [0, Validators.min(0)],
-      yearlyPlay: [0, Validators.min(0)],
-      isActive: [true],
-    });
-  }
+  // initializeAddForm() {
+  //   this.formData = this.formBuilder.group({
+  //     name: ["", [Validators.required]],
+  //     customerGrade: ["D"],
+  //     dailyPlay: [0, Validators.min(0)],
+  //     monthlyPlay: [0, Validators.min(0)],
+  //     yearlyPlay: [0, Validators.min(0)],
+  //     isActive: [true],
+  //   });
+  // }
 
   initializeEditForm(obj) {
     console.log(obj);
     this.editForm = this.formBuilder.group({
-      name: [obj.name, [Validators.required]],
-      customerGrade: [obj.customerGrade],
-      dailyPlay: [obj.dailyPlay, Validators.min(0)],
-      monthlyPlay: [obj.monthlyPlay, Validators.min(0)],
-      yearlyPlay: [obj.yearlyPlay, Validators.min(0)],
-      isActive: [obj.isActive],
-      isDeleted: [false],
+      in: [obj.startIn, [Validators.required]],
+      out: [obj.startOut, [Validators.required]],
+      jackPot: [obj.startJackPot, [Validators.required]],
+      isClear: [true],
+      isStart: [true],
+      staffId: [this.authService.currentUser.id],
     });
+  }
+
+  startValueChange(ev) {
+    if (!ev) {
+      this.editF["in"].patchValue(this.editedObj.endIn);
+      this.editF["out"].patchValue(this.editedObj.endOut);
+      this.editF["jackPot"].patchValue(this.editedObj.endJackPot);
+      this.editForm.updateValueAndValidity();
+    } else {
+      this.editF["in"].patchValue(this.editedObj.startIn);
+      this.editF["out"].patchValue(this.editedObj.startOut);
+      this.editF["jackPot"].patchValue(this.editedObj.startJackPot);
+      this.editForm.updateValueAndValidity();
+    }
   }
 
   openModal(content: any, obj?: any) {
     if (obj) {
-      this.editedId = obj.id;
+      this.editedObj = obj;
       this.initializeEditForm(obj);
       this.modalService.open(content);
     } else {
@@ -132,11 +135,12 @@ export class MetersComponent implements OnInit {
   editCustomer() {
     if (this.editForm.valid) {
       const form = this.editForm.getRawValue();
-      this.dataService.editHospitalityItems(form, this.editedId).subscribe(
+      console.log(this.editedObj);
+      this.dataService.editMeter(form, this.editedObj.id).subscribe(
         (resp) => {
-          this.toastr.success("Item edited successfully");
+          this.toastr.success("Meter edited successfully");
           this.modalService.dismissAll();
-          this.fetchData();
+          this.fetchData2();
         },
         (err) => {
           this.toastr.error("Something went wrong");
@@ -147,47 +151,47 @@ export class MetersComponent implements OnInit {
     }
   }
 
-  saveCustomer() {
-    if (this.formData.valid) {
-      const form = this.formData.getRawValue();
-      this.dataService.addHospitalityItems(form).subscribe(
-        (resp) => {
-          this.toastr.success("Item added successfully");
-          this.modalService.dismissAll();
-          this.initializeAddForm();
-          this.fetchData();
-        },
-        (err) => {
-          this.toastr.error("Something went wrong");
-        }
-      );
-    } else {
-      this.submitted = true;
-    }
-  }
+  // saveCustomer() {
+  //   if (this.formData.valid) {
+  //     const form = this.formData.getRawValue();
+  //     this.dataService.addHospitalityItems(form).subscribe(
+  //       (resp) => {
+  //         this.toastr.success("Item added successfully");
+  //         this.modalService.dismissAll();
+  //         this.initializeAddForm();
+  //         this.fetchData2();
+  //       },
+  //       (err) => {
+  //         this.toastr.error("Something went wrong");
+  //       }
+  //     );
+  //   } else {
+  //     this.submitted = true;
+  //   }
+  // }
 
   confirmDelete(obj) {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to delete this item?",
+      text: "You want to reset this item?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#34c38f",
       cancelButtonColor: "#f46a6a",
-      confirmButtonText: "Yes, delete!",
+      confirmButtonText: "Yes, reset!",
     }).then((result) => {
       if (result.value) {
-        obj.isDeleted = true;
-        this.dataService.editHospitalityItems(obj, obj.id).subscribe(
-          (resp) => {
-            this.toastr.success("Item deleted successfully");
-            this.fetchData();
-          },
-          (err) => {
-            obj.isDeleted = false;
-            this.toastr.error("Something went wrong");
-          }
-        );
+        // obj.isDeleted = true;
+        // this.dataService.editHospitalityItems(obj, obj.id).subscribe(
+        //   (resp) => {
+        //     this.toastr.success("Item reset successful");
+        //     this.fetchData2();
+        //   },
+        //   (err) => {
+        //     obj.isDeleted = false;
+        //     this.toastr.error("Something went wrong");
+        //   }
+        // );
       }
     });
   }
