@@ -122,6 +122,9 @@
 
     "CUSTOMERTRANSANSACTION": {
       "TEXT": "Customer Transaction",
+      "TEXT1": "Slot",
+      "TEXT2": "Live",
+      "TEXT3": "Complex",
       "BADGE": "04",
       "LIST": {
         "DEFAULT": "Default",
@@ -135,6 +138,8 @@
 
     "LIVEDATA": {
       "TEXT": "Live Data",
+      "TEXT1": "Sessions",
+      "TEXT2": "Close Day",
       "BADGE": "04",
       "LIST": {
         "DEFAULT": "Default",

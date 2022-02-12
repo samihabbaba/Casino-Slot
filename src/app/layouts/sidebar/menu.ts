@@ -60,13 +60,48 @@ export const MENU: MenuItem[] = [
     id: 5,
     label: "MENUITEMS.CUSTOMERTRANSANSACTION.TEXT",
     icon: "bxs-user-detail",
-    link: "/customer-transaction",
+    subItems: [
+      {
+        id: 24,
+        label: "MENUITEMS.CUSTOMERTRANSANSACTION.TEXT1",
+        link: "/customer-transaction/slot",
+        parentId: 5,
+      },
+
+      {
+        id: 25,
+        label: "MENUITEMS.CUSTOMERTRANSANSACTION.TEXT2",
+        link: "/customer-transaction/live",
+        parentId: 5,
+      },
+
+      {
+        id: 26,
+        label: "MENUITEMS.CUSTOMERTRANSANSACTION.TEXT3",
+        link: "/customer-transaction/complex",
+        parentId: 5,
+      },
+    ],
   },
   {
     id: 6,
     label: "MENUITEMS.LIVEDATA.TEXT",
     icon: "bxs-data",
-    link: "/live-data",
+    subItems: [
+      {
+        id: 22,
+        label: "MENUITEMS.LIVEDATA.TEXT1",
+        link: "/live-data/sessions",
+        parentId: 6,
+      },
+
+      {
+        id: 23,
+        label: "MENUITEMS.LIVEDATA.TEXT2",
+        link: "/live-data/close-day",
+        parentId: 6,
+      },
+    ],
   },
   {
     id: 7,
