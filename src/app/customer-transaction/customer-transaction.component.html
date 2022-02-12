@@ -1,1 +1,319 @@
-<p>customer-transaction works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title
+    title="Transactions"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row" *ngIf="footerData">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="profit-and-report">
+            <div class="data">
+              <div>
+                <span class="label">Total Customers : </span>
+                {{ 0 }} &nbsp;
+              </div>
+            </div>
+            <div class="buttons">
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Customers Report
+              </button>
+              <button
+              style="width: 100%; flex: 1; margin-right: 0.5rem"
+              type="button"
+              class="btn btn-secondary mt-2 mr-2"
+            >
+              <i class="mdi mdi-file-document me-1"></i> Statistics Report
+            </button>
+            <button
+            style="width: 100%; flex: 1; margin-right: 0.5rem"
+            type="button"
+            class="btn btn-secondary mt-2 mr-2"
+          >
+            <i class="mdi mdi-file-document me-1"></i> Discount Report
+          </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-7" style="display: flex">
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">Day</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="stardDayIn"
+                >
+                  <option [value]="0">Today</option>
+                  <option [value]="item.id" *ngFor="let item of daysList">
+                    {{ item.date }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-5" style="align-self: center">
+              <div class="text-sm-end" style="display: flex">
+                <button
+                  style="width: 100%; margin-right: 0.5rem"
+                  type="button"
+                  class="btn btn-success mt-2 mr-2"
+                  (click)="fetchData()"
+                >
+                  <i class="mdi mdi-search-web me-1"></i> Search
+                </button>
+
+                <!-- <button
+                  style="width: 100%"
+                  type="button"
+                  class="btn btn-primary mt-2 mr-2"
+                >
+                  <i class="mdi mdi-plus me-1"></i> New Transaction
+                </button> -->
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+
+<!-- Standard Modal -->
+<!-- <ng-template #add role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">New Transaction</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="saveCustomer()" [formGroup]="formData">
+      <div class="row">
+        <div class="col-12">
+          <div class="mb3">
+            <label for="formrow-inputState">Transaction Type</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="formRadios"
+                id="formRadios1"
+                [checked]="isIn === false"
+                (change)="
+                  isIn = false; form.typeId.patchValue(typeListIsOut[0].id)
+                "
+              />
+              <label class="form-check-label" for="formRadios1">
+                Kasa Out
+              </label>
+            </div>
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="formRadios"
+                id="formRadios2"
+                [checked]="isIn === true"
+                (change)="
+                  isIn = true; form.typeId.patchValue(typeListIsIn[0].id)
+                "
+              />
+              <label class="form-check-label" for="formRadios2">
+                Kasa In
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Amount</label>
+            <input
+              class="form-control"
+              placeholder="Enter Amount"
+              type="number"
+              name="title"
+              autocomplete="off"
+              formControlName="amount"
+              [ngClass]="{ 'is-invalid': submitted && form.amount.errors }"
+            />
+            <div
+              *ngIf="submitted && form.amount.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.amount.errors"
+                >Amount should be greater than 0.</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Currency</label>
+            <select
+              id="formrow-inputState"
+              formControlName="currencyId"
+              class="form-select"
+            >
+              <option [value]="item.id" *ngFor="let item of currencyList">
+                {{ item.code }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Note</label>
+            <input
+              class="form-control"
+              placeholder="Enter Note"
+              type="text"
+              name="title"
+              autocomplete="off"
+              formControlName="note"
+              [ngClass]="{ 'is-invalid': submitted && form.note.errors }"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Type</label>
+            <select
+              id="formrow-inputState"
+              formControlName="typeId"
+              class="form-select"
+            >
+              <option
+                [value]="item.id"
+                *ngFor="let item of isIn ? typeListIsIn : typeListIsOut"
+              >
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template> -->
+
+<!-- Edit Modal -->
+<!-- <ng-template #edit role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Edit Customer</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="editCustomer()" [formGroup]="editForm">
+      <div class="row">
+        <div class="col-12">
+          <div class="mb-3">
+            <label class="control-label">Amount</label>
+            <input
+              class="form-control"
+              placeholder="Enter Amount"
+              type="number"
+              name="title"
+              autocomplete="off"
+              formControlName="amount"
+              [ngClass]="{ 'is-invalid': submitted && editF.amount.errors }"
+            />
+            <div
+              *ngIf="submitted && editF.amount.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.amount.errors"
+                >Amount should be greater than 0.</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Currency</label>
+            <select
+              id="formrow-inputState"
+              formControlName="currencyId"
+              class="form-select"
+            >
+              <option [value]="item.id" *ngFor="let item of currencyList">
+                {{ item.code }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Note</label>
+            <input
+              class="form-control"
+              placeholder="Enter Note"
+              type="text"
+              name="title"
+              autocomplete="off"
+              formControlName="note"
+              [ngClass]="{ 'is-invalid': submitted && editF.note.errors }"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Type</label>
+            <select
+              id="formrow-inputState"
+              formControlName="typeId"
+              class="form-select"
+            >
+              <option
+                [value]="item.id"
+                *ngFor="
+                  let item of editedObj.isIn ? typeListIsIn : typeListIsOut
+                "
+              >
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template> -->

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LiveDataRoutingModule } from './live-data-routing.module';
 import { LiveDataComponent } from './live-data.component';
 import { CloseDayComponent } from './close-day/close-day.component';
+import { SharedModule } from 'primeng/api';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CloseDayComponent } from './close-day/close-day.component';
   ],
   imports: [
     CommonModule,
-    LiveDataRoutingModule
+    LiveDataRoutingModule,
+    SharedModule
   ]
 })
 export class LiveDataModule { }
