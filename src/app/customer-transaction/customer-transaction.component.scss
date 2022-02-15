@@ -2,6 +2,12 @@
   padding-top: 1rem;
 }
 
+.splitter-container {
+  height: 70vh;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+}
+
 .profit-and-report {
   display: flex;
   .data {
@@ -44,4 +50,23 @@
 tbody td {
   vertical-align: middle;
   padding: 0;
+}
+
+.table-nowrap th {
+  padding: 0.25rem 0.5rem;
+}
+
+.clickable-row {
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.greenText {
+  color: #34c38f;
+}
+
+.redText {
+  color: #f46a6a;
 }

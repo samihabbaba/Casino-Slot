@@ -1,10 +1,10 @@
 <div class="container-fluid" *ngIf="!isLoading">
   <app-page-title
-    title="Transactions"
+    title="Slot Transaction"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
 
-  <div class="row" *ngIf="footerData">
+  <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
@@ -12,7 +12,7 @@
             <div class="data">
               <div>
                 <span class="label">Total Customers : </span>
-                {{ 0 }} &nbsp;
+                {{ filteredFirstPanelData.length }} &nbsp;
               </div>
             </div>
             <div class="buttons">
@@ -24,19 +24,19 @@
                 <i class="mdi mdi-file-document me-1"></i> Customers Report
               </button>
               <button
-              style="width: 100%; flex: 1; margin-right: 0.5rem"
-              type="button"
-              class="btn btn-secondary mt-2 mr-2"
-            >
-              <i class="mdi mdi-file-document me-1"></i> Statistics Report
-            </button>
-            <button
-            style="width: 100%; flex: 1; margin-right: 0.5rem"
-            type="button"
-            class="btn btn-secondary mt-2 mr-2"
-          >
-            <i class="mdi mdi-file-document me-1"></i> Discount Report
-          </button>
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Statistics Report
+              </button>
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Discount Report
+              </button>
             </div>
           </div>
         </div>
@@ -49,9 +49,24 @@
       <div class="card">
         <div class="card-body">
           <div class="row mb-2">
-            <div class="col-sm-7" style="display: flex">
+            <div class="col-sm-10" style="display: flex">
+              <div
+                style="flex: 1.5; align-self: center; margin-top: 1.1rem"
+                class="search-box me-2 mb-2 d-inline-block"
+              >
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search..."
+                    [(ngModel)]="searchQuery"
+                    (keyup)="debounceSubject.next($event)"
+                  />
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+              </div>
               <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
-                <label for="formrow-inputState">Day</label>
+                <label for="formrow-inputState">Start Day</label>
                 <select
                   id="formrow-inputState"
                   class="form-select"
@@ -63,8 +78,21 @@
                   </option>
                 </select>
               </div>
+              <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
+                <label for="formrow-inputState">End Day</label>
+                <select
+                  id="formrow-inputState"
+                  class="form-select"
+                  [(ngModel)]="endDayIn"
+                >
+                  <option [value]="0">Today</option>
+                  <option [value]="item.id" *ngFor="let item of daysList">
+                    {{ item.date }}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="col-sm-5" style="align-self: center">
+            <div class="col-sm-2" style="align-self: center">
               <div class="text-sm-end" style="display: flex">
                 <button
                   style="width: 100%; margin-right: 0.5rem"
@@ -74,19 +102,263 @@
                 >
                   <i class="mdi mdi-search-web me-1"></i> Search
                 </button>
-
-                <!-- <button
-                  style="width: 100%"
-                  type="button"
-                  class="btn btn-primary mt-2 mr-2"
-                >
-                  <i class="mdi mdi-plus me-1"></i> New Transaction
-                </button> -->
               </div>
             </div>
             <!-- end col-->
           </div>
 
+          <div class="split-example splitter-container">
+            <as-split
+              direction="horizontal"
+              restrictMove="true"
+              [useTransition]="true"
+            >
+              <as-split-area size="60">
+                <as-split direction="vertical" restrictMove="true">
+                  <as-split-area size="65">
+                    <p-table
+                      [scrollable]="true"
+                      styleClass="p-datatable-sm"
+                      responsiveLayout="scroll"
+                      [value]="filteredFirstPanelData"
+                      [(contextMenuSelection)]="selectedCustomer"
+                      [contextMenu]="cmPanel1"
+                      dataKey="code"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>Customer</th>
+                          <th>Total</th>
+                          <th>Chip In</th>
+                          <th>Chip Out</th>
+                          <th>Cash</th>
+                          <th>Credit Card</th>
+                          <th>VIP</th>
+                          <th>Old Day</th>
+                          <th>Discount In</th>
+                          <th>Discount Out</th>
+                          <th>Discount</th>
+                          <th>Credit</th>
+                          <th>Cancel</th>
+                          <th>Jackpot</th>
+                          <th>WinLoss</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-customers>
+                        <tr
+                          (click)="handleFirstPanelRowClick(customers)"
+                          [pContextMenuRow]="customers"
+                          class="clickable-row"
+                          [ngClass]="{
+                            selected: selectedCustomer?.id === customers.id
+                          }"
+                        >
+                          <td>
+                            {{ customers.customerName }}
+                          </td>
+
+                          <td>
+                            {{ customers.total | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.chipIn | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.chipOut | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.cash | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.creditCard | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.vip | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.oldDayOut | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.discountIn | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.disountOut | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{
+                              customers.disountOut - customers.discountIn
+                                | number: "1.2-2"
+                            }}
+                          </td>
+                          <td>
+                            {{ customers.creditOut | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.cancel | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.jackPot | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.winLoss | number: "1.2-2" }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </as-split-area>
+                  <as-split-area size="35">
+                    <p-table
+
+                      [scrollable]="true"
+                      styleClass="p-datatable-sm"
+                      responsiveLayout="scroll"
+                      [value]="secondPanelData"
+                      [(contextMenuSelection)]="selectedTransaction"
+                      [contextMenu]="cmPanel2"
+                      dataKey="code"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>Date</th>
+                          <th>Machine</th>
+                          <th>Amount</th>
+                          <th>TL Amount</th>
+                          <th>Payment Method</th>
+                          <th>Type</th>
+                          <th>Staff</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-customers>
+                        <tr [pContextMenuRow]="customers" class="clickable-row">
+                          <td>
+                            {{ customers.recordDate | date: "short" }}
+                          </td>
+
+                          <td>
+                            {{ customers.machineName }}
+                          </td>
+
+                          <td>
+                            {{ customers.amount | number: "1.2-2" }}
+                            {{ customers.currency }}
+                          </td>
+                          <td>
+                            {{ customers.tlAmount | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.paymentType }}
+                          </td>
+
+                          <td>
+                            {{ customers.recordType }}
+                          </td>
+
+                          <td>
+                            {{ customers.staff }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </as-split-area>
+                </as-split>
+              </as-split-area>
+              <as-split-area size="40">
+                <as-split direction="vertical" restrictMove="true">
+                  <as-split-area size="60">
+                    <p-table
+                      [scrollable]="true"
+                      styleClass="p-datatable-sm"
+                      responsiveLayout="scroll"
+                      [value]="thirdPanelData"
+                      [(contextMenuSelection)]="selectedExtra"
+                      [contextMenu]="cmPanel3"
+                      dataKey="code"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th>Type</th>
+                          <th>Staff</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-customers>
+                        <tr [pContextMenuRow]="customers" class="clickable-row">
+                          <td>
+                            {{ customers.date | date: "short" }}
+                          </td>
+
+                          <td>
+                            {{ customers.amount | number: "1.2-2" }}
+                            {{ customers.currency }}
+                          </td>
+
+                          <td
+                            [ngClass]="{
+                              redText:
+                                customers.transactionType.endsWith('Out'),
+                              greenText:
+                                customers.transactionType.endsWith('In')
+                            }"
+                          >
+                            {{ customers.transactionType }}
+                          </td>
+
+                          <td>
+                            {{ customers.staff }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </as-split-area>
+                  <as-split-area size="40">
+                    <p-table
+                      [scrollable]="true"
+                      styleClass="p-datatable-sm"
+                      responsiveLayout="scroll"
+                      [value]="fourthPanelData"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>Name</th>
+                          <th>In</th>
+                          <th>Out</th>
+                          <th>Remaining</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-customers>
+                        <tr>
+                          <td>
+                            {{ customers.name }}
+                          </td>
+
+                          <td>
+                            {{ customers.in | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.out | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.remaining | number: "1.2-2" }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </as-split-area>
+                </as-split>
+              </as-split-area>
+            </as-split>
+          </div>
         </div>
       </div>
     </div>
@@ -96,8 +368,12 @@
 
 <app-loader *ngIf="isLoading"></app-loader>
 
-<!-- Standard Modal -->
-<!-- <ng-template #add role="document" let-modal>
+<p-contextMenu #cmPanel1 [model]="items"></p-contextMenu>
+<p-contextMenu #cmPanel2 [model]="items2"></p-contextMenu>
+<p-contextMenu #cmPanel3 [model]="items3"></p-contextMenu>
+
+<!-- Add Customer Transaction Modal -->
+<ng-template #addCustomerTransaction role="document" let-modal>
   <div class="modal-header">
     <h5 class="modal-title mt-0">New Transaction</h5>
     <button
@@ -108,7 +384,10 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="saveCustomer()" [formGroup]="formData">
+    <form
+      (ngSubmit)="createCustomerTransaction()"
+      [formGroup]="addCustomerTransactionForm"
+    >
       <div class="row">
         <div class="col-12">
           <div class="mb3">
@@ -121,7 +400,8 @@
                 id="formRadios1"
                 [checked]="isIn === false"
                 (change)="
-                  isIn = false; form.typeId.patchValue(typeListIsOut[0].id)
+                  isIn = false;
+                  form.transactionType.patchValue(transactionTypeOut[0])
                 "
               />
               <label class="form-check-label" for="formRadios1">
@@ -136,7 +416,8 @@
                 id="formRadios2"
                 [checked]="isIn === true"
                 (change)="
-                  isIn = true; form.typeId.patchValue(typeListIsIn[0].id)
+                  isIn = true;
+                  form.transactionType.patchValue(transactionTypeIn[0])
                 "
               />
               <label class="form-check-label" for="formRadios2">
@@ -180,30 +461,19 @@
           </div>
 
           <div class="mb-3">
-            <label class="control-label">Note</label>
-            <input
-              class="form-control"
-              placeholder="Enter Note"
-              type="text"
-              name="title"
-              autocomplete="off"
-              formControlName="note"
-              [ngClass]="{ 'is-invalid': submitted && form.note.errors }"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="formrow-inputState">Type</label>
+            <label for="formrow-inputState">Payment Type</label>
             <select
               id="formrow-inputState"
-              formControlName="typeId"
+              formControlName="transactionType"
               class="form-select"
             >
               <option
-                [value]="item.id"
-                *ngFor="let item of isIn ? typeListIsIn : typeListIsOut"
+                [value]="item"
+                *ngFor="
+                  let item of isIn ? transactionTypeIn : transactionTypeOut
+                "
               >
-                {{ item.name }}
+                {{ item }}
               </option>
             </select>
           </div>
@@ -221,12 +491,14 @@
       </div>
     </form>
   </div>
-</ng-template> -->
+</ng-template>
 
-<!-- Edit Modal -->
-<!-- <ng-template #edit role="document" let-modal>
+<!-- Edit Customer Transaction Modal -->
+<ng-template #editCustomerTransaction role="document" let-modal>
   <div class="modal-header">
-    <h5 class="modal-title mt-0">Edit Customer</h5>
+    <h5 class="modal-title mt-0">
+      Edit Transaction / {{ selectedCustomer.customerName }}
+    </h5>
     <button
       type="button"
       class="btn-close"
@@ -235,9 +507,20 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="editCustomer()" [formGroup]="editForm">
+    <form
+      (ngSubmit)="updateCustomerTransaction()"
+      [formGroup]="editTransactionForm"
+    >
       <div class="row">
         <div class="col-12">
+          <div class="mb-3">
+            <label class="control-label">Machine</label>
+
+            <p>
+              {{ selectedTransaction.machineName }}
+            </p>
+          </div>
+
           <div class="mb-3">
             <label class="control-label">Amount</label>
             <input
@@ -265,6 +548,7 @@
               id="formrow-inputState"
               formControlName="currencyId"
               class="form-select"
+              (change)="setRate($event)"
             >
               <option [value]="item.id" *ngFor="let item of currencyList">
                 {{ item.code }}
@@ -272,6 +556,74 @@
             </select>
           </div>
 
+          <div class="mb-3">
+            <label for="formrow-inputState">Transaction</label>
+            <select
+              id="formrow-inputState"
+              formControlName="recordType"
+              class="form-select"
+              [ngClass]="{ 'is-invalid': submitted && editF.recordType.errors }"
+            >
+              <option [value]="item" *ngFor="let item of recordTypeList">
+                {{ item }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="submitted && editF.recordType.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.recordType.errors"
+                >Transaction is required.</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Payment Type</label>
+            <select
+              id="formrow-inputState"
+              formControlName="paymentType"
+              class="form-select"
+            >
+              <option [value]="item" *ngFor="let item of paymentTypeList">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">TL Amount</label>
+
+            <p>
+              {{
+                editF["amount"].value * editF["rate"].value | number: "1.2-2"
+              }}
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <label class="control-label">Credit</label>
+
+            <p>
+              {{ editF["amount"].value * selectedTransaction.machineCredit }}
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Staff</label>
+            <select
+              id="formrow-inputState"
+              formControlName="staffId"
+              class="form-select"
+            >
+              <option [value]="item.id" *ngFor="let item of staffList">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+
+          <!--
           <div class="mb-3">
             <label class="control-label">Note</label>
             <input
@@ -283,9 +635,9 @@
               formControlName="note"
               [ngClass]="{ 'is-invalid': submitted && editF.note.errors }"
             />
-          </div>
+          </div> -->
 
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="formrow-inputState">Type</label>
             <select
               id="formrow-inputState"
@@ -301,7 +653,7 @@
                 {{ item.name }}
               </option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
       <div style="display: flex">
@@ -316,4 +668,4 @@
       </div>
     </form>
   </div>
-</ng-template> -->
+</ng-template>

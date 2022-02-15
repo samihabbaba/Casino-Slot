@@ -42,6 +42,7 @@
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
     "@types/chartist": "^0.11.0",
     "angular-archwizard": "^7.0.0",
+    "angular-split": "^13.2.0",
     "apexcharts": "^3.27.1",
     "bootstrap": "^5.1.3",
     "bs-custom-file-input": "^1.3.4",

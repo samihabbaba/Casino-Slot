@@ -460,6 +460,79 @@ export class DataService {
     );
   }
 
-
   // CUSTOMER TRANSACTIONS
+
+  getCustomersAllStat(startDay = 0, endDay = 0, searchQuery = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/allstat?startDayIn=${startDay}&endDayIn=${endDay}&searchQuery=${searchQuery}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getCustomerTransactionsById(startDay = 0, endDay = 0, customerId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/transaction/${customerId}?startDayIn=${startDay}&endDayIn=${endDay}&customerId=${customerId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getCustomerExtrasById(startDay = 0, endDay = 0, customerId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/extra/${customerId}?startDayIn=${startDay}&endDayIn=${endDay}&customerId=${customerId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getCustomerStatistics(startDay = 0, endDay = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/statistics?startDayIn=${startDay}&endDayIn=${endDay}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  createCustomerTransaction(obj) {
+    return this.http.post<any>(
+      `${environment.apiUrl}customer/transaction`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  editCustomerTransaction(obj, transactionId) {
+    return this.http.put<any>(
+      `${environment.apiUrl}customer/transaction/${transactionId}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  deleteCustomerExtra(transactionId) {
+    return this.http.delete<any>(
+      `${environment.apiUrl}customer/extra/${transactionId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  deleteCustomerTransaction(transactionId) {
+    return this.http.delete<any>(
+      `${environment.apiUrl}customer/transaction/${transactionId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 }
