@@ -4,45 +4,7 @@
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="profit-and-report">
-            <div class="data">
-              <div>
-                <span class="label">Total Customers : </span>
-                {{ filteredFirstPanelData.length }} &nbsp;
-              </div>
-            </div>
-            <div class="buttons">
-              <button
-                style="width: 100%; flex: 1; margin-right: 0.5rem"
-                type="button"
-                class="btn btn-secondary mt-2 mr-2"
-              >
-                <i class="mdi mdi-file-document me-1"></i> Customers Report
-              </button>
-              <button
-                style="width: 100%; flex: 1; margin-right: 0.5rem"
-                type="button"
-                class="btn btn-secondary mt-2 mr-2"
-              >
-                <i class="mdi mdi-file-document me-1"></i> Statistics Report
-              </button>
-              <button
-                style="width: 100%; flex: 1; margin-right: 0.5rem"
-                type="button"
-                class="btn btn-secondary mt-2 mr-2"
-              >
-                <i class="mdi mdi-file-document me-1"></i> Discount Report
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <div class="row">
     <div class="col-12">
@@ -272,7 +234,7 @@
               </as-split-area>
               <as-split-area size="40">
                 <as-split direction="vertical" restrictMove="true">
-                  <as-split-area size="60">
+                  <as-split-area size="53">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -319,7 +281,7 @@
                       </ng-template>
                     </p-table>
                   </as-split-area>
-                  <as-split-area size="40">
+                  <as-split-area size="47">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -363,7 +325,47 @@
       </div>
     </div>
   </div>
-  <!-- end row -->
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="profit-and-report">
+            <div class="data">
+              <div>
+                <span class="label">Total Customers : </span>
+                {{ filteredFirstPanelData.length }} &nbsp;
+              </div>
+            </div>
+            <div class="buttons">
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Customers Report
+              </button>
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Statistics Report
+              </button>
+              <button
+                style="width: 100%; flex: 1; margin-right: 0.5rem"
+                type="button"
+                class="btn btn-secondary mt-2 mr-2"
+              >
+                <i class="mdi mdi-file-document me-1"></i> Discount Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-loader *ngIf="isLoading"></app-loader>
