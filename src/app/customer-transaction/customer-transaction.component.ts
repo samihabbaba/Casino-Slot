@@ -252,9 +252,7 @@ export class CustomerTransactionComponent implements OnInit {
 
   setRate(event) {
     const selectedId = parseInt(event.target.value);
-    let rate = parseInt(
-      this.currencyList.find((x) => x.id === selectedId).rate
-    );
+    let rate = this.currencyList.find((x) => x.id === selectedId).rate;
     this.editF["rate"].patchValue(rate);
     this.editF["currencyId"].patchValue(selectedId);
   }

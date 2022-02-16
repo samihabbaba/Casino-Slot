@@ -77,8 +77,9 @@
                 <as-split direction="vertical" restrictMove="true">
                   <as-split-area size="65">
                     <p-table
+                    [resizableColumns]="true"
                       [scrollable]="true"
-                      styleClass="p-datatable-sm"
+                      styleClass="p-datatable-sm p-datatable-gridlines"
                       responsiveLayout="scroll"
                       [value]="filteredFirstPanelData"
                       [(contextMenuSelection)]="selectedCustomer"

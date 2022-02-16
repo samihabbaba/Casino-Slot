@@ -1,0 +1,108 @@
+.table-footer {
+  padding-top: 1rem;
+}
+
+.splitter-container {
+  height: 80vh;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+}
+
+.profit-and-report {
+  display: flex;
+  .data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    font-size: 14px;
+  }
+  .buttons {
+    display: flex;
+    width: 60%;
+  }
+}
+
+.label {
+  font-weight: 600;
+  &.big {
+    color: #34c38f;
+    font-size: 17px;
+  }
+  &.red {
+    color: #f46a6a;
+    font-size: 17px;
+  }
+}
+
+.first-row {
+  display: flex;
+  color: #556ee6;
+}
+
+.second-row {
+  display: flex;
+  color: #34c38f;
+}
+
+@media screen and (max-width: 1150px) {
+  .profit-and-report {
+    flex-direction: column;
+    .data,
+    .buttons {
+      width: 100%;
+    }
+  }
+}
+
+tbody td {
+  vertical-align: middle;
+  padding: 0;
+}
+
+.table-nowrap th {
+  padding: 0.25rem 0.5rem;
+}
+
+.clickable-row {
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.greenText {
+  color: #34c38f;
+}
+
+.redText {
+  color: #f46a6a;
+}
+
+.chipList {
+  display: flex;
+  .chips {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .chip-container {
+      display: flex;
+      align-items: center;
+      padding: 4px 0;
+      padding-right: 1rem;
+      justify-content: space-between;
+    }
+    input {
+      width: 40%;
+      height: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .chipList {
+    display: flex;
+    flex-direction: column;
+  }
+}

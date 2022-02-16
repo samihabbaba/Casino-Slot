@@ -535,4 +535,43 @@ export class DataService {
       }
     );
   }
+
+  getCustomersLiveStat(startDay = 0, endDay = 0, searchQuery = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/liveallstat?startDayIn=${startDay}&endDayIn=${endDay}&searchQuery=${searchQuery}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getCustomerLiveTransactionsById(startDay = 0, endDay = 0, customerId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/livetransaction/${customerId}?startDayIn=${startDay}&endDayIn=${endDay}&customerId=${customerId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getCustomerRealityDrop(customerId = 0) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/rd/${customerId}?customerId=${customerId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+
+  createLiveCustomerTransaction(obj) {
+    return this.http.post<any>(
+      `${environment.apiUrl}customer/live`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
 }

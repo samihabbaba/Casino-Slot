@@ -10,6 +10,7 @@ import { SharedModule } from "../shared/shared.module";
 import { TableModule } from "primeng/table";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 import { ContextMenuModule } from "primeng/contextmenu";
+import {InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ContextMenuModule } from "primeng/contextmenu";
     TableModule,
     ContextMenuModule,
     NgbTooltipModule,
+    InputNumberModule
   ],
 })
 export class CustomerTransactionModule {}
