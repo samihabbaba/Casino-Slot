@@ -125,4 +125,7 @@ export class SlotTransactionComponent implements OnInit {
       }
     });
   }
+
+
 }
+

@@ -182,12 +182,45 @@ export class LiveCustomerComponent implements OnInit {
 
   // 1ST PANEL
 
+  calculateWinLossLive(liveRec) {
+    let TotalDiscount = liveRec.disountOut - liveRec.discountIn;
+    liveRec.liveCreditCard =
+      liveRec.liveInCreditCard - liveRec.liveOutCreditCard;
+    liveRec.totalChip100TL =
+      liveRec.chip100TLOut +
+      liveRec.chip100TLKasaOut -
+      (liveRec.chip100TLKasaIN + liveRec.chip100TLIn);
+    liveRec.totalChip500TL =
+      liveRec.chip500TLOut +
+      liveRec.chip500TLKasaOut -
+      (liveRec.chip500TLKasaIN + liveRec.chip500TLIn);
+    liveRec.totalChip100EU =
+      liveRec.chip100EUOut +
+      liveRec.chip100EUKasaOut -
+      (liveRec.chip100EUKasaIN + liveRec.chip100EUIn);
+    liveRec.totalChip500EU =
+      liveRec.chip500EUOut +
+      liveRec.chip500EUKasaOut -
+      (liveRec.chip500EUKasaIN + liveRec.chip500EUIn);
+    liveRec.totalCash =
+      liveRec.tableCash + liveRec.liveInKasa + liveRec.liveInCreditCard;
+    liveRec.winLoss =
+      liveRec.liveOutKasa +
+      liveRec.disountOut +
+      liveRec.liveOutCreditCard -
+      (liveRec.totalCash + liveRec.discountIn);
+  }
+
   getAllCustomerStats() {
     this.dataService
       .getCustomersLiveStat(this.stardDayIn, this.endDayIn, this.searchQuery)
       .subscribe((resp) => {
-        this.firstPanelData = resp;
-        this.filteredFirstPanelData = resp;
+        const arr = resp;
+        arr.forEach((x) => {
+          this.calculateWinLossLive(x);
+        });
+        this.firstPanelData = arr;
+        this.filteredFirstPanelData = arr;
         this.isLoading = false;
       });
   }
@@ -382,54 +415,6 @@ export class LiveCustomerComponent implements OnInit {
         this.isLoading = false;
       });
   }
-
-  // get editF() {
-  //   return this.editTransactionForm.controls;
-  // }
-
-  // setRate(event) {
-  //   const selectedId = parseInt(event.target.value);
-  //   let rate = parseInt(
-  //     this.currencyList.find((x) => x.id === selectedId).rate
-  //   );
-  //   this.editF["rate"].patchValue(rate);
-  //   this.editF["currencyId"].patchValue(selectedId);
-  // }
-
-  // initializeEditTransactionForm(obj) {
-  //   this.editTransactionForm = this.formBuilder.group({
-  //     amount: [obj?.amount, [Validators.required, Validators.min(1)]],
-  //     currencyId: [this.currencyList.find((x) => x.code === obj.currency).id],
-  //     rate: [this.currencyList.find((x) => x.code === obj.currency).rate],
-  //     credit: [obj?.credit, [Validators.required]],
-  //     paymentType: [obj?.paymentType, [Validators.required]],
-  //     recordType: [obj?.recordType, [Validators.required]],
-  //     staffId: [this.staffList[0].id],
-  //     staffEdit: [this.authService.currentUser.id],
-  //   });
-  // }
-
-  // updateCustomerTransaction() {
-  //   if (this.editTransactionForm.valid) {
-  //     const form = this.editTransactionForm.getRawValue();
-  //     form.credit = form.amount * this.selectedTransaction.machineCredit;
-  //     console.log(form);
-  //     this.dataService
-  //       .editCustomerTransaction(form, this.selectedTransaction.id)
-  //       .subscribe(
-  //         (resp) => {
-  //           this.toastr.success("Transaction edited successfully");
-  //           this.modalService.dismissAll();
-  //           this.fetchData();
-  //         },
-  //         (err) => {
-  //           this.toastr.error("Something went wrong");
-  //         }
-  //       );
-  //   } else {
-  //     this.submitted = true;
-  //   }
-  // }
 
   confirmTransactionDelete() {
     Swal.fire({

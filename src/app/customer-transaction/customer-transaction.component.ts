@@ -169,12 +169,28 @@ export class CustomerTransactionComponent implements OnInit {
 
   // 1ST PANEL
 
+  calculateWinLoss(rec) {
+    let TotalDiscount = rec.disountOut - rec.discountIn;
+    let TotalCC = rec.creditCard + rec.creditCardIn - rec.creditCardOut;
+    let TotalCash = rec.cash + rec.cashIn - rec.cashOut;
+    let TotalOut = rec.cancel + rec.jackPot;
+    let TotalOldDay = rec.oldDayIn - rec.oldDayOut;
+    rec.winLoss =
+      TotalOut -
+      (TotalCC + TotalCash + rec.vip) +
+      (TotalDiscount + TotalOldDay);
+  }
+
   getAllCustomerStats() {
     this.dataService
       .getCustomersAllStat(this.stardDayIn, this.endDayIn, this.searchQuery)
       .subscribe((resp) => {
-        this.firstPanelData = resp;
-        this.filteredFirstPanelData = resp;
+        const arr = resp;
+        arr.forEach((x) => {
+          this.calculateWinLoss(x);
+        });
+        this.firstPanelData = arr;
+        this.filteredFirstPanelData = arr;
         this.isLoading = false;
       });
   }
