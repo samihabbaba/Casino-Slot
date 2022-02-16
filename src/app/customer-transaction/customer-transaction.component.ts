@@ -49,7 +49,7 @@ export class CustomerTransactionComponent implements OnInit {
         this.submitted = false;
       },
     },
-    { label: "Customer Report", icon: "pi pi-fw pi-times", command: () => null },
+    { label: "Customer Report", icon: "pi pi-fw pi-file", command: () => null },
   ];
 
   items2 = [

@@ -4,8 +4,6 @@
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
 
-
-
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -89,7 +87,7 @@
                     >
                       <ng-template pTemplate="header">
                         <tr>
-                          <th>Customer</th>
+                          <th style="flex: none; width: 150px">Customer</th>
                           <th>Total</th>
                           <th>Chip In</th>
                           <th>Chip Out</th>
@@ -115,7 +113,11 @@
                             selected: selectedCustomer?.id === customers.id
                           }"
                         >
-                          <td>
+                          <td
+                            placement="bottom"
+                            [ngbTooltip]="customers.customerName"
+                            style="width: 150px; flex: none; overflow: hidden"
+                          >
                             {{ customers.customerName }}
                           </td>
 
@@ -177,7 +179,6 @@
                   </as-split-area>
                   <as-split-area size="35">
                     <p-table
-
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
                       responsiveLayout="scroll"
@@ -234,7 +235,7 @@
               </as-split-area>
               <as-split-area size="40">
                 <as-split direction="vertical" restrictMove="true">
-                  <as-split-area size="53">
+                  <as-split-area size="54">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -281,7 +282,7 @@
                       </ng-template>
                     </p-table>
                   </as-split-area>
-                  <as-split-area size="47">
+                  <as-split-area size="46">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -325,7 +326,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-12">
