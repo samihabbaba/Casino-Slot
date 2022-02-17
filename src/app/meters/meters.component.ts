@@ -181,17 +181,24 @@ export class MetersComponent implements OnInit {
       confirmButtonText: "Yes, reset!",
     }).then((result) => {
       if (result.value) {
-        // obj.isDeleted = true;
-        // this.dataService.editHospitalityItems(obj, obj.id).subscribe(
-        //   (resp) => {
-        //     this.toastr.success("Item reset successful");
-        //     this.fetchData2();
-        //   },
-        //   (err) => {
-        //     obj.isDeleted = false;
-        //     this.toastr.error("Something went wrong");
-        //   }
-        // );
+        const form = this.formBuilder.group({
+          in: [0],
+          out: [0],
+          jackPot: [0],
+          isClear: [true],
+          isStart: [false],
+          staffId: [this.authService.currentUser.id],
+        });
+        this.dataService.editMeter(form.getRawValue(), obj.id).subscribe(
+          (resp) => {
+            this.toastr.success("Item reset successful");
+            this.fetchData2();
+          },
+          (err) => {
+            obj.isDeleted = false;
+            this.toastr.error("Something went wrong");
+          }
+        );
       }
     });
   }

@@ -152,9 +152,9 @@ export class DataService {
     );
   }
 
-  editOpenCredit(obj, lastDay) {
+  editOpenCredit(obj, lastDay, tableId) {
     return this.http.put<any>(
-      `${environment.apiUrl}table/updateclosecredit?isOpen=true&startDayIn=${lastDay}`,
+      `${environment.apiUrl}table/updateclosecredit?isOpen=true&startDayIn=${lastDay}&table=${tableId}`,
       obj,
       {
         headers: this.httpOptions.headers,

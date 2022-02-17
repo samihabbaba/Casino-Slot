@@ -179,17 +179,20 @@ export class LiveTableComponent implements OnInit {
       // obj.chips.forEach((x) => {
       //   x.value = x.quantity * x.value;
       // });
-      console.log(obj);
-      this.dataService.editOpenCredit(obj.chips, this.lastDayId).subscribe(
-        (resp) => {
-          this.toastr.success("Successfully changed");
-          this.modalService.dismissAll();
-          this.fetchData();
-        },
-        (err) => {
-          this.toastr.error("Something went wrong");
-        }
-      );
+      // console.log(obj);
+      // console.log(this.editedOpenCredit);
+      this.dataService
+        .editOpenCredit(obj.chips, this.lastDayId, this.editedOpenCredit.id)
+        .subscribe(
+          (resp) => {
+            this.toastr.success("Successfully changed");
+            this.modalService.dismissAll();
+            this.fetchData();
+          },
+          (err) => {
+            this.toastr.error("Something went wrong");
+          }
+        );
     } else {
       this.submitted = true;
     }
