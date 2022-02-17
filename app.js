@@ -6,23 +6,21 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 1200,
     height: 800,
     webPreferences: {
       nodeIntegration: true,
     },
+    autoHideMenuBar: true,
   });
-
 
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, `/dist/slot/index.html`),
       protocol: "file:",
-      slashes: true
+      slashes: true,
     })
   );
-
-
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

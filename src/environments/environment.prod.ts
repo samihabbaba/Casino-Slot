@@ -1,4 +1,4 @@
-let baseUrl = 'http://193.140.43.25:8080/'
+let baseUrl = 'https://api.hoomy.xyz/'
 
 export const environment = {
   production: true,
