@@ -47,15 +47,9 @@
 
   .single-row {
     display: grid;
-    grid-template-columns: 1fr .5fr .5fr;
+    grid-template-columns: 1fr 0.5fr 0.5fr;
   }
-  // &  .flex-col {
-  //   display: flex;
-  //   flex-direction: column;
-  //   // align-items: center;
-  // }
 }
-
 
 tbody:not(.pad) td {
   vertical-align: middle;

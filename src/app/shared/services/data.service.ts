@@ -152,6 +152,16 @@ export class DataService {
     );
   }
 
+  editOpenCredit(obj, lastDay) {
+    return this.http.put<any>(
+      `${environment.apiUrl}table/updateclosecredit?isOpen=true&startDayIn=${lastDay}`,
+      obj,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
   // MACHINE
   getMachines() {
     return this.http.get<any>(`${environment.apiUrl}machine`, {
@@ -612,7 +622,6 @@ export class DataService {
       headers: this.httpOptions.headers,
     });
   }
-
 
   getTableCloseDays(dayId) {
     return this.http.get<any>(

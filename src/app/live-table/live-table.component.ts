@@ -4,6 +4,7 @@ import {
   Validators,
   FormGroup,
   FormControl,
+  FormArray,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr";
@@ -22,6 +23,9 @@ export class LiveTableComponent implements OnInit {
   changePasswordForm: FormGroup;
   editedId: string = "";
 
+  lastDayId: any;
+  editedOpenCredit: any;
+
   currencyList: any[] = [];
   gamesList: any[] = [
     "BlackJack",
@@ -31,6 +35,7 @@ export class LiveTableComponent implements OnInit {
     "Tournament",
     "Card Game",
   ];
+  chipList: any[] = [];
 
   submitted = false;
   isLoading: boolean = false;
@@ -55,6 +60,7 @@ export class LiveTableComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.getCurrencies();
+    this.getDays();
     this.fetchData();
   }
 
@@ -74,6 +80,22 @@ export class LiveTableComponent implements OnInit {
         }
       });
       this.initializeAddForm();
+    });
+  }
+
+  getDays() {
+    this.dataService.getDays().subscribe((resp) => {
+      this.lastDayId = resp[0].id ? resp[0].id : 0;
+    });
+  }
+
+  getChips(table) {
+    this.dataService.getChipsForCurrency(table.currencyId).subscribe((resp) => {
+      this.chipList = resp;
+      this.chips.clear();
+      this.chipList.forEach((x) => {
+        this.addChip(x.id, x.value, x.currency);
+      });
     });
   }
 
@@ -123,48 +145,51 @@ export class LiveTableComponent implements OnInit {
     this.submitted = false;
   }
 
+  get chips() {
+    return this.changePasswordForm.controls["chips"] as FormArray;
+  }
+
+  addChip(chipId, chipValue, chipCurrency) {
+    const eventForm = this.formBuilder.group({
+      quantity: [null, [Validators.required, Validators.min(0)]],
+      chipId: [chipId, [Validators.required]],
+      value: [chipValue, [Validators.required]],
+      currency: [chipCurrency, [Validators.required]],
+    });
+    this.chips.push(eventForm);
+  }
+
   openPasswordModal(content, obj) {
-    this.initializePasswordForm(obj);
+    console.log(obj);
+    this.editedOpenCredit = obj;
+    this.initializePasswordForm();
+    this.getChips(this.editedOpenCredit);
     this.modalService.open(content);
   }
 
-  initializePasswordForm(obj) {
-    this.passwordsNotMatch = false;
+  initializePasswordForm() {
     this.changePasswordForm = this.formBuilder.group({
-      staffId: new FormControl(obj.id),
-      password: new FormControl("", [
-        Validators.required,
-        Validators.pattern(
-          "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{7,}"
-        ),
-      ]),
-      confirmPassword: new FormControl(""),
+      chips: this.formBuilder.array([]),
     });
   }
 
   changeStaffPassword() {
     if (this.changePasswordForm.valid) {
-      const password = this.changePasswordForm.get("password").value;
-      const passwordConfirm =
-        this.changePasswordForm.get("confirmPassword").value;
-
-      if (password === passwordConfirm) {
-        const obj = this.changePasswordForm.getRawValue();
-        delete obj.confirmPassword;
-        this.dataService.changeStaffPassword(obj).subscribe(
-          (resp) => {
-            this.toastr.success("Password changed successfully");
-            this.modalService.dismissAll();
-            this.fetchData();
-          },
-          (err) => {
-            this.toastr.error("Something went wrong");
-          }
-        );
-      }
-      if (password !== passwordConfirm) {
-        this.passwordsNotMatch = true;
-      }
+      const obj = this.changePasswordForm.getRawValue();
+      // obj.chips.forEach((x) => {
+      //   x.value = x.quantity * x.value;
+      // });
+      console.log(obj);
+      this.dataService.editOpenCredit(obj.chips, this.lastDayId).subscribe(
+        (resp) => {
+          this.toastr.success("Successfully changed");
+          this.modalService.dismissAll();
+          this.fetchData();
+        },
+        (err) => {
+          this.toastr.error("Something went wrong");
+        }
+      );
     } else {
       this.submitted = true;
     }
