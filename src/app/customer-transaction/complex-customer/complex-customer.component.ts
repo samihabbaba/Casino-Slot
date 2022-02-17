@@ -300,7 +300,7 @@ export class ComplexCustomerComponent implements OnInit {
     this.addLiveCustomerTransactionForm = this.formBuilder.group({
       amount: [0, [Validators.required, Validators.min(1)]],
       staffId: [this.authService.currentUser.id],
-      customerId: [this.selectedCustomer.id],
+      customerId: [this.filteredLivePanelData[0]?.id],
       currencyId: [this.currencyList[0].id],
       transactionType: [""],
       rate: [this.currencyList[0].rate],
@@ -455,7 +455,7 @@ export class ComplexCustomerComponent implements OnInit {
     this.addCustomerTransactionForm = this.formBuilder.group({
       amount: [0, [Validators.required, Validators.min(1)]],
       staffId: [this.authService.currentUser.id],
-      customerId: [this.selectedCustomer.id],
+      customerId: [this.filteredLivePanelData[0]?.id],
       currencyId: [this.currencyList[0].id],
       transactionType: [this.transactionTypeIn[0]],
       rate: [this.currencyList[0].rate],
