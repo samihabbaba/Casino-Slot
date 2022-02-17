@@ -10,9 +10,9 @@ import {
   NgbPaginationModule,
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { WidgetModule } from "../shared/widget/widget.module";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { SimplebarAngularModule } from "simplebar-angular";
+import { WidgetModule } from "../shared/widget/widget.module";
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -25,10 +25,9 @@ import { SimplebarAngularModule } from "simplebar-angular";
     NgbDropdownModule,
     NgbTooltipModule,
     NgbNavModule,
-    WidgetModule,
     NgApexchartsModule,
     SimplebarAngularModule,
-
+    WidgetModule,
     NgbPaginationModule
   ],
 })

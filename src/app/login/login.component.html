@@ -41,9 +41,6 @@
                 [formGroup]="loginForm"
                 (ngSubmit)="onSubmit()"
               >
-                <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{
-                  error
-                }}</ngb-alert>
 
                 <div class="mb-3">
                   <label for="email">Username</label>

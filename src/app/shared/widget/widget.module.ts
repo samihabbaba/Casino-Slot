@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { StatComponent } from './stat/stat.component';
-import { TransactionComponent } from './transaction/transaction.component';
 
 @NgModule({
-  declarations: [StatComponent, TransactionComponent],
+  declarations: [StatComponent],
   imports: [
     CommonModule,
     NgbModalModule
   ],
-  exports: [StatComponent, TransactionComponent]
+  exports: [StatComponent]
 })
 export class WidgetModule { }
