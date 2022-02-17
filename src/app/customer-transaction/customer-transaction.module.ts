@@ -11,6 +11,7 @@ import { TableModule } from "primeng/table";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 import { ContextMenuModule } from "primeng/contextmenu";
 import {InputNumberModule} from 'primeng/inputnumber';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {InputNumberModule} from 'primeng/inputnumber';
     TableModule,
     ContextMenuModule,
     NgbTooltipModule,
-    InputNumberModule
+    InputNumberModule,
+    AutoCompleteModule
   ],
 })
 export class CustomerTransactionModule {}

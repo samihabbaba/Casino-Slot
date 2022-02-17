@@ -15,14 +15,16 @@
                 class="search-box me-2 mb-2 d-inline-block"
               >
                 <div class="position-relative">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search..."
-                    [(ngModel)]="searchQuery"
-                    (keyup)="debounceSubject.next($event)"
-                  />
-                  <i class="bx bx-search-alt search-icon"></i>
+                  <p-autoComplete
+                    [(ngModel)]="selectedCustomer"
+                    [showEmptyMessage]="true"
+                    [suggestions]="filteredCustomers"
+                    placeholder="Search Customers"
+                    (completeMethod)="filterCustomer($event)"
+                    (onSelect)="handleFirstPanelRowClick($event)"
+                    field="name"
+                    [minLength]="2"
+                  ></p-autoComplete>
                 </div>
               </div>
               <div class="mb-3" style="flex: 1; margin-left: 0.5rem">
@@ -64,8 +66,9 @@
                 </button>
               </div>
             </div>
-            <!-- end col-->
           </div>
+
+          <!-- Splitter Starts Here -->
 
           <div class="split-example splitter-container">
             <as-split
@@ -73,22 +76,22 @@
               restrictMove="true"
               [useTransition]="true"
             >
-              <as-split-area size="60">
+              <as-split-area size="65">
                 <as-split direction="vertical" restrictMove="true">
-                  <as-split-area size="65">
+                  <as-split-area size="15">
                     <p-table
-                    [resizableColumns]="true"
+                      [resizableColumns]="true"
                       [scrollable]="true"
                       styleClass="p-datatable-sm p-datatable-gridlines"
                       responsiveLayout="scroll"
                       [value]="filteredFirstPanelData"
                       [(contextMenuSelection)]="selectedCustomer"
-                      [contextMenu]="cmPanel1"
+                      [contextMenu]="cmPanelLive"
                       dataKey="code"
                     >
                       <ng-template pTemplate="header">
                         <tr>
-                          <th style="flex: none; width: 150px">Customer</th>
+                          <!-- <th style="flex: none; width: 150px">Customer</th> -->
                           <th>Total</th>
                           <th>Chip In</th>
                           <th>Chip Out</th>
@@ -110,17 +113,14 @@
                           (click)="handleFirstPanelRowClick(customers)"
                           [pContextMenuRow]="customers"
                           class="clickable-row"
-                          [ngClass]="{
-                            selected: selectedCustomer?.id === customers.id
-                          }"
                         >
-                          <td
+                          <!-- <td
                             placement="bottom"
                             [ngbTooltip]="customers.customerName"
                             style="width: 150px; flex: none; overflow: hidden"
                           >
                             {{ customers.customerName }}
-                          </td>
+                          </td> -->
 
                           <td>
                             {{ customers.total | number: "1.2-2" }}
@@ -178,25 +178,219 @@
                       </ng-template>
                     </p-table>
                   </as-split-area>
-                  <as-split-area size="35">
+                  <as-split-area size="15">
                     <p-table
+                      [resizableColumns]="true"
+                      [scrollable]="true"
+                      styleClass="p-datatable-sm p-datatable-gridlines"
+                      responsiveLayout="scroll"
+                      [value]="filteredLivePanelData"
+                      [(contextMenuSelection)]="selectedCustomer"
+                      [contextMenu]="cmPanelLive"
+                      dataKey="code"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>Chip 500 TL</th>
+                          <th>Chip 100 TL</th>
+                          <th>Chip 500 EU</th>
+                          <th>Chip 100 EU</th>
+                          <th>Avarage Bet</th>
+                          <th>Table In</th>
+                          <th>Table Out</th>
+                          <th>Table Drop</th>
+                          <th>Kasa In</th>
+                          <th>Kasa Out</th>
+                          <th>Credit Card</th>
+                          <th>Discount</th>
+                          <th>Cash</th>
+                          <th>WinLoss</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-customers>
+                        <tr [pContextMenuRow]="customers" class="clickable-row">
+                          <td>
+                            {{ customers.chip500TLKasaOut }}
+                          </td>
+
+                          <td>
+                            {{ customers.chip100TLKasaOut }}
+                          </td>
+                          <td>
+                            {{ customers.chip500EUKasaOut }}
+                          </td>
+
+                          <td>
+                            {{ customers.chip100EUKasaOut }}
+                          </td>
+
+                          <td>
+                            {{ customers.avarageBet | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.liveTableIn | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.liveTableOut | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{
+                              customers.liveTableOut - customers.liveTableIn
+                                | number: "1.2-2"
+                            }}
+                          </td>
+
+                          <td>
+                            {{ customers.liveInKasa | number: "1.2-2" }}
+                          </td>
+                          <td>
+                            {{ customers.liveOutKasa | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.liveCreditCard | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{
+                              customers.disountOut - customers.discountIn
+                                | number: "1.2-2"
+                            }}
+                          </td>
+
+                          <td>
+                            {{ customers.totalCash | number: "1.2-2" }}
+                          </td>
+
+                          <td>
+                            {{ customers.winLoss | number: "1.2-2" }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </as-split-area>
+                  <as-split-area size="70">
+                    <ul
+                      ngbNav
+                      #nav="ngbNav"
+                      [activeId]="1"
+                      class="nav-tabs"
+                      style="padding-left: 0.3rem; padding-top: 0.3rem"
+                    >
+                      <li [ngbNavItem]="1">
+                        <a ngbNavLink>
+                          <span class="d-block d-sm-none"
+                            ><i class="fas fa-cubes"></i
+                          ></span>
+                          <span class="d-none d-sm-block"
+                            ><i class="fas fa-cubes"></i> &nbsp; Slot
+                            Transaction</span
+                          >
+                        </a>
+                        <ng-template ngbNavContent>
+                          <ng-template
+                            [ngTemplateOutlet]="TabContent"
+                          ></ng-template>
+                        </ng-template>
+                      </li>
+                      <li [ngbNavItem]="2">
+                        <a ngbNavLink>
+                          <span class="d-block d-sm-none"
+                            ><i class="fas fa-tv"></i
+                          ></span>
+                          <span class="d-none d-sm-block">
+                            <i class="fas fa-tv"></i> &nbsp; Live
+                            Transaction</span
+                          >
+                        </a>
+                        <ng-template ngbNavContent>
+                          <ng-template
+                            [ngTemplateOutlet]="TabContent1"
+                          ></ng-template>
+                        </ng-template>
+                      </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav"></div>
+
+                    <ng-template #TabContent>
+                      <p-table
+                        [scrollable]="true"
+                        styleClass="p-datatable-sm"
+                        responsiveLayout="scroll"
+                        [value]="secondPanelData"
+                        [(contextMenuSelection)]="selectedTransaction"
+                        [contextMenu]="cmPanel2"
+                        dataKey="code"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>Date</th>
+                            <th>Machine</th>
+                            <th>Amount</th>
+                            <th>TL Amount</th>
+                            <th>Payment Method</th>
+                            <th>Type</th>
+                            <th>Staff</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-customers>
+                          <tr
+                            [pContextMenuRow]="customers"
+                            class="clickable-row"
+                          >
+                            <td>
+                              {{ customers.recordDate | date: "short" }}
+                            </td>
+
+                            <td>
+                              {{ customers.machineName }}
+                            </td>
+
+                            <td>
+                              {{ customers.amount | number: "1.2-2" }}
+                              {{ customers.currency }}
+                            </td>
+                            <td>
+                              {{ customers.tlAmount | number: "1.2-2" }}
+                            </td>
+
+                            <td>
+                              {{ customers.paymentType }}
+                            </td>
+
+                            <td>
+                              {{ customers.recordType }}
+                            </td>
+
+                            <td>
+                              {{ customers.staff }}
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </ng-template>
+
+                    <ng-template #TabContent1>
+                      <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
                       responsiveLayout="scroll"
-                      [value]="secondPanelData"
+                      [value]="secondPanelDataLive"
                       [(contextMenuSelection)]="selectedTransaction"
-                      [contextMenu]="cmPanel2"
+                      [contextMenu]="cmPanel2Live"
                       dataKey="code"
                     >
                       <ng-template pTemplate="header">
                         <tr>
                           <th>Date</th>
-                          <th>Machine</th>
+                          <th>Game</th>
+                          <th>Table</th>
                           <th>Amount</th>
-                          <th>TL Amount</th>
                           <th>Payment Method</th>
-                          <th>Type</th>
                           <th>Staff</th>
+                          <th>Out</th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-customers>
@@ -206,15 +400,16 @@
                           </td>
 
                           <td>
-                            {{ customers.machineName }}
+                            {{ customers.game }}
+                          </td>
+
+                          <td>
+                            {{ customers.table }}
                           </td>
 
                           <td>
                             {{ customers.amount | number: "1.2-2" }}
                             {{ customers.currency }}
-                          </td>
-                          <td>
-                            {{ customers.tlAmount | number: "1.2-2" }}
                           </td>
 
                           <td>
@@ -222,21 +417,69 @@
                           </td>
 
                           <td>
-                            {{ customers.recordType }}
+                            {{ customers.staffName }}
                           </td>
 
                           <td>
-                            {{ customers.staff }}
+                            <span
+                              *ngIf="customers.isOut"
+                              class="badge bg-success font-size-12"
+                            >
+                              <i class="mdi mdi-check"></i>
+                            </span>
+
+                            <span
+                              *ngIf="!customers.isOut"
+                              class="badge bg-danger font-size-12"
+                            >
+                              <i class="mdi mdi-close"></i>
+                            </span>
                           </td>
                         </tr>
                       </ng-template>
                     </p-table>
+                    </ng-template>
                   </as-split-area>
                 </as-split>
               </as-split-area>
-              <as-split-area size="40">
+              <as-split-area size="35">
                 <as-split direction="vertical" restrictMove="true">
-                  <as-split-area size="54">
+                  <as-split-area size="15">
+                    <div class="realityPanel">
+                      <div class="panel">
+                        <span class="title">Result</span>
+                        <span class="value">{{
+                          this.livePanelData[0]?.winLoss +
+                            this.firstPanelData[0]?.winLoss | number: "1.2-2"
+                        }}</span>
+                      </div>
+                      <div class="panel">
+                        <span class="title">Reality Drop</span>
+                        <span class="value">{{
+                          realityDrop | number: "1.2-2"
+                        }}</span>
+                      </div>
+                      <div class="panel">
+                        <span class="title">Credit Card</span>
+                        <span class="value">{{
+                          this.firstPanelData[0]?.creditCard +
+                            this.livePanelData[0]?.liveCreditCard
+                            | number: "1.2-2"
+                        }}</span>
+                      </div>
+                      <div class="panel">
+                        <span class="title">Discount</span>
+                        <span class="value">{{
+                          this.firstPanelData[0]?.disountOut +
+                            this.livePanelData[0]?.disountOut -
+                            (this.firstPanelData[0]?.discountIn +
+                              this.livePanelData[0]?.discountIn)
+                            | number: "1.2-2"
+                        }}</span>
+                      </div>
+                    </div></as-split-area
+                  >
+                  <as-split-area size="41">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -283,7 +526,7 @@
                       </ng-template>
                     </p-table>
                   </as-split-area>
-                  <as-split-area size="46">
+                  <as-split-area size="44">
                     <p-table
                       [scrollable]="true"
                       styleClass="p-datatable-sm"
@@ -327,14 +570,14 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <app-loader *ngIf="isLoading"></app-loader>
 
-<p-contextMenu #cmPanel1 [model]="items"></p-contextMenu>
 <p-contextMenu #cmPanel2 [model]="items2"></p-contextMenu>
+<p-contextMenu #cmPanel2Live [model]="items2Live"></p-contextMenu>
 <p-contextMenu #cmPanel3 [model]="items3"></p-contextMenu>
+<p-contextMenu #cmPanelLive [model]="itemsLive"></p-contextMenu>
 
 <!-- Add Customer Transaction Modal -->
 <ng-template #addCustomerTransaction role="document" let-modal>
@@ -618,6 +861,226 @@
               </option>
             </select>
           </div> -->
+        </div>
+      </div>
+      <div style="display: flex">
+        <button
+          style="margin-left: auto"
+          type="submit"
+          class="btn btn-success"
+          id="btn-save-event"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Add Live Transaction Modal -->
+<ng-template #addLiveCustomerTransaction role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      Live Transaction / {{ selectedCustomer.customerName }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form
+      (ngSubmit)="createLiveTransaction()"
+      [formGroup]="addLiveCustomerTransactionForm"
+    >
+      <div class="row">
+        <div class="col-12">
+          <div class="mb3">
+            <label for="formrow-inputState">Transaction Type</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="formRadios"
+                id="formRadios3"
+                [checked]="transactionType === 'Live Out'"
+                (change)="transactionType = 'Live Out'"
+              />
+              <label class="form-check-label" for="formRadios3">
+                Live Out
+              </label>
+            </div>
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="formRadios"
+                id="formRadios4"
+                [checked]="transactionType === 'Live In'"
+                (change)="transactionType = 'Live In'"
+              />
+              <label class="form-check-label" for="formRadios4">
+                Live In
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3 chipList" formArrayName="chipRecords">
+            <div class="chips">
+              <div *ngFor="let chipForm of chipRecords.controls; let i = index">
+                <div *ngIf="chipForm.controls.currency.value === 'TL'">
+                  <div class="chip-container" [formGroup]="chipForm">
+                    <label class="form-check-label" for="formRadios4">
+                      {{ chipForm.controls.name.value }}
+                    </label>
+                    <!-- <input
+                      placeholder="Enter Quantity"
+                      formControlName="quantity"
+                      class="form-control"
+                      type="number"
+                    /> -->
+
+                    <p-inputNumber
+                      formControlName="quantity"
+                      mode="decimal"
+                      [showButtons]="true"
+                      inputId="minmax-buttons"
+                      [min]="0"
+                    >
+                    </p-inputNumber>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chips">
+              <div *ngFor="let chipForm of chipRecords.controls; let i = index">
+                <div *ngIf="chipForm.controls.currency.value === 'EURO'">
+                  <div class="chip-container" [formGroup]="chipForm">
+                    <label class="form-check-label" for="formRadios4">
+                      {{ chipForm.controls.name.value }}
+                    </label>
+                    <p-inputNumber
+                      formControlName="quantity"
+                      mode="decimal"
+                      [showButtons]="true"
+                      inputId="minmax-buttons"
+                      [min]="0"
+                    >
+                    </p-inputNumber>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="mb-3">
+            <label class="control-label">Machine</label>
+
+            <p>
+              {{ selectedTransaction.machineName }}
+            </p>
+          </div> -->
+
+          <!-- <div class="mb-3">
+            <label class="control-label">Amount</label>
+            <input
+              class="form-control"
+              placeholder="Enter Amount"
+              type="number"
+              name="title"
+              autocomplete="off"
+              formControlName="amount"
+              [ngClass]="{ 'is-invalid': submitted && editF.amount.errors }"
+            />
+            <div
+              *ngIf="submitted && editF.amount.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.amount.errors"
+                >Amount should be greater than 0.</span
+              >
+            </div>
+          </div> -->
+
+          <div class="mb-3">
+            <label for="formrow-inputState">Currency</label>
+            <select
+              id="formrow-inputState"
+              formControlName="currencyId"
+              class="form-select"
+              (change)="setRate($event, true)"
+            >
+              <option [value]="item.id" *ngFor="let item of currencyList">
+                {{ item.code }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3" style="display: flex; align-items: center">
+            <label for="formrow-inputState">Credit Card</label>
+            <ui-switch
+              style="margin-bottom: 0.5rem; margin-left: 0.5rem"
+              defaultBoColor="#dfdfdf"
+              size="small"
+              color="#34c38f"
+              [checked]="isCreditCard"
+              (change)="isCreditCard = $event"
+            ></ui-switch>
+          </div>
+
+          <!-- <div class="mb-3">
+            <label for="formrow-inputState">Transaction</label>
+            <select
+              id="formrow-inputState"
+              formControlName="recordType"
+              class="form-select"
+              [ngClass]="{ 'is-invalid': submitted && editF.recordType.errors }"
+            >
+              <option [value]="item" *ngFor="let item of recordTypeList">
+                {{ item }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="submitted && editF.recordType.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="editF.recordType.errors"
+                >Transaction is required.</span
+              >
+            </div>
+          </div> -->
+
+          <!-- <div class="mb-3">
+            <label for="formrow-inputState">Payment Type</label>
+            <select
+              id="formrow-inputState"
+              formControlName="paymentType"
+              class="form-select"
+            >
+              <option [value]="item" *ngFor="let item of paymentTypeList">
+                {{ item }}
+              </option>
+            </select>
+          </div> -->
+
+          <!-- <div class="mb-3">
+            <label class="control-label">TL Amount</label>
+
+            <p>{{ this.addLiveCustomerTransactionForm.controls["amount"].value | number: "1.2-2" }} &nbsp; TL</p>
+          </div> -->
+
+          <div class="mb-3">
+            <label class="control-label">Amount</label>
+
+            <p>
+              {{ calculateAmount() | number: "1.2-2" }} &nbsp;
+              {{ returnSelectedCurrency() }}
+            </p>
+          </div>
         </div>
       </div>
       <div style="display: flex">

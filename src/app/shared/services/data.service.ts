@@ -563,15 +563,27 @@ export class DataService {
     );
   }
 
-
   createLiveCustomerTransaction(obj) {
-    return this.http.post<any>(
-      `${environment.apiUrl}customer/live`,
-      obj,
+    return this.http.post<any>(`${environment.apiUrl}customer/live`, obj, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+  getCustomerStatById(startDay = 0, endDay = 0, customerId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/customerstatistics/${customerId}?startDayIn=${startDay}&endDayIn=${endDay}&customerId =${customerId}`,
       {
         headers: this.httpOptions.headers,
       }
     );
   }
 
+  getLiveCustomerStatById(startDay = 0, endDay = 0, customerId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}customer/customerlivestatistics/${customerId}?startDayIn=${startDay}&endDayIn=${endDay}&customerId =${customerId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 }
