@@ -1,1 +1,177 @@
-<p>live-data works!</p>
+<div class="container-fluid" *ngIf="!isLoading">
+  <app-page-title
+    title="Sessions"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <label for="formrow-inputState">Day</label>
+          <select
+            id="formrow-inputState"
+            class="form-select"
+            [(ngModel)]="stardDayIn"
+            (change)="fetchData()"
+          >
+            <option [value]="0">Today</option>
+            <option [value]="item.id" *ngFor="let item of daysList">
+              {{ item.date }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table dt-responsive nowrap">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="
+                  let customers of tableData
+                    | slice
+                      : (currentpage - 1) * pageSize
+                      : (currentpage - 1) * pageSize + pageSize;
+                  let i = index
+                "
+              >
+                <tr
+                  class="clickable"
+                  (click)="getSessionData(customers)"
+                  [ngClass]="{ active: this.editedId === customers.id }"
+                >
+                  <td>
+                    {{ customers.date | date: "mediumTime" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table dt-responsive nowrap">
+              <thead>
+                <tr>
+                  <th>Table</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="
+                  let customers of sessionData
+                    | slice
+                      : (currentpage - 1) * pageSize
+                      : (currentpage - 1) * pageSize + pageSize;
+                  let i = index
+                "
+              >
+                <tr
+                  class="clickable"
+                  (click)="selectSession(customers)"
+                  [ngClass]="{
+                    active: this.editedSession?.id === customers.id
+                  }"
+                >
+                  <td>
+                    {{ customers.table }}
+                  </td>
+
+                  <td>
+                    {{ customers.time }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <ngb-pagination
+            [collectionSize]="tableData.length"
+            [(page)]="currentpage"
+            [pageSize]="pageSize"
+            class="pagination pagination-rounded justify-content-end mb-2"
+            aria-label="Default pagination"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="control-label">Chip 25</label>
+            <input
+              [disabled]="!editedSession"
+              class="form-control"
+              placeholder="Select Session"
+              type="number"
+              name="title"
+              [min]="0"
+              [(ngModel)]="copyOfEditedSession.chip25"
+            />
+            <!-- <div *ngIf="submitted && editF.in.errors" class="invalid-feedback">
+              <span *ngIf="editF.in.errors.required">In is required.</span>
+            </div> -->
+          </div>
+          <!--   [ngClass]="{ 'is-invalid': submitted && editF.in.errors }" -->
+
+          <div class="mb-3">
+            <label class="control-label">Chip 5</label>
+            <input
+              [disabled]="!editedSession"
+              class="form-control"
+              placeholder="Select Session"
+              type="number"
+              name="title"
+              [min]="0"
+              [(ngModel)]="copyOfEditedSession.chip5"
+            />
+            <!-- <div *ngIf="submitted && editF.in.errors" class="invalid-feedback">
+              <span *ngIf="editF.in.errors.required">In is required.</span>
+            </div> -->
+          </div>
+          <!--   [ngClass]="{ 'is-invalid': submitted && editF.in.errors }" -->
+
+          <button
+            [disabled]="!editedSession"
+            style="width: 100%"
+            type="submit"
+            class="btn btn-success"
+            id="btn-save-event"
+            (click)="addSessionData()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>

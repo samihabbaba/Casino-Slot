@@ -586,4 +586,40 @@ export class DataService {
       }
     );
   }
+
+  // LIVE DATA
+
+  getSessionsById(dayId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}table/daysession/${dayId}?dayId=${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  getSessionsBySessionId(sessionId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}table/sessions/${sessionId}?sessionId=${sessionId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
+  addSessionData(obj) {
+    return this.http.post<any>(`${environment.apiUrl}table/sessiondata`, obj, {
+      headers: this.httpOptions.headers,
+    });
+  }
+
+
+  getTableCloseDays(dayId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}table/closeday/${dayId}?dayId=${dayId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
 }

@@ -457,7 +457,9 @@ export class ComplexCustomerComponent implements OnInit {
       staffId: [this.authService.currentUser.id],
       customerId: [this.filteredLivePanelData[0]?.id],
       currencyId: [this.currencyList[0].id],
-      transactionType: [this.transactionTypeIn[0]],
+      transactionType: [
+        this.isIn ? this.transactionTypeIn[0] : this.transactionTypeOut[0],
+      ],
       rate: [this.currencyList[0].rate],
       note: [""],
     });

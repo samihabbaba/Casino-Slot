@@ -1,0 +1,13 @@
+.clickable {
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+
+}
+
+.active {
+  outline: 0.15rem solid #a6d5fa !important;
+  outline-offset: -0.15rem !important;
+}
