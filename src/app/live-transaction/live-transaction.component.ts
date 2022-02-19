@@ -6,12 +6,11 @@ import Swal from "sweetalert2";
 import { DataService } from "../shared/services/data.service";
 
 @Component({
-  selector: 'app-live-transaction',
-  templateUrl: './live-transaction.component.html',
-  styleUrls: ['./live-transaction.component.scss']
+  selector: "app-live-transaction",
+  templateUrl: "./live-transaction.component.html",
+  styleUrls: ["./live-transaction.component.scss"],
 })
 export class LiveTransactionComponent implements OnInit {
-
   editedId: string = "";
 
   submitted = false;
@@ -22,6 +21,7 @@ export class LiveTransactionComponent implements OnInit {
   footerData: any = [];
 
   // Pagination
+  pagination: any;
   currentpage: number = 1;
   pageSize: number = 15;
 
@@ -58,17 +58,18 @@ export class LiveTransactionComponent implements OnInit {
   getMachines() {
     this.dataService.getLiveTable().subscribe((resp) => {
       this.machineList = resp;
-      console.log(this.machineList)
+      console.log(this.machineList);
     });
   }
 
   getStaff() {
-    this.dataService.getStaff().subscribe((resp) => {
-      resp.forEach((x) => {
-        if (x.role === "Inspector") {
-          this.staffList.push(x);
-        }
-      });
+    this.dataService.getStaffWithQuery("", "live").subscribe((resp) => {
+      this.staffList = resp;
+      // resp.forEach((x) => {
+      //   if (x.role === "Inspector") {
+      //     this.staffList.push(x);
+      //   }
+      // });
     });
   }
 
@@ -78,14 +79,23 @@ export class LiveTransactionComponent implements OnInit {
         this.stardDayIn,
         this.endDayIn,
         this.selectedMachine,
-        this.selectedStaff
+        this.selectedStaff,
+        this.pagination?.CurrentPage ? this.pagination?.CurrentPage : 1
       )
       .subscribe((resp) => {
-        this.tableData = resp;
+        this.tableData = resp.body;
+        this.pagination = JSON.parse(resp.headers.get("x-Pagination"));
+        console.log(this.pagination)
         this.isLoading = false;
-        console.log(this.tableData);
+        console.log(resp);
       });
     this.fetchFooterData();
+  }
+
+  changePagination(ev) {
+    this.pagination.CurrentPage = ev;
+    this.fetchData();
+    console.log(ev);
   }
 
   fetchFooterData() {

@@ -141,7 +141,7 @@ export class ChipComponent implements OnInit {
   // }
 
   fetchData() {
-    this.dataService.getKasaChips().subscribe((resp) => {
+    this.dataService.getKasaChips(true).subscribe((resp) => {
       this.euroChips = [];
       this.tlChips = [];
       resp.forEach((x) => {
@@ -154,7 +154,7 @@ export class ChipComponent implements OnInit {
       });
     });
 
-    this.dataService.getCurrentKasaChips().subscribe((resp) => {
+    this.dataService.getCurrentKasaChips(true).subscribe((resp) => {
       this.tlCurrentChips = [];
       this.euroCurrentChips = [];
       resp.forEach((x) => {

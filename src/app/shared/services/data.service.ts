@@ -104,6 +104,16 @@ export class DataService {
     );
   }
 
+  getStaffWithQuery(queryParams = "", role = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}staff?SearchQuery= ${queryParams}&role=${role}`,
+      {
+        params: this.params,
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
   addStaff(staff) {
     return this.http.post<any>(`${environment.apiUrl}staff`, staff, {
       headers: this.httpOptions.headers,
@@ -281,9 +291,15 @@ export class DataService {
     );
   }
 
-  getSlotData(startDayIn = 0, endDayIn = 0, machineId = 0, staff = "") {
+  getSlotData(
+    startDayIn = 0,
+    endDayIn = 0,
+    machineId = 0,
+    staff = "",
+    pageNumber
+  ) {
     return this.http.get<any>(
-      `${environment.apiUrl}slot/data?startDayIn=${startDayIn}&endDayIn=${endDayIn}&machine=${machineId}&staff=${staff}`,
+      `${environment.apiUrl}slot/data?startDayIn=${startDayIn}&endDayIn=${endDayIn}&machine=${machineId}&staff=${staff}&pageNumber=${pageNumber}&pageSize=100`,
       { observe: "response", headers: this.httpOptions.headers }
     );
   }
@@ -296,12 +312,10 @@ export class DataService {
 
   // LIVE TRANSACTION
 
-  getLive(startDayIn = 0, endDayIn = 0, tableId = 0, staff = "") {
+  getLive(startDayIn = 0, endDayIn = 0, tableId = 0, staff = "", pageNumber) {
     return this.http.get<any>(
-      `${environment.apiUrl}live?startDayIn=${startDayIn}&endDayIn=${endDayIn}&table=${tableId}&staff=${staff}`,
-      {
-        headers: this.httpOptions.headers,
-      }
+      `${environment.apiUrl}live?startDayIn=${startDayIn}&endDayIn=${endDayIn}&table=${tableId}&staff=${staff}&pageNumber=${pageNumber}&pageSize=100`,
+      { observe: "response", headers: this.httpOptions.headers }
     );
   }
 
@@ -427,10 +441,13 @@ export class DataService {
     );
   }
 
-  getKasaChips() {
-    return this.http.get<any>(`${environment.apiUrl}kasa/chips`, {
-      headers: this.httpOptions.headers,
-    });
+  getKasaChips(isOpen: any = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}kasa/chips?isOpen=${isOpen}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 
   editKasaChips(obj) {
@@ -443,10 +460,13 @@ export class DataService {
     );
   }
 
-  getCurrentKasaChips() {
-    return this.http.get<any>(`${environment.apiUrl}kasa/currentchips`, {
-      headers: this.httpOptions.headers,
-    });
+  getCurrentKasaChips(isOpen: any = "") {
+    return this.http.get<any>(
+      `${environment.apiUrl}kasa/currentchips?isOpen=${isOpen}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
   }
 
   // METERS

@@ -21,6 +21,7 @@ export class SlotTransactionComponent implements OnInit {
   footerData: any = [];
 
   // Pagination
+  pagination: any;
   currentpage: number = 1;
   pageSize: number = 15;
 
@@ -61,12 +62,13 @@ export class SlotTransactionComponent implements OnInit {
   }
 
   getStaff() {
-    this.dataService.getStaff().subscribe((resp) => {
-      resp.forEach((x) => {
-        if (x.role === "Attendant") {
-          this.staffList.push(x);
-        }
-      });
+    this.dataService.getStaffWithQuery("", "slot").subscribe((resp) => {
+      this.staffList = resp;
+      // resp.forEach((x) => {
+      //   if (x.role === "Attendant") {
+      //     this.staffList.push(x);
+      //   }
+      // });
     });
   }
 
@@ -76,14 +78,22 @@ export class SlotTransactionComponent implements OnInit {
         this.stardDayIn,
         this.endDayIn,
         this.selectedMachine,
-        this.selectedStaff
+        this.selectedStaff,
+        this.pagination?.CurrentPage ? this.pagination?.CurrentPage : 1
       )
       .subscribe((resp) => {
         this.tableData = resp.body;
+        this.pagination = JSON.parse(resp.headers.get("x-Pagination"));
         this.isLoading = false;
-        console.log(resp.headers.keys());
+        console.log(this.pagination);
       });
     this.fetchFooterData();
+  }
+
+  changePagination(ev) {
+    this.pagination.CurrentPage = ev;
+    this.fetchData();
+    console.log(ev);
   }
 
   fetchFooterData() {
@@ -125,7 +135,4 @@ export class SlotTransactionComponent implements OnInit {
       }
     });
   }
-
-
 }
-

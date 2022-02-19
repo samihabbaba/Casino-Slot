@@ -183,7 +183,7 @@
                   <th>Payment Method</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf="tableData">
                 <tr
                   *ngFor="
                     let customers of tableData
@@ -257,11 +257,12 @@
           </div>
           <!-- pagination -->
           <ngb-pagination
-            [collectionSize]="tableData.length"
-            [(page)]="currentpage"
-            [pageSize]="pageSize"
+          [collectionSize]="pagination.TotalCount"
+          [(page)]="pagination.CurrentPage"
+          [pageSize]="pagination.PageSize"
             class="pagination pagination-rounded justify-content-end mb-2"
             aria-label="Default pagination"
+            (pageChange)="changePagination($event)"
           >
           </ngb-pagination>
         </div>
