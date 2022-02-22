@@ -188,8 +188,9 @@
                   *ngFor="
                     let customers of tableData
                       | slice
-                        : (currentpage - 1) * pageSize
-                        : (currentpage - 1) * pageSize + pageSize;
+                        : (pagination.CurrentPage - 1) * pagination.PageSize
+                        : (pagination.CurrentPage - 1) * pagination.PageSize +
+                            pagination.PageSize;
                     let i = index
                   "
                 >
@@ -257,9 +258,9 @@
           </div>
           <!-- pagination -->
           <ngb-pagination
-          [collectionSize]="pagination.TotalCount"
-          [(page)]="pagination.CurrentPage"
-          [pageSize]="pagination.PageSize"
+            [collectionSize]="pagination.TotalCount"
+            [(page)]="pagination.CurrentPage"
+            [pageSize]="pagination.PageSize"
             class="pagination pagination-rounded justify-content-end mb-2"
             aria-label="Default pagination"
             (pageChange)="changePagination($event)"

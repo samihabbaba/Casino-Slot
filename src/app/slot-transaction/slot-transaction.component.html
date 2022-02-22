@@ -204,8 +204,8 @@
                   *ngFor="
                     let customers of tableData
                       | slice
-                        : (currentpage - 1) * pageSize
-                        : (currentpage - 1) * pageSize + pageSize;
+                        : (pagination.CurrentPage - 1) * pagination.PageSize
+                        : (pagination.CurrentPage - 1) * pagination.PageSize + pagination.PageSize;
                     let i = index
                   "
                 >
