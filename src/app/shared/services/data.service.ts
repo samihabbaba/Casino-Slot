@@ -282,6 +282,15 @@ export class DataService {
 
   // SLOT TRANSACTION
 
+  getStaffWallet(staffId) {
+    return this.http.get<any>(
+      `${environment.apiUrl}staff/wallet?staffId=${staffId}`,
+      {
+        headers: this.httpOptions.headers,
+      }
+    );
+  }
+
   getSlot(startDayIn = 0, endDayIn = 0, machineId = 0, staff = "") {
     return this.http.get<any>(
       `${environment.apiUrl}slot?startDayIn=${startDayIn}&endDayIn=${endDayIn}&machine=${machineId}&staff=${staff}`,

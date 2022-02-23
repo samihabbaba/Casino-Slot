@@ -194,12 +194,7 @@ export class StaffComponent implements OnInit {
   saveCustomer() {
     if (this.formData.valid) {
       const form = this.formData.getRawValue();
-      const formData = new FormData();
-      for (let i in form) {
-        formData.append(i, form[i]);
-      }
-
-      this.dataService.addStaff(formData).subscribe(
+      this.dataService.addStaff(form).subscribe(
         (resp) => {
           this.toastr.success("Staff added successfully");
           this.modalService.dismissAll();

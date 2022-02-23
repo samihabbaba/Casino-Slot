@@ -145,10 +145,13 @@
                   id="formrow-inputState"
                   class="form-select"
                   [(ngModel)]="selectedStaff"
-
                 >
                   <option [value]="''">All</option>
-                  <option id="staffSelect" [value]="item.id" *ngFor="let item of staffList">
+                  <option
+                    id="staffSelect"
+                    [value]="item.id"
+                    *ngFor="let item of staffList"
+                  >
                     {{ item.name }}
                   </option>
                 </select>
@@ -205,7 +208,8 @@
                     let customers of tableData
                       | slice
                         : (pagination.CurrentPage - 1) * pagination.PageSize
-                        : (pagination.CurrentPage - 1) * pagination.PageSize + pagination.PageSize;
+                        : (pagination.CurrentPage - 1) * pagination.PageSize +
+                            pagination.PageSize;
                     let i = index
                   "
                 >

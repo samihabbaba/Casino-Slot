@@ -152,7 +152,7 @@ export class DropsComponent implements OnInit {
   }
 
   getBillsByCurrencyId(currencyId) {
-    this.dataService.getBills().subscribe((resp) => {
+    this.dataService.getBillByCurrencyId(currencyId).subscribe((resp) => {
       this.billsList = resp;
       console.log(this.billsList)
       if (this.formData?.controls?.billId) {

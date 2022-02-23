@@ -209,7 +209,7 @@
 
   .logo {
     span.logo-lg {
-      display: none;
+      // display: none;
     }
 
     span.logo-sm {
@@ -426,7 +426,7 @@ body[data-sidebar="dark"] {
 
   // Enlarge menu
   &.vertical-collpsed {
-    min-height: 1760px;
+    min-height: max-content;
 
     // Side menu
     .vertical-menu {

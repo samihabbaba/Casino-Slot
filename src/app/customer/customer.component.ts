@@ -124,12 +124,12 @@ export class CustomerComponent implements OnInit {
   saveCustomer() {
     if (this.formData.valid) {
       const form = this.formData.getRawValue();
-      const formData = new FormData();
-      for (let i in form) {
-        formData.append(i, form[i]);
-      }
+      // const formData = new FormData();
+      // for (let i in form) {
+      //   formData.append(i, form[i]);
+      // }
 
-      this.dataService.addCustomer(formData).subscribe(
+      this.dataService.addCustomer(form).subscribe(
         (resp) => {
           this.toastr.success("Customer added successfully");
           this.modalService.dismissAll();

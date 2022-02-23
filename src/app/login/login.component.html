@@ -23,12 +23,15 @@
           <div class="card-body pt-0">
             <div>
               <a>
-                <div class="avatar-md profile-user-wid mb-4">
+                <div
+                  style="margin-top: 4px"
+                  class="avatar-md profile-user-wid mb-3"
+                >
                   <span class="avatar-title rounded-circle bg-light">
                     <img
-                      src="assets/images/logo.svg"
+                      src="assets/images/logo.jpg"
                       alt=""
-                      class="rounded-circle"
+                      style="border-radius: 2px"
                       height="34"
                     />
                   </span>
@@ -41,7 +44,6 @@
                 [formGroup]="loginForm"
                 (ngSubmit)="onSubmit()"
               >
-
                 <div class="mb-3">
                   <label for="email">Username</label>
                   <input
