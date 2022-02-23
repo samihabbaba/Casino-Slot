@@ -173,7 +173,7 @@
                   style="width: 100%"
                   type="button"
                   class="btn btn-primary mt-2 mr-2"
-                  (click)="confirmCollect(selectedStaff)"
+                  (click)="openModal(add)"
                 >
                   <i class="mdi mdi-plus me-1"></i> Collect
                 </button>
@@ -313,3 +313,76 @@
 </div>
 
 <app-loader *ngIf="isLoading"></app-loader>
+
+<ng-template #add role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Collect {{ staffName }}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body" style="padding: 8px;">
+    <div class="row" style="padding-bottom: 1rem;">
+      <h3>Pending</h3>
+      <div class="col-12" style="display: flex; padding: 0">
+        <div class="item">
+          <span>Chip:</span> &nbsp; {{ staffWallet.chipPending }}
+        </div>
+        <div class="item">
+          <span>C. Card:</span> &nbsp; {{ staffWallet.creditCardPending }}
+        </div>
+        <div class="item">
+          <span>EU:</span> &nbsp; {{ staffWallet.euroAmountPending }}
+        </div>
+        <div class="item">
+          <span>STG:</span> &nbsp; {{ staffWallet.stgAmountPending }}
+        </div>
+        <div class="item">
+          <span>TL:</span> &nbsp; {{ staffWallet.tlAmountPending }}
+        </div>
+        <div class="item">
+          <span>USD:</span> &nbsp; {{ staffWallet.usdAmountPending }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="padding-bottom: 1rem;">
+      <h3>Submitted</h3>
+      <div class="col-12" style="display: flex; padding: 0">
+        <div class="item">
+          <span>Chip:</span> &nbsp; {{ staffWallet.chipSubmitted }}
+        </div>
+        <div class="item">
+          <span>C. Card:</span> &nbsp; {{ staffWallet.creditCardSubmitted }}
+        </div>
+        <div class="item">
+          <span>EU:</span> &nbsp; {{ staffWallet.euroAmountSubmitted }}
+        </div>
+        <div class="item">
+          <span>STG:</span> &nbsp; {{ staffWallet.stgAmountSubmitted }}
+        </div>
+        <div class="item">
+          <span>TL:</span> &nbsp; {{ staffWallet.tlAmountSubmitted }}
+        </div>
+        <div class="item">
+          <span>USD:</span> &nbsp; {{ staffWallet.usdAmountSubmitted }}
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex">
+      <button
+      (click)="confirmCollect()"
+        style="margin-left: auto"
+        type="submit"
+        class="btn btn-success"
+        id="btn-save-event"
+      >
+        Collect
+      </button>
+    </div>
+  </div>
+</ng-template>

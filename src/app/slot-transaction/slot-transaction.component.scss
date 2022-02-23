@@ -44,3 +44,16 @@ tbody td {
   vertical-align: middle;
   padding: 0;
 }
+
+.item {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  padding: 0 2px;
+  flex: 1;
+  span {
+    white-space: nowrap;
+    color: #495057 !important;
+    font-weight: 600;
+  }
+}

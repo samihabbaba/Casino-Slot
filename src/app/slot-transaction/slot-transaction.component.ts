@@ -34,6 +34,9 @@ export class SlotTransactionComponent implements OnInit {
   machineList: any[] = [];
   staffList: any[] = [];
 
+  staffName: string = "";
+  staffWallet: any;
+
   constructor(
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
@@ -110,45 +113,25 @@ export class SlotTransactionComponent implements OnInit {
       });
   }
 
-  confirmCollect(obj) {
+  openModal(content: any, obj?: any) {
     this.dataService.getStaffWallet(this.selectedStaff).subscribe((resp) => {
-      const obj = resp;
-      Swal.fire({
-        title: `Pending : ${"Chip: " + obj?.chipPending}, ${
-          "Cc: " + obj?.creditCardPending
-        }, ${"EU: " + obj?.euroAmountPending}, ${
-          "STG: " + obj?.stgAmountPending
-        }, ${"TL: " + obj?.tlAmountPending}, ${
-          "USD: " + obj?.usdAmountPending
-        }`,
-        text: `Submitted : ${"Chip: " + obj?.chipSubmitted}, ${
-          "Cc: " + obj?.creditCardSubmitted
-        }, ${"EU: " + obj?.euroAmountSubmitted}, ${
-          "STG: " + obj?.stgAmountSubmitted
-        }, ${"TL: " + obj?.tlAmountSubmitted}, ${
-          "USD: " + obj?.usdAmountSubmitted
-        }`,
-        width: 800,
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#34c38f",
-        cancelButtonColor: "#f46a6a",
-        confirmButtonText: `Collect ${
-          document.getElementById("staffSelect").innerHTML
-        }`,
-      }).then((result) => {
-        if (result.value) {
-          this.dataService.collectStaff(this.selectedStaff).subscribe(
-            (resp) => {
-              this.toastr.success("Staff Collected successfully");
-              this.fetchData();
-            },
-            (err) => {
-              this.toastr.error("Something went wrong");
-            }
-          );
-        }
-      });
+      this.staffWallet = resp;
+      this.staffName = document.getElementById("staffSelect").innerHTML;
+      this.modalService.open(content);
+      this.submitted = false;
     });
+  }
+
+  confirmCollect() {
+    this.dataService.collectStaff(this.selectedStaff).subscribe(
+      (resp) => {
+        this.toastr.success("Staff Collected successfully");
+        this.fetchData();
+        this.modalService.dismissAll();
+      },
+      (err) => {
+        this.toastr.error("Something went wrong");
+      }
+    );
   }
 }

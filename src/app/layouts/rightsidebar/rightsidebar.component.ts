@@ -64,9 +64,9 @@ export class RightsidebarComponent implements OnInit {
       this.eventService.broadcast("changeLayout", "vertical");
     else this.eventService.broadcast("changeLayout", "horizontal");
 
-    if (layout.target.checked == true) {
-      location.reload();
-    }
+    // if (layout.target.checked == true) {
+    //   location.reload();
+    // }
   }
 
   changeWidth(width: string) {
